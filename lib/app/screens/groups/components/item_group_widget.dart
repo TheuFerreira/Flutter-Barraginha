@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/shared/models/group_model.dart';
+import 'package:flutter_barraginha/app/screens/groups/model/group_model.dart';
 
 import 'text_icon_widget.dart';
 
