@@ -19,6 +19,9 @@ abstract class _ProjectControllerBase with Store {
   @observable
   String message = '';
 
+  @computed
+  bool get isLoading => status == PageStatus.loading;
+
   _ProjectControllerBase() {
     status = PageStatus.loading;
     message = 'Carregando...';
@@ -44,9 +47,17 @@ abstract class _ProjectControllerBase with Store {
   }
 
   @action
-  void delete(int index) {
+  Future delete(int index) async {
+    message = 'Deletando Projeto...';
+    status = PageStatus.loading;
+
+    await Future.delayed(const Duration(seconds: 3));
+
     oldProjects.removeAt(index);
     projects.removeAt(index);
+
+    message = '';
+    status = PageStatus.normal;
   }
 
   @action

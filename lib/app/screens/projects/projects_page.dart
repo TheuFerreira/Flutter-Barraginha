@@ -29,11 +29,13 @@ class _ProjectsPageState extends State<ProjectsPage> {
         elevation: 0,
         backgroundColor: const Color(0xFF439889),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.add_circle,
-              color: Colors.white,
+          Builder(
+            builder: (context) => IconButton(
+              onPressed: controller.isLoading ? null : () {},
+              icon: const Icon(
+                Icons.add_circle,
+                color: Colors.white,
+              ),
             ),
           ),
         ],
@@ -43,8 +45,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
           CustomBar(
             top: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 64.0),
-              child: SearchWidget(
-                onChanged: controller.search,
+              child: Observer(
+                builder: (_) => SearchWidget(
+                  onChanged: controller.isLoading ? null : controller.search,
+                ),
               ),
             ),
             bottom: const Center(
@@ -83,7 +87,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         );
 
                         if (result == null || result == false) return;
-                        controller.delete(i);
+                        await controller.delete(i);
                       },
                     );
                   },
