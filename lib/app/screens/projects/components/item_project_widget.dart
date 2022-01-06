@@ -16,7 +16,12 @@ class ItemProjectWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
-      margin: const EdgeInsets.only(bottom: 32.0, left: 32.0, right: 32.0),
+      margin: const EdgeInsets.only(
+        top: 16.0,
+        bottom: 16.0,
+        left: 32.0,
+        right: 32.0,
+      ),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(24),
