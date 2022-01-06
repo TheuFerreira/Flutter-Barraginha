@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/groups/controllers/groups_controller.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
+import 'package:flutter_barraginha/app/shared/components/question_dialog.dart';
 import 'package:flutter_barraginha/app/shared/models/page_status.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -77,7 +78,14 @@ class _GroupsPageState extends State<GroupsPage> {
                     return ItemGroupWidget(
                       groups[i],
                       key: UniqueKey(),
-                      onLongPress: () {
+                      onLongPress: () async {
+                        final result = await QuestionDialog().show(
+                          context,
+                          title: 'Excluir',
+                          description: 'Deseja Realmente Excluir?',
+                        );
+
+                        if (result == null || result == false) return;
                         controller.deleteGroup(i);
                       },
                     );
