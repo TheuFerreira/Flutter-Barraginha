@@ -3,10 +3,10 @@ import 'package:flutter_barraginha/app/screens/projects/model/project_model.dart
 
 import 'text_icon_widget.dart';
 
-class ItemGroupWidget extends StatelessWidget {
+class ItemProjectWidget extends StatelessWidget {
   final ProjectModel group;
   final Function()? onLongPress;
-  const ItemGroupWidget(
+  const ItemProjectWidget(
     this.group, {
     Key? key,
     this.onLongPress,

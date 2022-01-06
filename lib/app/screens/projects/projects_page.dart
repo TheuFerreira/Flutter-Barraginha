@@ -6,7 +6,7 @@ import 'package:flutter_barraginha/app/shared/models/page_status.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'components/custom_app_bar.dart';
-import 'components/item_group_widget.dart';
+import 'components/item_project_widget.dart';
 import 'components/search_widget.dart';
 
 class ProjectsPage extends StatefulWidget {
@@ -77,7 +77,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                   physics: const BouncingScrollPhysics(),
                   itemCount: projects.length,
                   itemBuilder: (builder, i) {
-                    return ItemGroupWidget(
+                    return ItemProjectWidget(
                       projects[i],
                       key: UniqueKey(),
                       onLongPress: () async {
