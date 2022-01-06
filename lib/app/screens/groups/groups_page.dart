@@ -46,9 +46,11 @@ class _GroupsPageState extends State<GroupsPage> {
                 ),
               ],
             ),
-            middle: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 64.0),
-              child: SearchWidget(),
+            middle: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 64.0),
+              child: SearchWidget(
+                onChanged: controller.search,
+              ),
             ),
             bottom: const Center(
               child: Text(

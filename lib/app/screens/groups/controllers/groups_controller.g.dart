@@ -9,17 +9,32 @@ part of 'groups_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$GroupsController on _GroupControllerBase, Store {
-  final _$grAtom = Atom(name: '_GroupControllerBase.gr');
+  final _$oldGroupsAtom = Atom(name: '_GroupControllerBase.oldGroups');
 
   @override
-  ObservableList<GroupModel> get groups {
-    _$grAtom.reportRead();
+  List<GroupModel> get oldGroups {
+    _$oldGroupsAtom.reportRead();
+    return super.oldGroups;
+  }
+
+  @override
+  set oldGroups(List<GroupModel> value) {
+    _$oldGroupsAtom.reportWrite(value, super.oldGroups, () {
+      super.oldGroups = value;
+    });
+  }
+
+  final _$groupsAtom = Atom(name: '_GroupControllerBase.groups');
+
+  @override
+  List<GroupModel> get groups {
+    _$groupsAtom.reportRead();
     return super.groups;
   }
 
   @override
-  set groups(ObservableList<GroupModel> value) {
-    _$grAtom.reportWrite(value, super.groups, () {
+  set groups(List<GroupModel> value) {
+    _$groupsAtom.reportWrite(value, super.groups, () {
       super.groups = value;
     });
   }
@@ -80,9 +95,21 @@ mixin _$GroupsController on _GroupControllerBase, Store {
   }
 
   @override
+  void search(String value) {
+    final _$actionInfo = _$_GroupControllerBaseActionController.startAction(
+        name: '_GroupControllerBase.search');
+    try {
+      return super.search(value);
+    } finally {
+      _$_GroupControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-gr: ${groups},
+oldGroups: ${oldGroups},
+groups: ${groups},
 status: ${status},
 message: ${message}
     ''';

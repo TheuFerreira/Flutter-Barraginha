@@ -8,7 +8,10 @@ class GroupsController = _GroupControllerBase with _$GroupsController;
 
 abstract class _GroupControllerBase with Store {
   @observable
-  ObservableList<GroupModel> groups = ObservableList<GroupModel>();
+  List<GroupModel> oldGroups = [];
+
+  @observable
+  List<GroupModel> groups = ObservableList<GroupModel>();
 
   @observable
   PageStatus status = PageStatus.normal;
@@ -27,18 +30,30 @@ abstract class _GroupControllerBase with Store {
 
   @action
   void reloadGroups() {
-    groups.add(GroupModel('Fazenda do Crocodilo', DateTime(2021, 5, 13), 20));
-    groups.add(GroupModel('Avenida de SJE', DateTime(2020, 12, 20), 10));
-    groups.add(GroupModel('Rua do Paulão', DateTime(2022, 01, 01), 5));
-    groups.add(GroupModel('Fazenda Jão Kisse', DateTime(2020, 09, 17), 17));
-    groups.add(GroupModel('Rua da Igreja', DateTime(2022, 02, 28), 2));
+    oldGroups
+        .add(GroupModel('Fazenda do Crocodilo', DateTime(2021, 5, 13), 20));
+    oldGroups.add(GroupModel('Avenida de SJE', DateTime(2020, 12, 20), 10));
+    oldGroups.add(GroupModel('Rua do Paulão', DateTime(2022, 01, 01), 5));
+    oldGroups.add(GroupModel('Fazenda Jão Kisse', DateTime(2020, 09, 17), 17));
+    oldGroups.add(GroupModel('Rua da Igreja', DateTime(2022, 02, 28), 2));
 
+    groups = oldGroups;
     status = PageStatus.normal;
     message = '';
   }
 
   @action
   void deleteGroup(int index) {
+    oldGroups.removeAt(index);
     groups.removeAt(index);
+  }
+
+  @action
+  void search(String value) {
+    groups = oldGroups
+        .where(
+          (element) => element.title.contains(value),
+        )
+        .toList();
   }
 }
