@@ -39,7 +39,7 @@ class CustomAppBar extends StatelessWidget {
               ],
             ),
             Container(
-              height: 45,
+              height: 35,
             ),
           ],
         ),
@@ -51,14 +51,14 @@ class CustomAppBar extends StatelessWidget {
             color: const Color(0xFF00695C),
             elevation: 2,
             margin: const EdgeInsets.symmetric(
-              horizontal: 64.0,
+              horizontal: 80.0,
               vertical: 5,
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24.0),
+              padding: const EdgeInsets.symmetric(vertical: 18.0),
               child: bottom,
             ),
           ),
