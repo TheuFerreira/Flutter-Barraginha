@@ -17,21 +17,6 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
               name: '_ProjectControllerBase.isLoading'))
           .value;
 
-  final _$oldProjectsAtom = Atom(name: '_ProjectControllerBase.oldProjects');
-
-  @override
-  List<ProjectModel> get oldProjects {
-    _$oldProjectsAtom.reportRead();
-    return super.oldProjects;
-  }
-
-  @override
-  set oldProjects(List<ProjectModel> value) {
-    _$oldProjectsAtom.reportWrite(value, super.oldProjects, () {
-      super.oldProjects = value;
-    });
-  }
-
   final _$projectsAtom = Atom(name: '_ProjectControllerBase.projects');
 
   @override
@@ -84,6 +69,13 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
     return _$deleteAsyncAction.run(() => super.delete(index));
   }
 
+  final _$addAsyncAction = AsyncAction('_ProjectControllerBase.add');
+
+  @override
+  Future<dynamic> add(ProjectModel project) {
+    return _$addAsyncAction.run(() => super.add(project));
+  }
+
   final _$_ProjectControllerBaseActionController =
       ActionController(name: '_ProjectControllerBase');
 
@@ -112,7 +104,6 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
   @override
   String toString() {
     return '''
-oldProjects: ${oldProjects},
 projects: ${projects},
 status: ${status},
 message: ${message},

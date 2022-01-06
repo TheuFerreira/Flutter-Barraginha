@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/projects/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/controllers/projects_controller.dart';
+import 'package:flutter_barraginha/app/screens/projects/model/project_model.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
-import 'package:flutter_barraginha/app/shared/components/question_dialog.dart';
+import 'package:flutter_barraginha/app/shared/components/question_dialog_widget.dart';
 import 'package:flutter_barraginha/app/shared/models/page_status.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -19,6 +21,9 @@ class ProjectsPage extends StatefulWidget {
 class _ProjectsPageState extends State<ProjectsPage> {
   final controller = ProjectsController();
 
+  final _nameTextController = TextEditingController();
+  final _volumeTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +36,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
         actions: [
           Builder(
             builder: (context) => IconButton(
-              onPressed: controller.isLoading ? null : () {},
+              onPressed: controller.isLoading ? null : _onTapNewProject,
               icon: const Icon(
                 Icons.add_circle,
                 color: Colors.white,
@@ -79,16 +84,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     return ItemProjectWidget(
                       projects[i],
                       key: UniqueKey(),
-                      onLongPress: () async {
-                        final result = await QuestionDialog().show(
-                          context,
-                          title: 'Excluir',
-                          description: 'Deseja Realmente Excluir?',
-                        );
-
-                        if (result == null || result == false) return;
-                        await controller.delete(i);
-                      },
+                      onLongPress: () => _onLongPressItemProject(i),
                     );
                   },
                 );
@@ -98,5 +94,86 @@ class _ProjectsPageState extends State<ProjectsPage> {
         ],
       ),
     );
+  }
+
+  void _onTapNewProject() async {
+    final result = await showDialog(
+      context: context,
+      builder: (_) {
+        return QuestionDialogWidget(
+          title: 'Nome do projeto',
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFieldWidget(
+                controller: _nameTextController,
+                labelText: 'Nome do Projeto',
+                hintText: 'Ex: Roça do Zé',
+              ),
+              const SizedBox(height: 16.0),
+              TextFieldWidget(
+                controller: _volumeTextController,
+                labelText: 'Volume de Chuva',
+                hintText: 'Ex: 22',
+                textInputType: TextInputType.number,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (result == null || result == false) {
+      return;
+    }
+
+    final textRainVolume = _volumeTextController.text;
+    final textName = _nameTextController.text.trim();
+    if (textRainVolume.isEmpty || textName.isEmpty) {
+      return;
+    }
+
+    final rainVolume = int.parse(textRainVolume);
+
+    final project = ProjectModel(
+      textName,
+      DateTime.now(),
+      rainVolume,
+      0,
+    );
+    final response = await controller.add(project);
+    if (response == null) {
+      return;
+    }
+
+    _volumeTextController.text = '';
+    _nameTextController.text = '';
+
+    // TODO: Convert response to Project Model
+
+    // TODO: Next Page
+  }
+
+  void _onLongPressItemProject(int i) async {
+    final result = await showDialog(
+      context: context,
+      builder: (_) => QuestionDialogWidget(
+        title: 'Excluir',
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Text(
+              'Deseja Realmente Excluir?',
+              style: TextStyle(
+                color: Color(0xFF666666),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    if (result == null || result == false) return;
+    await controller.delete(i);
   }
 }
