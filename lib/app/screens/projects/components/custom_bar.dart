@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CustomAppBar extends StatelessWidget {
+class CustomBar extends StatelessWidget {
   final Widget? top;
-  final Widget? middle;
   final Widget? bottom;
-  const CustomAppBar({
+  const CustomBar({
     Key? key,
     this.top,
-    this.middle,
     this.bottom,
   }) : super(key: key);
 
@@ -21,7 +19,7 @@ class CustomAppBar extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  height: 200,
+                  height: 100,
                   color: const Color(0xFF439889),
                 ),
                 SafeArea(
@@ -30,8 +28,6 @@ class CustomAppBar extends StatelessWidget {
                     child: Column(
                       children: [
                         top != null ? top! : const SizedBox(),
-                        const SizedBox(height: 16.0),
-                        middle != null ? middle! : const SizedBox(),
                       ],
                     ),
                   ),

@@ -5,7 +5,7 @@ import 'package:flutter_barraginha/app/shared/components/question_dialog.dart';
 import 'package:flutter_barraginha/app/shared/models/page_status.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import 'components/custom_app_bar.dart';
+import 'components/custom_bar.dart';
 import 'components/item_project_widget.dart';
 import 'components/search_widget.dart';
 
@@ -22,31 +22,26 @@ class _ProjectsPageState extends State<ProjectsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: Column(),
+      ),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: const Color(0xFF439889),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.add_circle,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
       body: Column(
         children: [
-          CustomAppBar(
-            top: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.view_headline,
-                    color: Colors.white,
-                    size: 40,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.add_circle,
-                    color: Colors.white,
-                    size: 40,
-                  ),
-                ),
-              ],
-            ),
-            middle: Padding(
+          CustomBar(
+            top: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 64.0),
               child: SearchWidget(
                 onChanged: controller.search,
