@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/shared/models/group_model.dart';
 
 import 'text_icon_widget.dart';
 
 class ItemGroupWidget extends StatelessWidget {
-  final String title;
-  final String date;
-  final String parts;
+  final GroupModel group;
   final Function()? onLongPress;
-  const ItemGroupWidget({
+  const ItemGroupWidget(
+    this.group, {
     Key? key,
-    this.title = 'Title',
-    this.date = '01/01/2001',
-    this.parts = '20 Trechos',
     this.onLongPress,
   }) : super(key: key);
 
@@ -35,7 +32,7 @@ class ItemGroupWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                title,
+                group.title,
                 style: const TextStyle(
                   fontSize: 24.0,
                   color: Color(0xFF666666),
@@ -59,8 +56,8 @@ class ItemGroupWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  TextIconWidget(Icons.calendar_today, date),
-                  TextIconWidget(Icons.timeline, parts),
+                  TextIconWidget(Icons.calendar_today, group.getShortDate()),
+                  TextIconWidget(Icons.timeline, '${group.parts} Trechos'),
                 ],
               ),
             ],

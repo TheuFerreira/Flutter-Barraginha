@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/shared/models/group_model.dart';
 
 import 'components/custom_app_bar.dart';
 import 'components/item_group_widget.dart';
@@ -51,9 +52,9 @@ class GroupsPage extends StatelessWidget {
           Flexible(
             child: ListView.builder(
               physics: const BouncingScrollPhysics(),
-              itemCount: 15,
+              itemCount: groups.length,
               itemBuilder: (builder, i) {
-                return const ItemGroupWidget();
+                return ItemGroupWidget(groups[i]);
               },
             ),
           ),
