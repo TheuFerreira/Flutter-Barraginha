@@ -1,11 +1,11 @@
 import 'package:intl/intl.dart';
 
-class GroupModel {
+class ProjectModel {
   String title;
   DateTime date;
   int parts;
 
-  GroupModel(this.title, this.date, this.parts);
+  ProjectModel(this.title, this.date, this.parts);
 
   String getShortDate() {
     return DateFormat('dd/MM/yyyy').format(date);
