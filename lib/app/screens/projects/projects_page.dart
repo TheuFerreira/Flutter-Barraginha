@@ -4,13 +4,13 @@ import 'package:flutter_barraginha/app/screens/projects/controllers/projects_con
 import 'package:flutter_barraginha/app/screens/projects/dialogs/add_dialog_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/model/project_model.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
+import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/shared/models/page_status.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'components/custom_bar.dart';
 import 'components/item_project_widget.dart';
-import 'components/search_widget.dart';
 
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({Key? key}) : super(key: key);
@@ -47,8 +47,18 @@ class _ProjectsPageState extends State<ProjectsPage> {
             top: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 64.0),
               child: Observer(
-                builder: (_) => SearchWidget(
-                  onChanged: controller.isLoading ? null : controller.search,
+                builder: (_) => SizedBox(
+                  height: 36,
+                  child: TextFieldWidget(
+                    suffixIcon: const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                    hintText: 'Pesquisar',
+                    fillColor: const Color.fromARGB(50, 255, 255, 255),
+                    textColor: Colors.white,
+                    onChanged: controller.isLoading ? null : controller.search,
+                  ),
                 ),
               ),
             ),
@@ -102,13 +112,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
       return;
     }
 
-    final project = result as ProjectModel;
-    final response = await controller.add(project);
-    if (response == false) {
+    final response = await controller.add(result as ProjectModel);
+    if (response == null) {
       return;
     }
-
-    // TODO: Convert response to Project Model
 
     // TODO: Next Page
   }

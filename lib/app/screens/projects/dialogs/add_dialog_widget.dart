@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/projects/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/model/project_model.dart';
+import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/shared/dialogs/base_dialog.dart';
 
 class AddDialogWidget extends StatelessWidget {
@@ -12,23 +12,33 @@ class AddDialogWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseDialog(
       title: 'Nome do projeto',
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextFieldWidget(
-            controller: _nameTextController,
-            labelText: 'Nome do Projeto',
-            hintText: 'Ex: Roça do Zé',
-          ),
-          const SizedBox(height: 16.0),
-          TextFieldWidget(
-            controller: _volumeTextController,
-            labelText: 'Volume de Chuva',
-            hintText: 'Ex: 22',
-            textInputType: TextInputType.number,
-          ),
-        ],
+      content: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 42,
+              child: TextFieldWidget(
+                controller: _nameTextController,
+                labelText: 'Nome do Projeto',
+                hintText: 'Ex: Roça do Zé',
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            SizedBox(
+              height: 42,
+              child: TextFieldWidget(
+                controller: _volumeTextController,
+                labelText: 'Volume de Chuva',
+                hintText: 'Ex: 22',
+                keyboardType: TextInputType.number,
+              ),
+            ),
+          ],
+        ),
       ),
+      onCancel: () => Navigator.pop(context),
       onConfirm: () => _onConfirm(context),
     );
   }

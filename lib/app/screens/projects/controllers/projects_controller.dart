@@ -67,7 +67,7 @@ abstract class _ProjectControllerBase with Store {
   }
 
   @action
-  Future<bool> add(ProjectModel project) async {
+  Future<ProjectModel?> add(ProjectModel project) async {
     message = 'Criando novo Projeto...';
     status = PageStatus.loading;
 
@@ -78,7 +78,7 @@ abstract class _ProjectControllerBase with Store {
 
     message = '';
     status = PageStatus.normal;
-    return true;
+    return project;
   }
 
   @action

@@ -97,42 +97,5 @@ class BaseDialog extends StatelessWidget {
         ],
       ),
     );
-    return AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 24,
-        ),
-      ),
-      content: content,
-      actionsAlignment: MainAxisAlignment.spaceBetween,
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context, false);
-          },
-          child: const Text(
-            'Cancelar',
-            style: TextStyle(
-              color: Color(0xFF666666),
-              fontSize: 16.0,
-            ),
-          ),
-        ),
-        TextButton(
-          onPressed: onConfirm,
-          child: const Text(
-            'Continuar',
-            style: TextStyle(
-              color: Color(0xFF666666),
-              fontSize: 16.0,
-            ),
-          ),
-        ),
-      ],
-    );
   }
 }
