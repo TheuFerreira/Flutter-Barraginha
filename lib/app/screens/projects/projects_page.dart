@@ -124,7 +124,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
         elevation: 0,
         backgroundColor: const Color(0xFF439889),
         actions: [
-          Builder(
+          Observer(
             builder: (context) => IconButton(
               onPressed: controller.isLoading ? null : _onTapNewProject,
               icon: const Icon(
@@ -190,7 +190,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
     // TODO: Simplify this Rule
     final result = await showDialog(
       context: context,
-      builder: (_) {
+      builder: (context) {
         return QuestionDialogWidget(
           title: 'Nome do projeto',
           content: Column(
