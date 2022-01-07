@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class QuestionDialogWidget extends StatelessWidget {
   final String title;
   final Widget? content;
+  final Function()? onConfirm;
   const QuestionDialogWidget({
     Key? key,
     this.title = 'Title',
     this.content,
+    @required this.onConfirm,
   }) : super(key: key);
 
   @override
@@ -37,9 +39,7 @@ class QuestionDialogWidget extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () {
-            Navigator.pop(context, true);
-          },
+          onPressed: onConfirm,
           child: const Text(
             'Continuar',
             style: TextStyle(

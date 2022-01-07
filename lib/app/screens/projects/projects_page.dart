@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
-import 'package:flutter_barraginha/app/screens/projects/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/controllers/projects_controller.dart';
+import 'package:flutter_barraginha/app/screens/projects/dialogs/add_dialog_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/model/project_model.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/question_dialog_widget.dart';
@@ -21,9 +21,6 @@ class ProjectsPage extends StatefulWidget {
 
 class _ProjectsPageState extends State<ProjectsPage> {
   final controller = ProjectsController();
-
-  final _nameTextController = TextEditingController();
-  final _volumeTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -96,58 +93,20 @@ class _ProjectsPageState extends State<ProjectsPage> {
   }
 
   void _onTapNewProject() async {
-    // TODO: Simplify this Rule
     final result = await showDialog(
       context: context,
-      builder: (context) {
-        return QuestionDialogWidget(
-          title: 'Nome do projeto',
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFieldWidget(
-                controller: _nameTextController,
-                labelText: 'Nome do Projeto',
-                hintText: 'Ex: Roça do Zé',
-              ),
-              const SizedBox(height: 16.0),
-              TextFieldWidget(
-                controller: _volumeTextController,
-                labelText: 'Volume de Chuva',
-                hintText: 'Ex: 22',
-                textInputType: TextInputType.number,
-              ),
-            ],
-          ),
-        );
-      },
+      builder: (context) => AddDialogWidget(),
     );
 
-    if (result == null || result == false) {
+    if (result == null) {
       return;
     }
 
-    final textRainVolume = _volumeTextController.text;
-    final textName = _nameTextController.text.trim();
-    if (textRainVolume.isEmpty || textName.isEmpty) {
-      return;
-    }
-
-    final rainVolume = int.parse(textRainVolume);
-
-    final project = ProjectModel(
-      textName,
-      DateTime.now(),
-      rainVolume,
-      0,
-    );
+    final project = result as ProjectModel;
     final response = await controller.add(project);
-    if (response == null) {
+    if (response == false) {
       return;
     }
-
-    _volumeTextController.text = '';
-    _nameTextController.text = '';
 
     // TODO: Convert response to Project Model
 
@@ -170,10 +129,11 @@ class _ProjectsPageState extends State<ProjectsPage> {
             ),
           ],
         ),
+        onConfirm: () => Navigator.pop(context, true),
       ),
     );
 
-    if (result == null || result == false) return;
+    if (result == null) return;
     await controller.delete(i);
   }
 }

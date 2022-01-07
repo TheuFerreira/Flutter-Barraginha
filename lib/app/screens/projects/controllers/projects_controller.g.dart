@@ -72,7 +72,7 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
   final _$addAsyncAction = AsyncAction('_ProjectControllerBase.add');
 
   @override
-  Future<dynamic> add(ProjectModel project) {
+  Future<bool> add(ProjectModel project) {
     return _$addAsyncAction.run(() => super.add(project));
   }
 
