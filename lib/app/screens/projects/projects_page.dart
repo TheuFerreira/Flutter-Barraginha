@@ -4,8 +4,8 @@ import 'package:flutter_barraginha/app/screens/projects/controllers/projects_con
 import 'package:flutter_barraginha/app/screens/projects/dialogs/add_dialog_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/model/project_model.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
-import 'package:flutter_barraginha/app/shared/components/question_dialog_widget.dart';
 import 'package:flutter_barraginha/app/shared/models/page_status.dart';
+import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'components/custom_bar.dart';
@@ -114,26 +114,13 @@ class _ProjectsPageState extends State<ProjectsPage> {
   }
 
   void _onLongPressItemProject(int i) async {
-    final result = await showDialog(
-      context: context,
-      builder: (_) => QuestionDialogWidget(
-        title: 'Excluir',
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              'Deseja Realmente Excluir?',
-              style: TextStyle(
-                color: Color(0xFF666666),
-              ),
-            ),
-          ],
-        ),
-        onConfirm: () => Navigator.pop(context, true),
-      ),
+    final result = await DialogService.showQuestionDialog(
+      context,
+      'Excluir',
+      'Deseja Realmente Excluir?',
     );
 
-    if (result == null) return;
+    if (!result) return;
     await controller.delete(i);
   }
 }

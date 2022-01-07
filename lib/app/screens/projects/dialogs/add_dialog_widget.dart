@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/model/project_model.dart';
-import 'package:flutter_barraginha/app/shared/components/question_dialog_widget.dart';
+import 'package:flutter_barraginha/app/shared/dialogs/base_dialog.dart';
 
 class AddDialogWidget extends StatelessWidget {
   final _nameTextController = TextEditingController();
@@ -10,7 +10,7 @@ class AddDialogWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return QuestionDialogWidget(
+    return BaseDialog(
       title: 'Nome do projeto',
       content: Column(
         mainAxisSize: MainAxisSize.min,
