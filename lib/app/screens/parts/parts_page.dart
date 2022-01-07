@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
 
 import 'components/item_info_widget.dart';
 
@@ -21,7 +22,17 @@ class _PartsPageState extends State<PartsPage> {
         centerTitle: true,
         title: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 48.0),
-          child: TextFieldWidget(),
+          child: SizedBox(
+            height: 32,
+            child: TextFieldWidget(
+              textColor: Color(0xFF666666),
+              suffixIcon: Icon(
+                Icons.edit,
+                size: 20.0,
+                color: Color(0xFF666666),
+              ),
+            ),
+          ),
           // TODO: Text Field Controller
         ),
         actions: [
@@ -171,9 +182,9 @@ class ItemPartWidget extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.info),
+                        icon: const Icon(Icons.info),
                         iconSize: 32,
-                        color: Color(0xFF666666),
+                        color: const Color(0xFF666666),
                         onPressed: () {},
                       ),
                     ],
@@ -277,48 +288,6 @@ class ItemPartWidget extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class TextFieldWidget extends StatelessWidget {
-  final Function(String)? onChanged;
-  const TextFieldWidget({
-    Key? key,
-    this.onChanged,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 32,
-      child: TextField(
-        cursorColor: const Color(0xFF666666),
-        style: const TextStyle(color: Color(0xFF666666)),
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.only(left: 16.0),
-          fillColor: const Color(0xFFF1F1F1),
-          filled: true,
-          suffixIcon: const Icon(
-            Icons.edit,
-            size: 20.0,
-            color: Color(0xFF666666),
-          ),
-          border: _defaultBorder(),
-          enabledBorder: _defaultBorder(),
-          focusedBorder: _defaultBorder(),
-        ),
-        onChanged: onChanged,
-      ),
-    );
-  }
-
-  _defaultBorder() {
-    return OutlineInputBorder(
-      borderSide: const BorderSide(
-        color: Colors.transparent,
-      ),
-      borderRadius: BorderRadius.circular(24),
     );
   }
 }
