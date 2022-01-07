@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
 import 'package:flutter_barraginha/app/screens/projects/projects_page.dart';
 
 class App extends StatelessWidget {
@@ -9,7 +10,7 @@ class App extends StatelessWidget {
     return const MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: ProjectsPage(),
+      home: PartsPage(),
     );
   }
 }
