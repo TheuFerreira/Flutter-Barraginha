@@ -11,13 +11,6 @@ class ItemPartWidget extends StatelessWidget {
         vertical: 8.0,
         horizontal: 8.0,
       ),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(24),
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        ),
-      ),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Stack(

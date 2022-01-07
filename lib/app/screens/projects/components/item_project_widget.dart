@@ -5,31 +5,30 @@ import 'text_icon_widget.dart';
 
 class ItemProjectWidget extends StatelessWidget {
   final ProjectModel group;
+  final Function()? onTap;
   final Function()? onLongPress;
   const ItemProjectWidget(
     this.group, {
     Key? key,
+    this.onTap,
     this.onLongPress,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 6,
       margin: const EdgeInsets.only(
         top: 16.0,
         bottom: 16.0,
         left: 32.0,
         right: 32.0,
       ),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
+      child: InkWell(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(24),
           topLeft: Radius.circular(24),
           topRight: Radius.circular(24),
         ),
-      ),
-      child: InkWell(
         onLongPress: onLongPress,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
@@ -48,7 +47,7 @@ class ItemProjectWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: onTap,
                     icon: const Icon(
                       Icons.arrow_forward,
                       size: 32,
