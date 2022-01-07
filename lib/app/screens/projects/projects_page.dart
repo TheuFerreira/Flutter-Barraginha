@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/controllers/projects_controller.dart';
 import 'package:flutter_barraginha/app/screens/projects/model/project_model.dart';
@@ -26,100 +27,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Refactor
     return Scaffold(
-      drawer: Drawer(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              color: const Color(0xFF439889),
-              child: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(75),
-                        child: Container(
-                          color: const Color(0xFF00695C),
-                          height: 150,
-                          width: 150,
-                        ),
-                      ),
-                      const SizedBox(height: 16.0),
-                      const Text(
-                        'Nome do App',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: ListView(
-                children: [
-                  ListTile(
-                    leading: const Icon(
-                      Icons.live_help,
-                      size: 32.0,
-                    ),
-                    title: const Text(
-                      'Tutorial',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    textColor: const Color(0xFF666666),
-                    iconColor: const Color(0xFF666666),
-                    onTap: () {
-                      // TODO: Tutorial
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(
-                      Icons.people,
-                      size: 32.0,
-                    ),
-                    title: const Text(
-                      'Parceiros',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    textColor: const Color(0xFF666666),
-                    iconColor: const Color(0xFF666666),
-                    onTap: () {
-                      // TODO: Parceiros
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(
-                      Icons.info,
-                      size: 32.0,
-                    ),
-                    title: const Text(
-                      'Sobre',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    textColor: const Color(0xFF666666),
-                    iconColor: const Color(0xFF666666),
-                    onTap: () {
-                      // TODO: Sobre
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      drawer: const DrawerWidget(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: const Color(0xFF439889),
