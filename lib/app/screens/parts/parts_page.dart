@@ -57,7 +57,7 @@ class _PartsPageState extends State<PartsPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 8.0),
+                const SizedBox(height: 18.0),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
