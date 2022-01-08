@@ -6,7 +6,6 @@ class ItemPartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
       margin: const EdgeInsets.symmetric(
         vertical: 8.0,
         horizontal: 8.0,
