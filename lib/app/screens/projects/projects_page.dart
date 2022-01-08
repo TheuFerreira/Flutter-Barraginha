@@ -33,10 +33,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
           Observer(
             builder: (context) => IconButton(
               onPressed: controller.isLoading ? null : _onTapNewProject,
-              icon: const Icon(
-                Icons.add_circle,
-                color: Colors.white,
-              ),
+              color: Colors.white,
+              iconSize: 32,
+              icon: const Icon(Icons.add_circle),
             ),
           ),
         ],

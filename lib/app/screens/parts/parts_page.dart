@@ -39,6 +39,7 @@ class _PartsPageState extends State<PartsPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.add_circle),
+            iconSize: 32,
             color: Theme.of(context).colorScheme.secondary,
             onPressed: () {
               // TODO: Add Part
@@ -51,7 +52,7 @@ class _PartsPageState extends State<PartsPage> {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            height: 160,
+            height: 180,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,

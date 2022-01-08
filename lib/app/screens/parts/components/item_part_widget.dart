@@ -32,13 +32,12 @@ class ItemPartWidget extends StatelessWidget {
                       ),
                       IconButton(
                         icon: const Icon(Icons.info),
-                        iconSize: 32,
+                        iconSize: 24,
                         color: const Color(0xFF666666),
                         onPressed: () {},
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
