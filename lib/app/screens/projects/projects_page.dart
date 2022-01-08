@@ -69,28 +69,31 @@ class _ProjectsPageState extends State<ProjectsPage> {
             ),
           ),
           Flexible(
-            child: Observer(
-              builder: (_) {
-                final projects = controller.projects;
-                final status = controller.status;
-                final message = controller.message;
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Observer(
+                builder: (_) {
+                  final projects = controller.projects;
+                  final status = controller.status;
+                  final message = controller.message;
 
-                if (status == PageStatus.loading) {
-                  return LoadingWidget(message);
-                }
+                  if (status == PageStatus.loading) {
+                    return LoadingWidget(message);
+                  }
 
-                return ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: projects.length,
-                  itemBuilder: (builder, i) {
-                    return ItemProjectWidget(
-                      projects[i],
-                      key: UniqueKey(),
-                      onLongPress: () => _onLongPressItemProject(i),
-                    );
-                  },
-                );
-              },
+                  return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: projects.length,
+                    itemBuilder: (builder, i) {
+                      return ItemProjectWidget(
+                        projects[i],
+                        key: UniqueKey(),
+                        onLongPress: () => _onLongPressItemProject(i),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
         ],

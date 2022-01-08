@@ -20,8 +20,6 @@ class ItemProjectWidget extends StatelessWidget {
       margin: const EdgeInsets.only(
         top: 16.0,
         bottom: 16.0,
-        left: 32.0,
-        right: 32.0,
       ),
       child: InkWell(
         borderRadius: const BorderRadius.only(
