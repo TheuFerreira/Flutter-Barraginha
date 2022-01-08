@@ -61,7 +61,7 @@ class App extends StatelessWidget {
           ),
         ),
       ),
-      home: const ProjectsPage(),
+      home: const PartsPage(),
     );
   }
 }
