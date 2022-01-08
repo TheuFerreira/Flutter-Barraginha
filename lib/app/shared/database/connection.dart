@@ -16,17 +16,17 @@ abstract class Connection {
   _createDB(Database db, int version) async {
     await db.transaction(
       (txn) async {
-        await txn.execute(sqlDB);
+        await txn.execute(sqlProject);
       },
     );
   }
 }
 
-const String sqlDB = ''
+const String sqlProject = ''
     'CREATE TABLE project ('
-    'id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, '
-    'title TEXT NOT NULL, '
-    'date DATETIME NOT NULL, '
+    'id          INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, '
+    'title       TEXT NOT NULL, '
+    'date        DATETIME NOT NULL, '
     'rain_volume INTEGER NOT NULL, '
-    'status BOOLEAN NOT NULL DEFAULT (1)'
+    'status      BOOLEAN NOT NULL DEFAULT (1)'
     ');';

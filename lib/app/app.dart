@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
 import 'package:flutter_barraginha/app/screens/projects/projects_page.dart';
 
 class App extends StatelessWidget {
