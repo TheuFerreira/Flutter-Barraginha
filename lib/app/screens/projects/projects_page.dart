@@ -62,13 +62,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 ),
               ),
             ),
-            bottom: const Center(
+            bottom: Center(
               child: Text(
                 'Meus Projetos',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                ),
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
           ),

@@ -26,13 +26,9 @@ class ItemPartWidget extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         'Trecho 1',
-                        style: TextStyle(
-                          color: Color(0xFF666666),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 26.0,
-                        ),
+                        style: Theme.of(context).textTheme.headline3,
                       ),
                       IconButton(
                         icon: const Icon(Icons.info),

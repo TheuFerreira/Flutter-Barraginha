@@ -37,10 +37,7 @@ class ItemProjectWidget extends StatelessWidget {
             children: [
               Text(
                 group.title,
-                style: const TextStyle(
-                  fontSize: 24.0,
-                  color: Color(0xFF666666),
-                ),
+                style: Theme.of(context).textTheme.headline2,
               ),
               const SizedBox(height: 8.0),
               Row(

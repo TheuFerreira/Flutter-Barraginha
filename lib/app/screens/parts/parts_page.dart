@@ -57,14 +57,11 @@ class _PartsPageState extends State<PartsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 8.0),
-                const Padding(
-                  padding: EdgeInsets.only(left: 8.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
                     'Projeto',
-                    style: TextStyle(
-                      color: Color(0xFF666666),
-                      fontSize: 24.0,
-                    ),
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
                 const SizedBox(height: 8.0),
@@ -111,14 +108,11 @@ class _PartsPageState extends State<PartsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 8.0),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
                         'Trechos',
-                        style: TextStyle(
-                          color: Color(0xFF666666),
-                          fontSize: 24.0,
-                        ),
+                        style: Theme.of(context).textTheme.headline2,
                       ),
                     ),
                     const SizedBox(height: 8.0),
