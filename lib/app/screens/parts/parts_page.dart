@@ -39,7 +39,7 @@ class _PartsPageState extends State<PartsPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.add_circle),
-            color: const Color(0xFF00695C),
+            color: Theme.of(context).colorScheme.secondary,
             onPressed: () {
               // TODO: Add Part
             },

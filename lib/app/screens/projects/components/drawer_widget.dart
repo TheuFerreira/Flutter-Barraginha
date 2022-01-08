@@ -11,7 +11,7 @@ class DrawerWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            color: const Color(0xFF439889),
+            color: Theme.of(context).colorScheme.primary,
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -20,7 +20,7 @@ class DrawerWidget extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(75),
                       child: Container(
-                        color: const Color(0xFF00695C),
+                        color: Theme.of(context).colorScheme.secondary,
                         height: 150,
                         width: 150,
                       ),

@@ -13,10 +13,7 @@ class DialogService {
         title: title,
         content: Text(
           description,
-          style: const TextStyle(
-            color: Color(0xFF666666),
-            fontSize: 16.0,
-          ),
+          style: Theme.of(context).textTheme.headline4,
         ),
         onConfirm: () => Navigator.pop(context, true),
         onCancel: () => Navigator.pop(context, false),

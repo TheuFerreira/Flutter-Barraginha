@@ -18,12 +18,8 @@ class ItemDrawerWidget extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: const TextStyle(
-          fontSize: 20.0,
-        ),
+        style: Theme.of(context).textTheme.headline5,
       ),
-      textColor: const Color(0xFF666666),
-      iconColor: const Color(0xFF666666),
       onTap: onTap,
     );
   }

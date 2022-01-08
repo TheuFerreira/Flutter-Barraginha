@@ -28,7 +28,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
       drawer: const DrawerWidget(),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF439889),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           Observer(
             builder: (context) => IconButton(

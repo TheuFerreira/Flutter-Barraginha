@@ -45,10 +45,10 @@ class ItemProjectWidget extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: onTap,
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_forward,
                       size: 32,
-                      color: Color(0xFF00695C),
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                 ],

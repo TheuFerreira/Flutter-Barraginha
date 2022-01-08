@@ -74,7 +74,7 @@ class BaseDialog extends StatelessWidget {
                       bottomRight: Radius.circular(16.0),
                     ),
                   ),
-                  color: const Color(0xFF439889),
+                  color: Theme.of(context).colorScheme.primary,
                   child: InkWell(
                     onTap: onConfirm,
                     child: const Padding(

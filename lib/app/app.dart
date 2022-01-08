@@ -11,6 +11,15 @@ class App extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xFF439889),
+          secondary: Color(0xFF00695C),
+        ),
+        listTileTheme: const ListTileThemeData(
+          iconColor: Color(0xFF666666),
+          textColor: Color(0xFF666666),
+          style: ListTileStyle.drawer,
+        ),
         textTheme: const TextTheme(
           headline1: TextStyle(
             fontWeight: FontWeight.normal,
@@ -27,6 +36,19 @@ class App extends StatelessWidget {
             fontSize: 24.0,
             color: Color(0xFF666666),
           ),
+          headline4: TextStyle(
+            fontSize: 18.0,
+            color: Color(0xFF666666),
+          ),
+          headline5: TextStyle(
+            fontSize: 20.0,
+            color: Color(0xFF666666),
+          ),
+          subtitle1: TextStyle(
+            height: 1.5,
+            fontSize: 16.0,
+            color: Color(0xFFA8A8A8),
+          ),
         ),
         cardTheme: const CardTheme(
           elevation: 6,
@@ -39,7 +61,7 @@ class App extends StatelessWidget {
           ),
         ),
       ),
-      home: const PartsPage(),
+      home: const ProjectsPage(),
     );
   }
 }

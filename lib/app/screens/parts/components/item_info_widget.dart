@@ -18,7 +18,7 @@ class ItemInfoWidget extends StatelessWidget {
       padding: const EdgeInsets.only(top: 16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
-        color: const Color(0xFF439889),
+        color: Theme.of(context).colorScheme.primary,
       ),
       child: Stack(
         fit: StackFit.expand,
@@ -28,7 +28,10 @@ class ItemInfoWidget extends StatelessWidget {
             top: 0,
             child: Text(
               title,
-              style: const TextStyle(color: Colors.white, fontSize: 16.0),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+              ),
             ),
           ),
           if (onEdit != null)

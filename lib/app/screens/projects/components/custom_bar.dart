@@ -20,7 +20,7 @@ class CustomBar extends StatelessWidget {
               children: [
                 Container(
                   height: 100,
-                  color: const Color(0xFF439889),
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 SafeArea(
                   child: Padding(
@@ -44,7 +44,7 @@ class CustomBar extends StatelessWidget {
           left: 0,
           right: 0,
           child: Card(
-            color: const Color(0xFF00695C),
+            color: Theme.of(context).colorScheme.secondary,
             elevation: 2,
             margin: const EdgeInsets.symmetric(
               horizontal: 80.0,

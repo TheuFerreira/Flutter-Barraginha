@@ -15,15 +15,12 @@ class TextIconWidget extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: const Color(0xFF00695C),
+          color: Theme.of(context).colorScheme.secondary,
         ),
         const SizedBox(width: 8.0),
         Text(
           data,
-          style: const TextStyle(
-            fontSize: 18.0,
-            color: Color(0xFF666666),
-          ),
+          style: Theme.of(context).textTheme.headline4,
         ),
       ],
     );

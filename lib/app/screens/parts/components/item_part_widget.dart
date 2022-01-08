@@ -45,77 +45,48 @@ class ItemPartWidget extends StatelessWidget {
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             'Tamanho',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Color(0xFF666666),
-                            ),
+                            style: Theme.of(context).textTheme.headline5,
                           ),
                           Text(
                             'Raio: 2m',
-                            style: TextStyle(
-                              height: 1.5,
-                              fontSize: 16.0,
-                              color: Color(0xFFA8A8A8),
-                            ),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                           Text(
                             'Profundidade: 2m',
-                            style: TextStyle(
-                              height: 1.5,
-                              fontSize: 16.0,
-                              color: Color(0xFFA8A8A8),
-                            ),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                           Text(
                             'Volume: 20000L',
-                            style: TextStyle(
-                              height: 1.5,
-                              fontSize: 16.0,
-                              color: Color(0xFFA8A8A8),
-                            ),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
+                        children: [
                           Text(
                             'Bolsões',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Color(0xFF666666),
-                            ),
+                            style: Theme.of(context).textTheme.headline5,
                           ),
                           Text(
                             '6',
-                            style: TextStyle(
-                              height: 1.5,
-                              fontSize: 16.0,
-                              color: Color(0xFFA8A8A8),
-                            ),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: const [
+                        children: [
                           Text(
                             'Distância',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Color(0xFF666666),
-                            ),
+                            style: Theme.of(context).textTheme.headline5,
                           ),
                           Text(
                             '200m',
-                            style: TextStyle(
-                              height: 1.5,
-                              fontSize: 16.0,
-                              color: Color(0xFFA8A8A8),
-                            ),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ],
                       ),
