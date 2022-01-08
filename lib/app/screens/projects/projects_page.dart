@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/controllers/projects_controller.dart';
 import 'package:flutter_barraginha/app/screens/projects/dialogs/add_dialog_widget.dart';
-import 'package:flutter_barraginha/app/screens/projects/model/project_model.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
-import 'package:flutter_barraginha/app/shared/models/page_status.dart';
+import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -21,6 +20,7 @@ class ProjectsPage extends StatefulWidget {
 
 class _ProjectsPageState extends State<ProjectsPage> {
   final controller = ProjectsController();
+  final searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +49,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 builder: (_) => SizedBox(
                   height: 36,
                   child: TextFieldWidget(
+                    controller: searchController,
                     suffixIcon: const Icon(
                       Icons.search,
                       color: Colors.white,
@@ -88,7 +89,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       return ItemProjectWidget(
                         projects[i],
                         key: UniqueKey(),
-                        onLongPress: () => _onLongPressItemProject(i),
+                        onLongPress: _onLongPressItemProject,
                       );
                     },
                   );
@@ -111,15 +112,20 @@ class _ProjectsPageState extends State<ProjectsPage> {
       return;
     }
 
-    final response = await controller.add(result as ProjectModel);
-    if (response == null) {
-      return;
-    }
+    final title = result['title'];
+    final rainVolume = result['rain_volume'] as int;
+
+    final project = await controller.add(
+      title,
+      rainVolume,
+    );
+
+    searchController.text = '';
 
     // TODO: Next Page
   }
 
-  void _onLongPressItemProject(int i) async {
+  void _onLongPressItemProject(project) async {
     final result = await DialogService.showQuestionDialog(
       context,
       'Excluir',
@@ -127,6 +133,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
     );
 
     if (!result) return;
-    await controller.delete(i);
+    await controller.delete(
+      project,
+      searchController.text,
+    );
   }
 }

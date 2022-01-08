@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/projects/model/project_model.dart';
+import 'package:flutter_barraginha/app/shared/models/project_model.dart';
 
 import 'text_icon_widget.dart';
 
 class ItemProjectWidget extends StatelessWidget {
-  final ProjectModel group;
+  final ProjectModel project;
   final Function()? onTap;
-  final Function()? onLongPress;
+  final Function(ProjectModel project)? onLongPress;
   const ItemProjectWidget(
-    this.group, {
+    this.project, {
     Key? key,
     this.onTap,
     this.onLongPress,
@@ -27,14 +27,14 @@ class ItemProjectWidget extends StatelessWidget {
           topLeft: Radius.circular(24),
           topRight: Radius.circular(24),
         ),
-        onLongPress: onLongPress,
+        onLongPress: () => onLongPress!(project),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                group.title,
+                project.title,
                 style: Theme.of(context).textTheme.headline2,
               ),
               const SizedBox(height: 8.0),
@@ -55,8 +55,8 @@ class ItemProjectWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  TextIconWidget(Icons.calendar_today, group.getShortDate()),
-                  TextIconWidget(Icons.timeline, '${group.parts} Trechos'),
+                  TextIconWidget(Icons.calendar_today, project.getShortDate()),
+                  TextIconWidget(Icons.timeline, '${project.parts} Trechos'),
                 ],
               ),
             ],

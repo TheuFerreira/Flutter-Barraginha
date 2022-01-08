@@ -62,43 +62,32 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
     });
   }
 
+  final _$loadAsyncAction = AsyncAction('_ProjectControllerBase.load');
+
+  @override
+  Future<dynamic> load() {
+    return _$loadAsyncAction.run(() => super.load());
+  }
+
   final _$deleteAsyncAction = AsyncAction('_ProjectControllerBase.delete');
 
   @override
-  Future<dynamic> delete(int index) {
-    return _$deleteAsyncAction.run(() => super.delete(index));
+  Future<dynamic> delete(ProjectModel project, String search) {
+    return _$deleteAsyncAction.run(() => super.delete(project, search));
   }
 
   final _$addAsyncAction = AsyncAction('_ProjectControllerBase.add');
 
   @override
-  Future<ProjectModel?> add(ProjectModel project) {
-    return _$addAsyncAction.run(() => super.add(project));
+  Future<ProjectModel> add(String title, int rainVolume) {
+    return _$addAsyncAction.run(() => super.add(title, rainVolume));
   }
 
-  final _$_ProjectControllerBaseActionController =
-      ActionController(name: '_ProjectControllerBase');
+  final _$searchAsyncAction = AsyncAction('_ProjectControllerBase.search');
 
   @override
-  void reload() {
-    final _$actionInfo = _$_ProjectControllerBaseActionController.startAction(
-        name: '_ProjectControllerBase.reload');
-    try {
-      return super.reload();
-    } finally {
-      _$_ProjectControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void search(String value) {
-    final _$actionInfo = _$_ProjectControllerBaseActionController.startAction(
-        name: '_ProjectControllerBase.search');
-    try {
-      return super.search(value);
-    } finally {
-      _$_ProjectControllerBaseActionController.endAction(_$actionInfo);
-    }
+  Future<dynamic> search(String value) {
+    return _$searchAsyncAction.run(() => super.search(value));
   }
 
   @override

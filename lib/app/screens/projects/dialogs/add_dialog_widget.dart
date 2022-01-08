@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/projects/model/project_model.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/shared/dialogs/base_dialog.dart';
 
@@ -50,14 +49,11 @@ class AddDialogWidget extends StatelessWidget {
       return;
     }
 
-    final rainVolume = int.parse(textRainVolume);
-    final project = ProjectModel(
-      textName,
-      DateTime.now(),
-      rainVolume,
-      0,
-    );
+    final result = {
+      'title': textName,
+      'rain_volume': int.parse(textRainVolume),
+    };
 
-    Navigator.pop(context, project);
+    Navigator.pop(context, result);
   }
 }

@@ -1,5 +1,6 @@
-import 'package:flutter_barraginha/app/screens/projects/model/project_model.dart';
-import 'package:flutter_barraginha/app/shared/models/page_status.dart';
+import 'package:flutter_barraginha/app/shared/models/project_model.dart';
+import 'package:flutter_barraginha/app/shared/database/dao/dao_project.dart';
+import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
 import 'package:mobx/mobx.dart';
 
 part 'projects_controller.g.dart';
@@ -21,60 +22,48 @@ abstract class _ProjectControllerBase with Store {
   @computed
   bool get isLoading => status == PageStatus.loading;
 
+  final _dao = DAOProject();
+
   _ProjectControllerBase() {
+    load();
+  }
+
+  @action
+  Future load() async {
     status = PageStatus.loading;
     message = 'Carregando...';
 
-    // TODO: Load Projects from DB
-    Future.delayed(const Duration(seconds: 5)).then((value) {
-      reload();
-    });
-  }
+    projects = await _dao.search();
 
-  @action
-  void reload() {
-    oldProjects.add(ProjectModel(
-        'Fazenda do Crocodilo', DateTime(2021, 5, 13), 22, 20,
-        id: 1));
-    oldProjects.add(
-        ProjectModel('Avenida de SJE', DateTime(2020, 12, 20), 40, 10, id: 2));
-    oldProjects.add(
-        ProjectModel('Rua do Paulão', DateTime(2022, 01, 01), 20, 5, id: 3));
-    oldProjects.add(ProjectModel(
-        'Fazenda Jão Kisse', DateTime(2020, 09, 17), 50, 17,
-        id: 4));
-    oldProjects.add(
-        ProjectModel('Rua da Igreja', DateTime(2022, 02, 28), 2, 2, id: 5));
-
-    projects = oldProjects;
     status = PageStatus.normal;
     message = '';
   }
 
   @action
-  Future delete(int index) async {
+  Future delete(ProjectModel project, String search) async {
     message = 'Deletando Projeto...';
     status = PageStatus.loading;
 
-    // TODO: Delete Project from DB
-    await Future.delayed(const Duration(seconds: 3));
-
-    oldProjects.removeAt(index);
-    projects = oldProjects;
+    await _dao.delete(project);
+    projects = await _dao.search(search: search);
 
     message = '';
     status = PageStatus.normal;
   }
 
   @action
-  Future<ProjectModel?> add(ProjectModel project) async {
+  Future<ProjectModel> add(String title, int rainVolume) async {
     message = 'Criando novo Projeto...';
     status = PageStatus.loading;
 
-    // TODO: Add Project to DB
-    await Future.delayed(const Duration(seconds: 3));
-    oldProjects.insert(0, project);
-    projects = oldProjects;
+    ProjectModel project = ProjectModel.fromAdd(
+      title,
+      DateTime.now(),
+      rainVolume,
+    );
+    project = await _dao.save(project);
+
+    projects = await _dao.search();
 
     message = '';
     status = PageStatus.normal;
@@ -82,12 +71,13 @@ abstract class _ProjectControllerBase with Store {
   }
 
   @action
-  void search(String value) {
-    // TODO: Search Project in DB
-    projects = oldProjects
-        .where(
-          (element) => element.title.contains(value),
-        )
-        .toList();
+  Future search(String value) async {
+    message = 'Pesquisando...';
+    status = PageStatus.loading;
+
+    projects = await _dao.search(search: value);
+
+    message = '';
+    status = PageStatus.normal;
   }
 }
