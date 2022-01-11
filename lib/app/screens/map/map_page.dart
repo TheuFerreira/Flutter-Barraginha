@@ -14,7 +14,6 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   late MapController controller;
-  //final optionsController = OptionsController();
 
   @override
   void initState() {
@@ -119,6 +118,26 @@ class _MapPageState extends State<MapPage> {
               ),
               Container(
                 height: 150,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 24.0,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        // TODO: Calculate
+                      },
+                      child: const Text(
+                        'Calcular',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           );
@@ -126,7 +145,5 @@ class _MapPageState extends State<MapPage> {
       ),
     );
   }
-}
-
 // TODO: Edit move Move marker
-// TODO: Calculate button
+}

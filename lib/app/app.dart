@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/map/map_page.dart';
 import 'package:flutter_barraginha/app/screens/projects/projects_page.dart';
 
 class App extends StatelessWidget {
@@ -13,6 +14,16 @@ class App extends StatelessWidget {
         colorScheme: const ColorScheme.light(
           primary: Color(0xFF439889),
           secondary: Color(0xFF00695C),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            primary: const Color(0xFF00695C),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12.0),
+            minimumSize: Size(200, 20),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
+          ),
         ),
         listTileTheme: const ListTileThemeData(
           iconColor: Color(0xFF666666),
@@ -60,7 +71,7 @@ class App extends StatelessWidget {
           ),
         ),
       ),
-      home: const ProjectsPage(),
+      home: const MapPage(),
     );
   }
 }
