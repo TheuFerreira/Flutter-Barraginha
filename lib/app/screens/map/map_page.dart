@@ -127,7 +127,6 @@ class _MapPageState extends State<MapPage> {
   }
 }
 
-// TODO: Converter options in component
 // TODO: Add marker, max 2
 // TODO: Edit, Move and Delete marker
 // TODO: Calculate button

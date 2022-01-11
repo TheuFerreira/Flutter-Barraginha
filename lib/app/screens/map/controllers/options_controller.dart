@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/map/components/option_widget.dart';
 import 'package:mobx/mobx.dart';
 
 part 'options_controller.g.dart';
@@ -24,45 +25,21 @@ abstract class _OptionsControllerBase with Store {
   }
 }
 
-List<Widget> options = [
-  Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: const [
-        Icon(Icons.add),
-        Text('Adicionar'),
-      ],
-    ),
+List<Widget> options = const [
+  OptionWidget(
+    icon: Icons.add,
+    title: 'Adicionar',
   ),
-  Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: const [
-        Icon(Icons.edit),
-        Text('Editar'),
-      ],
-    ),
+  OptionWidget(
+    icon: Icons.edit,
+    title: 'Editar',
   ),
-  Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: const [
-        Icon(Icons.control_camera),
-        Text('Mover'),
-      ],
-    ),
+  OptionWidget(
+    icon: Icons.control_camera,
+    title: 'Mover',
   ),
-  Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: const [
-        Icon(Icons.delete),
-        Text('Deletar'),
-      ],
-    ),
+  OptionWidget(
+    icon: Icons.delete,
+    title: 'Deletar',
   ),
 ];
