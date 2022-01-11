@@ -19,7 +19,7 @@ class App extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             primary: const Color(0xFF00695C),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12.0),
-            minimumSize: Size(200, 20),
+            minimumSize: const Size(200, 20),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25),
             ),

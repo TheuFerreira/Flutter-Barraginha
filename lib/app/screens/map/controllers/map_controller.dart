@@ -23,6 +23,7 @@ abstract class _MapControllerBase with Store {
   PageStatus status = PageStatus.loading;
 
   OptionsController options = OptionsController();
+  MarkerId? markerToMove;
 
   _MapControllerBase() {
     status = PageStatus.loading;
@@ -52,6 +53,18 @@ abstract class _MapControllerBase with Store {
     final selectedOption = options.selected;
     if (selectedOption == OptionsType.add) {
       addMarker(context, position);
+    } else if (selectedOption == OptionsType.move) {
+      if (markerToMove == null) {
+        ToastService.show('Clique em um ponto primeiro!!!');
+        return;
+      }
+
+      final index = markers.indexWhere(
+        (element) => element.markerId == markerToMove,
+      );
+
+      markers[index] = markers[index].copyWith(positionParam: position);
+      markerToMove = null;
     }
   }
 
@@ -66,13 +79,20 @@ abstract class _MapControllerBase with Store {
     Marker marker = Marker(
       markerId: markerId,
       position: position,
+      draggable: true,
       onTap: () {
         final selectedOption = options.selected;
         if (selectedOption == OptionsType.delete) {
           deleteMarker(context, markerId);
+        } else if (selectedOption == OptionsType.edit) {
+          // TODO: Edit
+        } else if (selectedOption == OptionsType.move) {
+          markerToMove = markerId;
+          ToastService.show('Clique em um ponto do mapa.');
         }
       },
     );
+
     markers.add(marker);
   }
 

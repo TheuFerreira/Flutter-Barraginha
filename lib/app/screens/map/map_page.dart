@@ -145,5 +145,4 @@ class _MapPageState extends State<MapPage> {
       ),
     );
   }
-// TODO: Edit move Move marker
 }
