@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
+import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
@@ -61,6 +62,11 @@ abstract class _MapControllerBase with Store {
 
   @action
   void addMarker(LatLng position) {
+    if (markers.length == 2) {
+      ToastService.show('Máximo de 2 Pontos Adicionados!');
+      return;
+    }
+
     Marker marker = Marker(
       markerId: MarkerId('teste' + position.toString()),
       position: position,
