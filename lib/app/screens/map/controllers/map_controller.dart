@@ -1,8 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
+import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
 
@@ -25,29 +23,12 @@ abstract class _MapControllerBase with Store {
     getCurrentLocation();
   }
 
-  // TODO: Service for Geolocator
   Future getCurrentLocation() async {
-    final serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      log('Location services are disabled.');
+    final position = await GeolocatorService().getCurrentLocation();
+    if (position == null) {
+      ToastService.show('Um problema aconteceu');
       return;
     }
-
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        log('Location permissions are denied.');
-        return;
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      log('Location permissions are permanently denied, we canoot request permissions.');
-      return;
-    }
-
-    final position = await Geolocator.getCurrentPosition();
 
     initialPosition = CameraPosition(
       target: LatLng(
