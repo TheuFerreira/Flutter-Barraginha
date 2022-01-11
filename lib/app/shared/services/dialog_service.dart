@@ -11,9 +11,12 @@ class DialogService {
       context: context,
       builder: (ctx) => BaseDialog(
         title: title,
-        content: Text(
-          description,
-          style: Theme.of(context).textTheme.headline4,
+        content: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Text(
+            description,
+            style: Theme.of(context).textTheme.headline4,
+          ),
         ),
         onConfirm: () => Navigator.pop(context, true),
         onCancel: () => Navigator.pop(context, false),

@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
+import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
+import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,6 +21,8 @@ abstract class _MapControllerBase with Store {
 
   @observable
   PageStatus status = PageStatus.loading;
+
+  OptionsController options = OptionsController();
 
   _MapControllerBase() {
     status = PageStatus.loading;
@@ -42,16 +48,48 @@ abstract class _MapControllerBase with Store {
   }
 
   @action
-  void addMarker(LatLng position) {
+  void clickMap(BuildContext context, LatLng position) {
+    final selectedOption = options.selected;
+    if (selectedOption == OptionsType.add) {
+      addMarker(context, position);
+    }
+  }
+
+  void addMarker(BuildContext context, LatLng position) {
     if (markers.length == 2) {
       ToastService.show('Máximo de 2 Pontos Adicionados!');
       return;
     }
 
+    MarkerId markerId = MarkerId(position.toString());
+
     Marker marker = Marker(
-      markerId: MarkerId('teste' + position.toString()),
+      markerId: markerId,
       position: position,
+      onTap: () {
+        final selectedOption = options.selected;
+        if (selectedOption == OptionsType.delete) {
+          deleteMarker(context, markerId);
+        }
+      },
     );
     markers.add(marker);
+  }
+
+  Future deleteMarker(BuildContext context, MarkerId id) async {
+    final result = await DialogService.showQuestionDialog(
+      context,
+      'Excluir ponto',
+      'Tem certeza de que deseja excluir o ponto marcado?',
+    );
+
+    if (result == false) {
+      return;
+    }
+
+    final marker = markers.where((element) => element.markerId == id).first;
+    markers.remove(marker);
+
+    ToastService.show('Ponto excluido!!!');
   }
 }

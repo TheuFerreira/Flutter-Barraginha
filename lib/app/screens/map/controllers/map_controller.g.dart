@@ -59,11 +59,11 @@ mixin _$MapController on _MapControllerBase, Store {
       ActionController(name: '_MapControllerBase');
 
   @override
-  void addMarker(LatLng position) {
+  void clickMap(BuildContext context, LatLng position) {
     final _$actionInfo = _$_MapControllerBaseActionController.startAction(
-        name: '_MapControllerBase.addMarker');
+        name: '_MapControllerBase.clickMap');
     try {
-      return super.addMarker(position);
+      return super.clickMap(context, position);
     } finally {
       _$_MapControllerBaseActionController.endAction(_$actionInfo);
     }

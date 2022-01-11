@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
 
 class OptionWidget extends StatelessWidget {
   final IconData? icon;
   final String title;
-  const OptionWidget({Key? key, this.icon, this.title = 'Title'})
-      : super(key: key);
+  final OptionsType type;
+  const OptionWidget({
+    Key? key,
+    this.icon,
+    this.title = 'Title',
+    this.type = OptionsType.none,
+  }) : super(key: key);
+
+  getType() {}
 
   @override
   Widget build(BuildContext context) {

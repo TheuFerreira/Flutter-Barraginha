@@ -14,7 +14,7 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   late MapController controller;
-  final optionsController = OptionsController();
+  //final optionsController = OptionsController();
 
   @override
   void initState() {
@@ -64,7 +64,8 @@ class _MapPageState extends State<MapPage> {
                                   initialCameraPosition: initialPosition,
                                   mapType: MapType.terrain,
                                   markers: Set.from(markers),
-                                  onTap: controller.addMarker,
+                                  onTap: (position) =>
+                                      controller.clickMap(context, position),
                                 );
                               },
                             ),
@@ -103,9 +104,9 @@ class _MapPageState extends State<MapPage> {
                                   selectedColor:
                                       Theme.of(context).colorScheme.primary,
                                   renderBorder: false,
-                                  onPressed: optionsController.onSelect,
+                                  onPressed: controller.options.onSelect,
                                   children: options,
-                                  isSelected: optionsController.values,
+                                  isSelected: controller.options.values,
                                 ),
                               ),
                             ],
@@ -127,5 +128,5 @@ class _MapPageState extends State<MapPage> {
   }
 }
 
-// TODO: Edit, Move and Delete marker
+// TODO: Edit move Move marker
 // TODO: Calculate button

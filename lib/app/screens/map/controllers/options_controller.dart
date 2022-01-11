@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/components/option_widget.dart';
+import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
 import 'package:mobx/mobx.dart';
 
 part 'options_controller.g.dart';
@@ -13,7 +14,14 @@ abstract class _OptionsControllerBase with Store {
   );
 
   @computed
-  int get selected => values.indexWhere((element) => element == true);
+  OptionsType get selected {
+    final index = values.indexWhere((element) => element == true);
+    if (index == -1) {
+      return OptionsType.none;
+    }
+
+    return options[index].type;
+  }
 
   @action
   void onSelect(int index) {
@@ -25,21 +33,25 @@ abstract class _OptionsControllerBase with Store {
   }
 }
 
-List<Widget> options = const [
+List<OptionWidget> options = const [
   OptionWidget(
     icon: Icons.add,
     title: 'Adicionar',
+    type: OptionsType.add,
   ),
   OptionWidget(
     icon: Icons.edit,
     title: 'Editar',
+    type: OptionsType.edit,
   ),
   OptionWidget(
     icon: Icons.control_camera,
     title: 'Mover',
+    type: OptionsType.move,
   ),
   OptionWidget(
     icon: Icons.delete,
     title: 'Deletar',
+    type: OptionsType.delete,
   ),
 ];

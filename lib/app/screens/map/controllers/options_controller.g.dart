@@ -9,11 +9,11 @@ part of 'options_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$OptionsController on _OptionsControllerBase, Store {
-  Computed<int>? _$selectedComputed;
+  Computed<OptionsType>? _$selectedComputed;
 
   @override
-  int get selected =>
-      (_$selectedComputed ??= Computed<int>(() => super.selected,
+  OptionsType get selected =>
+      (_$selectedComputed ??= Computed<OptionsType>(() => super.selected,
               name: '_OptionsControllerBase.selected'))
           .value;
 
