@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/shared/dialogs/base_dialog.dart';
+import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 
 class AddDialogWidget extends StatelessWidget {
   final _nameTextController = TextEditingController();
@@ -46,6 +47,7 @@ class AddDialogWidget extends StatelessWidget {
     final textRainVolume = _volumeTextController.text;
     final textName = _nameTextController.text.trim();
     if (textRainVolume.isEmpty || textName.isEmpty) {
+      ToastService.show('Insira valores válidos!!!');
       return;
     }
 

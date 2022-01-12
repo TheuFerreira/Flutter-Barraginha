@@ -63,6 +63,8 @@ class _MapPageState extends State<MapPage> {
                                   initialCameraPosition: initialPosition,
                                   mapType: MapType.terrain,
                                   markers: Set.from(markers),
+                                  onMapCreated: (map) =>
+                                      controller.mapController = map,
                                   onTap: (position) =>
                                       controller.clickMap(context, position),
                                 );
@@ -125,16 +127,35 @@ class _MapPageState extends State<MapPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // TODO: Calculate
-                      },
-                      child: const Text(
-                        'Calcular',
-                        style: TextStyle(
-                          fontSize: 20.0,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.west),
+                          color: Colors.white,
+                          onPressed: () {
+                            // TODO: Back to previous page
+                          },
                         ),
-                      ),
+                        ElevatedButton(
+                          onPressed: () {
+                            // TODO: Calculate
+                          },
+                          child: const Text(
+                            'Calcular',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.settings),
+                          color: Colors.white,
+                          onPressed: () {
+                            // TODO: Ontap Settings
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),

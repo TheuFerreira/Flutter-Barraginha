@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
+import 'package:flutter_barraginha/app/screens/map/dialogs/edit_marker_dialog.dart';
 import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
@@ -24,6 +25,7 @@ abstract class _MapControllerBase with Store {
 
   OptionsController options = OptionsController();
   MarkerId? markerToMove;
+  GoogleMapController? mapController;
 
   _MapControllerBase() {
     status = PageStatus.loading;
@@ -54,17 +56,7 @@ abstract class _MapControllerBase with Store {
     if (selectedOption == OptionsType.add) {
       addMarker(context, position);
     } else if (selectedOption == OptionsType.move) {
-      if (markerToMove == null) {
-        ToastService.show('Clique em um ponto primeiro!!!');
-        return;
-      }
-
-      final index = markers.indexWhere(
-        (element) => element.markerId == markerToMove,
-      );
-
-      markers[index] = markers[index].copyWith(positionParam: position);
-      markerToMove = null;
+      moveMarker(position);
     }
   }
 
@@ -82,13 +74,13 @@ abstract class _MapControllerBase with Store {
       draggable: true,
       onTap: () {
         final selectedOption = options.selected;
-        if (selectedOption == OptionsType.delete) {
+        if (selectedOption == OptionsType.edit) {
+          editMarker(context, markerId);
+        } else if (selectedOption == OptionsType.delete) {
           deleteMarker(context, markerId);
-        } else if (selectedOption == OptionsType.edit) {
-          // TODO: Edit
         } else if (selectedOption == OptionsType.move) {
           markerToMove = markerId;
-          ToastService.show('Clique em um ponto do mapa.');
+          ToastService.show('Clique em um marcador do mapa.');
         }
       },
     );
@@ -96,20 +88,56 @@ abstract class _MapControllerBase with Store {
     markers.add(marker);
   }
 
-  Future deleteMarker(BuildContext context, MarkerId id) async {
+  void editMarker(BuildContext context, MarkerId id) async {
+    final index = _getIndexOfMarkerById(id);
+    final oldPosition = markers[index].position;
+
+    final newPosition = await showDialog<LatLng>(
+      context: context,
+      builder: (ctx) => EditMarkerDialog(oldPosition),
+    );
+
+    if (newPosition == null) {
+      return;
+    }
+
+    markers[index] = markers[index].copyWith(positionParam: newPosition);
+    mapController!.moveCamera(CameraUpdate.newLatLng(newPosition));
+  }
+
+  void deleteMarker(BuildContext context, MarkerId id) async {
     final result = await DialogService.showQuestionDialog(
       context,
       'Excluir ponto',
-      'Tem certeza de que deseja excluir o ponto marcado?',
+      'Tem certeza de que deseja excluir o marcador marcado?',
     );
 
     if (result == false) {
       return;
     }
 
-    final marker = markers.where((element) => element.markerId == id).first;
+    final index = _getIndexOfMarkerById(id);
+    final marker = markers[index];
     markers.remove(marker);
 
-    ToastService.show('Ponto excluido!!!');
+    ToastService.show('Marcador excluido!!!');
+  }
+
+  Future moveMarker(LatLng position) async {
+    if (markerToMove == null) {
+      ToastService.show('Clique em um marcador primeiro!!!');
+      return;
+    }
+
+    final index = _getIndexOfMarkerById(markerToMove!);
+    markers[index] = markers[index].copyWith(positionParam: position);
+    mapController!.moveCamera(CameraUpdate.newLatLng(position));
+    markerToMove = null;
+  }
+
+  int _getIndexOfMarkerById(MarkerId id) {
+    return markers.indexWhere(
+      (element) => element.markerId == id,
+    );
   }
 }
