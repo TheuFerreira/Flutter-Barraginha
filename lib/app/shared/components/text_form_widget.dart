@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-class TextFieldWidget extends StatelessWidget {
+class TextFormWidget extends StatelessWidget {
   final TextEditingController? controller;
   final Widget? suffixIcon;
   final String? labelText;
   final String? hintText;
   final Color fillColor;
   final Color textColor;
+  final String? errorText;
   final TextInputType? keyboardType;
   final Function(String)? onChanged;
-  const TextFieldWidget({
+  const TextFormWidget({
     Key? key,
     this.controller,
     this.suffixIcon,
@@ -17,17 +18,17 @@ class TextFieldWidget extends StatelessWidget {
     this.hintText,
     this.fillColor = const Color(0xFFF1F1F1),
     this.textColor = const Color(0xFF666666),
+    this.errorText,
     this.keyboardType,
     this.onChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       cursorColor: textColor,
       style: TextStyle(color: textColor),
-      keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
@@ -51,6 +52,11 @@ class TextFieldWidget extends StatelessWidget {
         focusedBorder: _defaultBorder(),
       ),
       onChanged: onChanged,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return errorText;
+        }
+      },
     );
   }
 

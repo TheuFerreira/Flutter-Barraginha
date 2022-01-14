@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/controllers/projects_controller.dart';
 import 'package:flutter_barraginha/app/screens/projects/dialogs/add_dialog_widget.dart';
-import 'package:flutter_barraginha/app/screens/projects/dialogs/add_dialog_widget_test.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
@@ -106,7 +105,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   void _onTapNewProject() async {
     final result = await showDialog(
       context: context,
-      builder: (context) => AddDialogWidgetTest(), //AddDialogWidget(),
+      builder: (context) => AddDialogWidget(),
     );
 
     if (result == null) {
