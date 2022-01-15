@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/dialogs/edit_marker_dialog.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
+import 'package:flutter_barraginha/app/shared/services/google_earth_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
@@ -62,7 +65,7 @@ abstract class _MapControllerBase with Store {
 
   void addMarker(BuildContext context, LatLng position) {
     if (markers.length == 2) {
-      ToastService.show('Máximo de 2 Pontos Adicionados!');
+      ToastService.show('Máximo de 2 Marcadores Adicionados!');
       return;
     }
 
@@ -108,7 +111,7 @@ abstract class _MapControllerBase with Store {
   void deleteMarker(BuildContext context, MarkerId id) async {
     final result = await DialogService.showQuestionDialog(
       context,
-      'Excluir ponto',
+      'Excluir marcador',
       'Tem certeza de que deseja excluir o marcador marcado?',
     );
 
@@ -139,5 +142,34 @@ abstract class _MapControllerBase with Store {
     return markers.indexWhere(
       (element) => element.markerId == id,
     );
+  }
+
+  Future calculate() async {
+    final start = markers[0];
+    final end = markers[1];
+
+    final altitudeA = await GoogleEarthService.getAltitude(start.position);
+    final altitudeB = await GoogleEarthService.getAltitude(end.position);
+    final distance = GeolocatorService()
+        .getDistanceBetweenTwoPoints(start.position, end.position);
+
+    final k = 1.25; // TODO: Tipo de solo;
+    final le = 4; // TODO: Largura da estrada
+    final i = 72; // TODO: Intensidade de chuva
+
+    final dn = altitudeA! - altitudeB!;
+    final dh = sqrt(pow(distance, 2) - pow(dn, 2));
+    final d = (dn * 100) / dh;
+    final eh = 45.18 * k * pow(d, -0.42);
+    final ev = 0.4518 * k * pow(k, 0.58);
+    final nBolsoesCalc = dh / eh;
+    final nBolsoesAjust = nBolsoesCalc; // TODO: Arredondar
+    final espBolsoes = distance / nBolsoesAjust;
+    final ve = espBolsoes * le * i;
+    final p = pow((ve / 6.52), 1 / 3);
+    final r = 2.41 * p;
+    final vb = 3.14 * pow(p, 2) * (r - (p / 3));
+
+    // TODO: ERRORS
   }
 }

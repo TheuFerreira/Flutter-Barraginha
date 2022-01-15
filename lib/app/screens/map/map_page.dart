@@ -138,9 +138,7 @@ class _MapPageState extends State<MapPage> {
                           },
                         ),
                         ElevatedButton(
-                          onPressed: () {
-                            // TODO: Calculate
-                          },
+                          onPressed: controller.calculate,
                           child: const Text(
                             'Calcular',
                             style: TextStyle(

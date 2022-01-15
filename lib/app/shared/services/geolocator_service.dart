@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GeolocatorService {
   // TODO: Exceptions
@@ -26,5 +27,14 @@ class GeolocatorService {
     }
 
     return await Geolocator.getCurrentPosition();
+  }
+
+  double getDistanceBetweenTwoPoints(LatLng start, LatLng end) {
+    return Geolocator.distanceBetween(
+      start.latitude,
+      start.longitude,
+      end.latitude,
+      end.longitude,
+    );
   }
 }
