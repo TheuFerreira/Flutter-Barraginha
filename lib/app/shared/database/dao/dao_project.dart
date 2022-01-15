@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_barraginha/app/shared/database/dao/dao_soil_type.dart';
 import 'package:flutter_barraginha/app/shared/models/project_model.dart';
 import 'package:flutter_barraginha/app/shared/database/connection.dart';

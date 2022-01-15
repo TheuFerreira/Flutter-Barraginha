@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/controllers/projects_controller.dart';
 import 'package:flutter_barraginha/app/screens/projects/dialogs/add_dialog_widget.dart';
@@ -90,6 +91,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       return ItemProjectWidget(
                         projects[i],
                         key: UniqueKey(),
+                        onTap: _onTapItemProject,
                         onLongPress: _onLongPressItemProject,
                       );
                     },
@@ -121,7 +123,18 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
     searchController.text = '';
 
-    // TODO: Next Page
+    _onTapItemProject(project);
+  }
+
+  void _onTapItemProject(project) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => PartsPage(project),
+      ),
+    );
+
+    await controller.search(searchController.text);
   }
 
   void _onLongPressItemProject(project) async {
@@ -132,9 +145,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
     );
 
     if (!result) return;
-    await controller.delete(
-      project,
-      searchController.text,
-    );
+
+    await controller.delete(project);
+    await controller.search(searchController.text);
   }
 }

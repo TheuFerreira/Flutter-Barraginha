@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
+import 'package:flutter_barraginha/app/shared/models/project_model.dart';
 
 import 'components/item_info_widget.dart';
 import 'components/item_part_widget.dart';
 
 class PartsPage extends StatefulWidget {
-  const PartsPage({Key? key}) : super(key: key);
+  final ProjectModel project;
+  const PartsPage(
+    this.project, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   _PartsPageState createState() => _PartsPageState();

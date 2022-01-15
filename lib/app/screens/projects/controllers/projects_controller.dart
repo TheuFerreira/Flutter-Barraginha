@@ -41,12 +41,11 @@ abstract class _ProjectControllerBase with Store {
   }
 
   @action
-  Future delete(ProjectModel project, String search) async {
+  Future delete(ProjectModel project) async {
     message = 'Deletando Projeto...';
     status = PageStatus.loading;
 
     await _dao.delete(project);
-    projects = await _dao.search(search: search);
 
     message = '';
     status = PageStatus.normal;
@@ -69,7 +68,6 @@ abstract class _ProjectControllerBase with Store {
     );
 
     project = await _dao.save(project);
-    projects = await _dao.search();
 
     message = '';
     status = PageStatus.normal;

@@ -5,7 +5,7 @@ import 'text_icon_widget.dart';
 
 class ItemProjectWidget extends StatelessWidget {
   final ProjectModel project;
-  final Function()? onTap;
+  final Function(ProjectModel project)? onTap;
   final Function(ProjectModel project)? onLongPress;
   const ItemProjectWidget(
     this.project, {
@@ -42,7 +42,7 @@ class ItemProjectWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                    onPressed: onTap,
+                    onPressed: () => onTap!(project),
                     icon: Icon(
                       Icons.arrow_forward,
                       size: 32,

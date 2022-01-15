@@ -72,8 +72,8 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
   final _$deleteAsyncAction = AsyncAction('_ProjectControllerBase.delete');
 
   @override
-  Future<dynamic> delete(ProjectModel project, String search) {
-    return _$deleteAsyncAction.run(() => super.delete(project, search));
+  Future<dynamic> delete(ProjectModel project) {
+    return _$deleteAsyncAction.run(() => super.delete(project));
   }
 
   final _$addAsyncAction = AsyncAction('_ProjectControllerBase.add');
