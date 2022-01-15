@@ -71,7 +71,7 @@ class App extends StatelessWidget {
           ),
         ),
       ),
-      home: const MapPage(),
+      home: const ProjectsPage(),
     );
   }
 }

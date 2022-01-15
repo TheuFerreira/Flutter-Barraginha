@@ -105,7 +105,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   void _onTapNewProject() async {
     final result = await showDialog(
       context: context,
-      builder: (context) => AddDialogWidget(),
+      builder: (context) => const AddDialogWidget(),
     );
 
     if (result == null) {
