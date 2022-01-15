@@ -29,6 +29,7 @@ class TextFormWidget extends StatelessWidget {
       controller: controller,
       cursorColor: textColor,
       style: TextStyle(color: textColor),
+      keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,

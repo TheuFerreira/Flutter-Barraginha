@@ -9,6 +9,7 @@ class TextFieldWidget extends StatelessWidget {
   final Color textColor;
   final TextInputType? keyboardType;
   final Function(String)? onChanged;
+  final Function(String)? onSubmitted;
   const TextFieldWidget({
     Key? key,
     this.controller,
@@ -19,6 +20,7 @@ class TextFieldWidget extends StatelessWidget {
     this.textColor = const Color(0xFF666666),
     this.keyboardType,
     this.onChanged,
+    this.onSubmitted,
   }) : super(key: key);
 
   @override
@@ -51,6 +53,7 @@ class TextFieldWidget extends StatelessWidget {
         focusedBorder: _defaultBorder(),
       ),
       onChanged: onChanged,
+      onSubmitted: onSubmitted,
     );
   }
 

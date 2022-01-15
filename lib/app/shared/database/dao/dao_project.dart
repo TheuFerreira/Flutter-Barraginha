@@ -36,9 +36,9 @@ class DAOProject extends Connection {
   Future<ProjectModel> save(ProjectModel project) async {
     if (project.id == null) {
       return await _add(project);
+    } else {
+      return await _update(project);
     }
-
-    throw Exception();
   }
 
   Future<ProjectModel> _add(ProjectModel project) async {
@@ -49,6 +49,23 @@ class DAOProject extends Connection {
     project.id = await db.transaction<int>((txn) async {
       final id = await txn.insert('project', values);
       return id;
+    });
+
+    return project;
+  }
+
+  Future<ProjectModel> _update(ProjectModel project) async {
+    final db = await getDatabase();
+
+    final values = project.toMap();
+
+    await db.transaction((txn) async {
+      await txn.update(
+        'project',
+        values,
+        where: 'id = ?',
+        whereArgs: [project.id],
+      );
     });
 
     return project;

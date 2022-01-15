@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/parts/controllers/part_controller.dart';
+import 'package:flutter_barraginha/app/screens/parts/dialogs/update_rain_dialog.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
+import 'package:flutter_barraginha/app/shared/components/text_form_widget.dart';
+import 'package:flutter_barraginha/app/shared/dialogs/base_dialog.dart';
 import 'package:flutter_barraginha/app/shared/models/project_model.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'components/item_info_widget.dart';
 import 'components/item_part_widget.dart';
@@ -17,7 +22,18 @@ class PartsPage extends StatefulWidget {
 }
 
 class _PartsPageState extends State<PartsPage> {
+  late PartController _controller;
+  late TextEditingController _projectNameController;
   final partsScroll = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = PartController(widget.project);
+    _projectNameController = TextEditingController(text: widget.project.title);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,20 +42,26 @@ class _PartsPageState extends State<PartsPage> {
         elevation: 0,
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 48.0),
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          color: Colors.black,
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 48.0),
           child: SizedBox(
             height: 32,
             child: TextFieldWidget(
-              textColor: Color(0xFF666666),
-              suffixIcon: Icon(
+              controller: _projectNameController,
+              textColor: const Color(0xFF666666),
+              suffixIcon: const Icon(
                 Icons.edit,
                 size: 20.0,
                 color: Color(0xFF666666),
               ),
+              onSubmitted: _controller.updateTitleProject,
             ),
           ),
-          // TODO: Text Field Controller
         ),
         actions: [
           IconButton(
@@ -72,27 +94,34 @@ class _PartsPageState extends State<PartsPage> {
                 ),
                 const SizedBox(height: 8.0),
                 Expanded(
-                  child: Row(
-                    children: [
-                      const Flexible(
-                        child: ItemInfoWidget(
-                          title: 'Trechos',
-                        ),
-                      ),
-                      const Expanded(
-                        child: ItemInfoWidget(
-                          title: 'Bolsões',
-                        ),
-                      ),
-                      Expanded(
-                        child: ItemInfoWidget(
-                          title: 'Volume de chuva',
-                          onEdit: () {
-                            // TODO: Edit Volume de Chuva
-                          },
-                        ),
-                      ),
-                    ],
+                  child: Observer(
+                    builder: (context) {
+                      final parts = _controller.project.parts;
+                      final rainVolume = _controller.project.rainVolume;
+                      return Row(
+                        children: [
+                          Flexible(
+                            child: ItemInfoWidget(
+                              title: 'Trechos',
+                              value: parts.toString(),
+                            ),
+                          ),
+                          const Expanded(
+                            child: ItemInfoWidget(
+                              title: 'Bolsões',
+                              // TODO: Value total Bolsoes
+                            ),
+                          ),
+                          Expanded(
+                            child: ItemInfoWidget(
+                              title: 'Volume de chuva',
+                              value: rainVolume.toString(),
+                              onEdit: () => _updateRainVolume(rainVolume),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(height: 8.0),
@@ -122,13 +151,18 @@ class _PartsPageState extends State<PartsPage> {
                       ),
                     ),
                     const SizedBox(height: 8.0),
-                    ListView.builder(
-                      controller: partsScroll,
-                      shrinkWrap: true,
-                      itemCount: 3,
-                      itemBuilder: (builder, i) {
-                        return const ItemPartWidget();
-                        // TODO: Edit Part
+                    Observer(
+                      builder: (context) {
+                        final parts = _controller.parts;
+                        return ListView.builder(
+                          controller: partsScroll,
+                          shrinkWrap: true,
+                          itemCount: parts.length,
+                          itemBuilder: (builder, i) {
+                            return const ItemPartWidget();
+                            // TODO: Edit Part
+                          },
+                        );
                       },
                     ),
                   ],
@@ -139,5 +173,17 @@ class _PartsPageState extends State<PartsPage> {
         ],
       ),
     );
+  }
+
+  void _updateRainVolume(double rainVolume) async {
+    final result = await showDialog(
+      context: context,
+      builder: (ctx) => UpdateRainDialog(
+        rainVolume.toString(),
+      ),
+    );
+    if (result == null) return;
+
+    await _controller.updateRainVolumeProject(result as double);
   }
 }

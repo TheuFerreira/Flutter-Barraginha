@@ -7,7 +7,7 @@ class ItemInfoWidget extends StatelessWidget {
   const ItemInfoWidget({
     Key? key,
     this.title = 'Title',
-    this.value = '2',
+    this.value = '0',
     this.onEdit,
   }) : super(key: key);
 
