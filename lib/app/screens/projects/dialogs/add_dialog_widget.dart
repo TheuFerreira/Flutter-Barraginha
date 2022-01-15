@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/shared/components/dropdown_button_form_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/text_form_widget.dart';
+import 'package:flutter_barraginha/app/shared/database/dao/dao_soil_type.dart';
 import 'package:flutter_barraginha/app/shared/dialogs/base_dialog.dart';
 import 'package:flutter_barraginha/app/shared/models/soil_type_model.dart';
 
@@ -19,12 +18,13 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
   final _volumeTextController = TextEditingController();
 
   late SoilTypeModel _soilTypeSelected;
+  final _daoSoilType = DAOSoilType();
 
   @override
   void initState() {
     super.initState();
 
-    _soilTypeSelected = soilTypes[0];
+    _soilTypeSelected = _daoSoilType.getById(1);
   }
 
   @override
@@ -71,7 +71,8 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
                   labelText: 'Tipo de solo',
                   onChanged: _changeSoilType,
                   value: _soilTypeSelected,
-                  items: soilTypes
+                  items: _daoSoilType
+                      .getAll()
                       .map(
                         (e) => DropdownMenuItem(
                           child: Text(e.text),
@@ -99,14 +100,13 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
       return;
     }
 
-    final textRainVolume = _volumeTextController.text;
+    final textRainVolume = _volumeTextController.text.replaceAll(',', '.');
     final textName = _nameTextController.text.trim();
-    log(_soilTypeSelected.toMap().toString());
 
     final result = {
       'title': textName,
-      'rain_volume': int.parse(textRainVolume),
-      'soil_type': _soilTypeSelected.toMap(),
+      'rain_volume': double.parse(textRainVolume),
+      'soil_type': _soilTypeSelected,
     };
 
     Navigator.pop(context, result);

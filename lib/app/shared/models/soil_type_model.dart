@@ -1,17 +1,7 @@
 class SoilTypeModel {
-  final String text;
-  final double value;
+  late int id;
+  late String text;
+  late double value;
 
-  SoilTypeModel(this.text, this.value);
-
-  Map<String, dynamic> toMap() => {
-        'text': text,
-        'value': value,
-      };
+  SoilTypeModel(this.id, this.text, this.value);
 }
-
-List<SoilTypeModel> soilTypes = [
-  SoilTypeModel("Latossolo", 1.25),
-  SoilTypeModel("Argissolos", 0.95),
-  SoilTypeModel("Cambissolos", 0.75),
-];

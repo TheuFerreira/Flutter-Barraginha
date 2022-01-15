@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter_barraginha/app/shared/database/dao/dao_soil_type.dart';
 import 'package:flutter_barraginha/app/shared/models/project_model.dart';
 import 'package:flutter_barraginha/app/shared/database/connection.dart';
 
@@ -5,17 +8,27 @@ class DAOProject extends Connection {
   Future<List<ProjectModel>> search({String search = ''}) async {
     final db = await getDatabase();
     final result = await db.rawQuery(
-      'SELECT p.id, p.title, p.date, p.rain_volume, 20 AS parts '
+      'SELECT p.id, p.id_soil_type, p.title, p.date, p.rain_volume, COUNT(pt.id) AS parts '
               'FROM project AS p '
-              'WHERE status = 1 AND title LIKE \'%' +
+              'LEFT JOIN part AS pt ON pt.id_project = p.id '
+              'WHERE p.status = 1 AND title LIKE \'%' +
           search +
-          '%\';',
+          '%\' '
+              'GROUP BY p.id '
+              ';',
     );
 
     List<ProjectModel> projects = [];
     for (Map<String, dynamic> map in result) {
-      final project = ProjectModel.fromMap(map);
+      int idSoilType = map['id_soil_type'] as int;
+      final soilType = DAOSoilType().getById(idSoilType);
 
+      Map<String, dynamic> otherMap = {
+        ...map,
+        'soil_type': soilType,
+      };
+
+      final project = ProjectModel.fromMap(otherMap);
       projects.add(project);
     }
 

@@ -1,6 +1,7 @@
 import 'package:flutter_barraginha/app/shared/models/project_model.dart';
 import 'package:flutter_barraginha/app/shared/database/dao/dao_project.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
+import 'package:flutter_barraginha/app/shared/models/soil_type_model.dart';
 import 'package:mobx/mobx.dart';
 
 part 'projects_controller.g.dart';
@@ -52,17 +53,22 @@ abstract class _ProjectControllerBase with Store {
   }
 
   @action
-  Future<ProjectModel> add(String title, int rainVolume) async {
+  Future<ProjectModel> add(
+    String title,
+    double rainVolume,
+    SoilTypeModel soilType,
+  ) async {
     message = 'Criando novo Projeto...';
     status = PageStatus.loading;
 
-    ProjectModel project = ProjectModel.fromAdd(
+    ProjectModel project = ProjectModel(
       title,
       DateTime.now(),
       rainVolume,
+      soilType,
     );
-    project = await _dao.save(project);
 
+    project = await _dao.save(project);
     projects = await _dao.search();
 
     message = '';

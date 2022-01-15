@@ -5,6 +5,7 @@ import 'package:flutter_barraginha/app/screens/projects/dialogs/add_dialog_widge
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
+import 'package:flutter_barraginha/app/shared/models/soil_type_model.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -113,12 +114,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
     }
 
     final title = result['title'];
-    final rainVolume = result['rain_volume'] as int;
+    final rainVolume = result['rain_volume'] as double;
+    final soilType = result['soil_type'] as SoilTypeModel;
 
-    final project = await controller.add(
-      title,
-      rainVolume,
-    );
+    final project = await controller.add(title, rainVolume, soilType);
 
     searchController.text = '';
 

@@ -79,8 +79,9 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
   final _$addAsyncAction = AsyncAction('_ProjectControllerBase.add');
 
   @override
-  Future<ProjectModel> add(String title, int rainVolume) {
-    return _$addAsyncAction.run(() => super.add(title, rainVolume));
+  Future<ProjectModel> add(
+      String title, double rainVolume, SoilTypeModel soilType) {
+    return _$addAsyncAction.run(() => super.add(title, rainVolume, soilType));
   }
 
   final _$searchAsyncAction = AsyncAction('_ProjectControllerBase.search');
