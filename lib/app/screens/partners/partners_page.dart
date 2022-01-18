@@ -1,16 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
 
 class PartnersPage extends StatelessWidget {
-  const PartnersPage({Key? key}) : super(key: key);
 
+
+  const PartnersPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold
-      (
+    (
+      drawer: DrawerWidget(),
 
       appBar: AppBar
         (
-        centerTitle: true,
+          leading: Padding
+          (
+            padding: const EdgeInsets.only(bottom: 120),
+            child: Builder
+            (
+              builder: (context) => IconButton
+              (
+                icon: Icon
+                (
+                    Icons.reorder,
+                  size: 30,
+                ),
+                onPressed: ()
+              {
+                Scaffold.of(context).openDrawer();
+              },
+              ),
+            ),
+
+          ),
+          centerTitle: true,
 
         title: Container
           (
@@ -25,10 +49,10 @@ class PartnersPage extends StatelessWidget {
             ),
 
           ),
-          padding: EdgeInsets.only(top: 50),
+          padding: EdgeInsets.only(top: 30),
 
         ),
-        toolbarHeight: 200,
+        toolbarHeight: 180,
       ),
 
       body: Column
