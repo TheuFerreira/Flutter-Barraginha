@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/partners/partners_page.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/item_drawer_widget.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -49,9 +50,12 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 ItemDrawerWidget(
                   title: 'Parceiros',
-                  onTap: () {
-                    // TODO: Parceiros
-                  },
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (ctx) => const PartnersPage(),
+                    ),
+                  ),
                 ),
                 ItemDrawerWidget(
                   title: 'Sobre',
