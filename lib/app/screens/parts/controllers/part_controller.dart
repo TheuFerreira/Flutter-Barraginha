@@ -1,6 +1,9 @@
 import 'package:flutter_barraginha/app/shared/database/dao/dao_project.dart';
 import 'package:flutter_barraginha/app/shared/models/part_model.dart';
+import 'package:flutter_barraginha/app/shared/models/point_model.dart';
 import 'package:flutter_barraginha/app/shared/models/project_model.dart';
+import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
 
 part 'part_controller.g.dart';
@@ -12,9 +15,33 @@ abstract class _PartControllerBase with Store {
   ProjectModel project;
 
   @observable
-  List<PartModel> parts = ObservableList();
+  List<PartModel> parts = ObservableList.of(
+    const [
+      PartModel(
+        1,
+        3,
+        [
+          PointModel(1, LatLng(38.71980474264239, 9.140625000000002), 172),
+          PointModel(2, LatLng(38.7199219336158, 9.14040505886078), 162),
+        ],
+      ),
+    ],
+  );
 
-  _PartControllerBase(this.project);
+  @observable
+  Map<String, dynamic>? values;
+
+  _PartControllerBase(this.project) {
+    CalculatorService.calculate(
+      start: parts[0].points[0].position,
+      end: parts[0].points[1].position,
+      rainVolume: project.rainVolume,
+      roadWidth: parts[0].roadWidth!,
+      soilType: project.soilType.value,
+    ).then((value) {
+      values = value;
+    });
+  }
 
   @action
   Future updateTitleProject(String newTitle) async {

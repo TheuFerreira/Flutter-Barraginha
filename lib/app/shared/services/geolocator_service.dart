@@ -29,7 +29,7 @@ class GeolocatorService {
     return await Geolocator.getCurrentPosition();
   }
 
-  double getDistanceBetweenTwoPoints(LatLng start, LatLng end) {
+  static double getDistanceBetweenTwoPoints(LatLng start, LatLng end) {
     return Geolocator.distanceBetween(
       start.latitude,
       start.longitude,

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/parts/controllers/part_controller.dart';
 import 'package:flutter_barraginha/app/screens/parts/dialogs/update_rain_dialog.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
-import 'package:flutter_barraginha/app/shared/components/text_form_widget.dart';
-import 'package:flutter_barraginha/app/shared/dialogs/base_dialog.dart';
 import 'package:flutter_barraginha/app/shared/models/project_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -159,8 +157,16 @@ class _PartsPageState extends State<PartsPage> {
                           shrinkWrap: true,
                           itemCount: parts.length,
                           itemBuilder: (builder, i) {
-                            return const ItemPartWidget();
-                            // TODO: Edit Part
+                            return ItemPartWidget(
+                              parts[i],
+                              title: 'Trecho ${i + 1}',
+                              onInfo: () {
+                                // TODO: Info Part
+                              },
+                              onEdit: () {
+                                // TODO: Edit Part
+                              },
+                            );
                           },
                         );
                       },

@@ -39,6 +39,21 @@ mixin _$PartController on _PartControllerBase, Store {
     });
   }
 
+  final _$valuesAtom = Atom(name: '_PartControllerBase.values');
+
+  @override
+  Map<String, dynamic>? get values {
+    _$valuesAtom.reportRead();
+    return super.values;
+  }
+
+  @override
+  set values(Map<String, dynamic>? value) {
+    _$valuesAtom.reportWrite(value, super.values, () {
+      super.values = value;
+    });
+  }
+
   final _$updateTitleProjectAsyncAction =
       AsyncAction('_PartControllerBase.updateTitleProject');
 
@@ -61,7 +76,8 @@ mixin _$PartController on _PartControllerBase, Store {
   String toString() {
     return '''
 project: ${project},
-parts: ${parts}
+parts: ${parts},
+values: ${values}
     ''';
   }
 }

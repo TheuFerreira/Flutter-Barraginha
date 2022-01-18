@@ -5,6 +5,7 @@ import 'package:flutter_barraginha/app/screens/map/controllers/options_controlle
 import 'package:flutter_barraginha/app/screens/map/dialogs/edit_marker_dialog.dart';
 import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
+import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/google_earth_service.dart';
@@ -148,28 +149,16 @@ abstract class _MapControllerBase with Store {
     final start = markers[0];
     final end = markers[1];
 
-    final altitudeA = await GoogleEarthService.getAltitude(start.position);
-    final altitudeB = await GoogleEarthService.getAltitude(end.position);
-    final distance = GeolocatorService()
-        .getDistanceBetweenTwoPoints(start.position, end.position);
+    final soilType = 1.25; // TODO: Tipo de solo;
+    final roadWidth = 4.0; // TODO: Largura da estrada
+    final rainVolume = 72.0; // TODO: Intensidade de chuva
 
-    final k = 1.25; // TODO: Tipo de solo;
-    final le = 4; // TODO: Largura da estrada
-    final i = 72; // TODO: Intensidade de chuva
-
-    final dn = altitudeA! - altitudeB!;
-    final dh = sqrt(pow(distance, 2) - pow(dn, 2));
-    final d = (dn * 100) / dh;
-    final eh = 45.18 * k * pow(d, -0.42);
-    final ev = 0.4518 * k * pow(k, 0.58);
-    final nBolsoesCalc = dh / eh;
-    final nBolsoesAjust = nBolsoesCalc; // TODO: Arredondar
-    final espBolsoes = distance / nBolsoesAjust;
-    final ve = espBolsoes * le * i;
-    final p = pow((ve / 6.52), 1 / 3);
-    final r = 2.41 * p;
-    final vb = 3.14 * pow(p, 2) * (r - (p / 3));
-
-    // TODO: ERRORS
+    await CalculatorService.calculate(
+      start: start.position,
+      end: end.position,
+      rainVolume: rainVolume,
+      roadWidth: roadWidth,
+      soilType: soilType,
+    );
   }
 }
