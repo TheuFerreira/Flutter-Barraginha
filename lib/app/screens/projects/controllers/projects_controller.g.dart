@@ -20,13 +20,13 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
   final _$projectsAtom = Atom(name: '_ProjectControllerBase.projects');
 
   @override
-  List<ProjectModel> get projects {
+  List<ProjectListResponse> get projects {
     _$projectsAtom.reportRead();
     return super.projects;
   }
 
   @override
-  set projects(List<ProjectModel> value) {
+  set projects(List<ProjectListResponse> value) {
     _$projectsAtom.reportWrite(value, super.projects, () {
       super.projects = value;
     });
@@ -62,24 +62,17 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
     });
   }
 
-  final _$loadAsyncAction = AsyncAction('_ProjectControllerBase.load');
-
-  @override
-  Future<dynamic> load() {
-    return _$loadAsyncAction.run(() => super.load());
-  }
-
   final _$deleteAsyncAction = AsyncAction('_ProjectControllerBase.delete');
 
   @override
-  Future<dynamic> delete(ProjectModel project) {
+  Future<dynamic> delete(ProjectListResponse project) {
     return _$deleteAsyncAction.run(() => super.delete(project));
   }
 
   final _$addAsyncAction = AsyncAction('_ProjectControllerBase.add');
 
   @override
-  Future<ProjectModel> add(
+  Future<ProjectListResponse> add(
       String title, double rainVolume, SoilTypeModel soilType) {
     return _$addAsyncAction.run(() => super.add(title, rainVolume, soilType));
   }

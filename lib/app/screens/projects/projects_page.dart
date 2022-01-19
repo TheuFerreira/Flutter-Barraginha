@@ -3,6 +3,7 @@ import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/controllers/projects_controller.dart';
 import 'package:flutter_barraginha/app/screens/projects/dialogs/add_dialog_widget.dart';
+import 'package:flutter_barraginha/app/screens/projects/models/responses/project_list_response.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
@@ -126,7 +127,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
     _onTapItemProject(project);
   }
 
-  void _onTapItemProject(project) async {
+  void _onTapItemProject(ProjectListResponse project) async {
     await Navigator.push(
       context,
       MaterialPageRoute(

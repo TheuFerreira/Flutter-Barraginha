@@ -5,15 +5,14 @@ class PartnersPage extends StatelessWidget {
   const PartnersPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.only(bottom: 120),
           child: Builder(
             builder: (context) => IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.reorder,
                 size: 30,
               ),
@@ -25,7 +24,7 @@ class PartnersPage extends StatelessWidget {
         ),
         centerTitle: true,
         title: Container(
-          child: Text(
+          child: const Text(
             'Parceiros',
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
           ),

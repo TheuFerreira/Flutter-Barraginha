@@ -1,5 +1,8 @@
-import 'package:flutter_barraginha/app/shared/models/project_model.dart';
-import 'package:flutter_barraginha/app/shared/database/dao/dao_project.dart';
+import 'package:flutter_barraginha/app/screens/projects/models/requests/project_add_response.dart';
+import 'package:flutter_barraginha/app/screens/projects/models/responses/project_list_response.dart';
+import 'package:flutter_barraginha/app/screens/projects/usecases/project_add_usecases.dart';
+import 'package:flutter_barraginha/app/screens/projects/usecases/project_list_usecases.dart';
+import 'package:flutter_barraginha/app/screens/projects/usecases/project_remove_usecases.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
 import 'package:flutter_barraginha/app/shared/models/soil_type_model.dart';
 import 'package:mobx/mobx.dart';
@@ -9,10 +12,8 @@ part 'projects_controller.g.dart';
 class ProjectsController = _ProjectControllerBase with _$ProjectsController;
 
 abstract class _ProjectControllerBase with Store {
-  List<ProjectModel> oldProjects = [];
-
   @observable
-  List<ProjectModel> projects = ObservableList<ProjectModel>();
+  List<ProjectListResponse> projects = ObservableList<ProjectListResponse>();
 
   @observable
   PageStatus status = PageStatus.normal;
@@ -23,36 +24,23 @@ abstract class _ProjectControllerBase with Store {
   @computed
   bool get isLoading => status == PageStatus.loading;
 
-  final _dao = DAOProject();
-
   _ProjectControllerBase() {
-    load();
+    search('');
   }
 
   @action
-  Future load() async {
-    status = PageStatus.loading;
-    message = 'Carregando...';
-
-    projects = await _dao.search();
-
-    status = PageStatus.normal;
-    message = '';
-  }
-
-  @action
-  Future delete(ProjectModel project) async {
+  Future delete(ProjectListResponse project) async {
     message = 'Deletando Projeto...';
     status = PageStatus.loading;
 
-    await _dao.delete(project);
+    await ProjectRemoveUsecases().delete(project);
 
     message = '';
     status = PageStatus.normal;
   }
 
   @action
-  Future<ProjectModel> add(
+  Future<ProjectListResponse> add(
     String title,
     double rainVolume,
     SoilTypeModel soilType,
@@ -60,18 +48,18 @@ abstract class _ProjectControllerBase with Store {
     message = 'Criando novo Projeto...';
     status = PageStatus.loading;
 
-    ProjectModel project = ProjectModel(
-      title,
-      DateTime.now(),
-      rainVolume,
-      soilType,
+    final project = ProjectAddResponse(
+      title: title,
+      date: DateTime.now(),
+      rainVolume: rainVolume,
+      idSoilType: soilType.id,
     );
 
-    project = await _dao.save(project);
+    final newProject = await ProjectAddUsecases().add(project);
 
     message = '';
     status = PageStatus.normal;
-    return project;
+    return newProject;
   }
 
   @action
@@ -79,7 +67,7 @@ abstract class _ProjectControllerBase with Store {
     message = 'Pesquisando...';
     status = PageStatus.loading;
 
-    projects = await _dao.search(search: value);
+    projects = await ProjectListUsecases().search(search: value);
 
     message = '';
     status = PageStatus.normal;

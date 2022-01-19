@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/parts/controllers/part_controller.dart';
 import 'package:flutter_barraginha/app/screens/parts/dialogs/update_rain_dialog.dart';
+import 'package:flutter_barraginha/app/screens/projects/models/responses/project_list_response.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
-import 'package:flutter_barraginha/app/shared/models/project_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'components/item_info_widget.dart';
 import 'components/item_part_widget.dart';
 
 class PartsPage extends StatefulWidget {
-  final ProjectModel project;
+  final ProjectListResponse project;
   const PartsPage(
     this.project, {
     Key? key,
@@ -28,7 +28,7 @@ class _PartsPageState extends State<PartsPage> {
   void initState() {
     super.initState();
 
-    _controller = PartController(widget.project);
+    _controller = PartController(widget.project.id);
     _projectNameController = TextEditingController(text: widget.project.title);
   }
 
@@ -94,8 +94,11 @@ class _PartsPageState extends State<PartsPage> {
                 Expanded(
                   child: Observer(
                     builder: (context) {
-                      final parts = _controller.project.parts;
-                      final rainVolume = _controller.project.rainVolume;
+                      if (_controller.project == null) {
+                        return Container();
+                      }
+                      final parts = _controller.project!.parts;
+                      final rainVolume = _controller.project!.rainVolume;
                       return Row(
                         children: [
                           Flexible(
@@ -181,7 +184,7 @@ class _PartsPageState extends State<PartsPage> {
     );
   }
 
-  void _updateRainVolume(double rainVolume) async {
+  void _updateRainVolume(num rainVolume) async {
     final result = await showDialog(
       context: context,
       builder: (ctx) => UpdateRainDialog(
