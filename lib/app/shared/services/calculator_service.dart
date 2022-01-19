@@ -10,7 +10,7 @@ class CalculatorService {
     required LatLng end,
     required double soilType,
     required double roadWidth,
-    required double rainVolume,
+    required num rainVolume,
   }) async {
     double? altitudeA = await GoogleEarthService.getAltitude(start);
     double? altitudeB = await GoogleEarthService.getAltitude(end);

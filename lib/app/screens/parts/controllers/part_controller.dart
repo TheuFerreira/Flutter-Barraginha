@@ -1,7 +1,8 @@
-import 'package:flutter_barraginha/app/shared/database/dao/dao_project.dart';
+import 'package:flutter_barraginha/app/screens/parts/models/responses/project_part_response.dart';
+import 'package:flutter_barraginha/app/screens/parts/usecases/get_project_part_usecases.dart';
+import 'package:flutter_barraginha/app/screens/parts/usecases/update_project_usecases.dart';
 import 'package:flutter_barraginha/app/shared/models/part_model.dart';
 import 'package:flutter_barraginha/app/shared/models/point_model.dart';
-import 'package:flutter_barraginha/app/shared/models/project_model.dart';
 import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
@@ -12,7 +13,7 @@ class PartController = _PartControllerBase with _$PartController;
 
 abstract class _PartControllerBase with Store {
   @observable
-  ProjectModel project;
+  ProjectPartResponse? project;
 
   @observable
   List<PartModel> parts = ObservableList.of(
@@ -31,27 +32,31 @@ abstract class _PartControllerBase with Store {
   @observable
   Map<String, dynamic>? values;
 
-  _PartControllerBase(this.project) {
-    CalculatorService.calculate(
-      start: parts[0].points[0].position,
-      end: parts[0].points[1].position,
-      rainVolume: project.rainVolume,
-      roadWidth: parts[0].roadWidth!,
-      soilType: project.soilType.value,
-    ).then((value) {
-      values = value;
+  _PartControllerBase(int idProject) {
+    GetProjectPartUseCase().getProjectPart(idProject).then((value) {
+      project = value;
+
+      CalculatorService.calculate(
+        start: parts[0].points[0].position,
+        end: parts[0].points[1].position,
+        rainVolume: project!.rainVolume,
+        roadWidth: parts[0].roadWidth!,
+        soilType: 1.25, //project!.soilType.value,
+      ).then((value) {
+        values = value;
+      });
     });
   }
 
   @action
   Future updateTitleProject(String newTitle) async {
-    project.title = newTitle;
-    project = await DAOProject().save(project);
+    project!.title = newTitle;
+    project = await UpdateProjectUsecases().update(project!);
   }
 
   @action
-  Future updateRainVolumeProject(double newRainVolume) async {
-    project.rainVolume = newRainVolume;
-    project = await DAOProject().save(project);
+  Future updateRainVolumeProject(num newRainVolume) async {
+    project!.rainVolume = newRainVolume;
+    project = await UpdateProjectUsecases().update(project!);
   }
 }

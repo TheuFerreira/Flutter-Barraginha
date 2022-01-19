@@ -12,13 +12,13 @@ mixin _$PartController on _PartControllerBase, Store {
   final _$projectAtom = Atom(name: '_PartControllerBase.project');
 
   @override
-  ProjectModel get project {
+  ProjectPartResponse? get project {
     _$projectAtom.reportRead();
     return super.project;
   }
 
   @override
-  set project(ProjectModel value) {
+  set project(ProjectPartResponse? value) {
     _$projectAtom.reportWrite(value, super.project, () {
       super.project = value;
     });
@@ -67,7 +67,7 @@ mixin _$PartController on _PartControllerBase, Store {
       AsyncAction('_PartControllerBase.updateRainVolumeProject');
 
   @override
-  Future<dynamic> updateRainVolumeProject(double newRainVolume) {
+  Future<dynamic> updateRainVolumeProject(num newRainVolume) {
     return _$updateRainVolumeProjectAsyncAction
         .run(() => super.updateRainVolumeProject(newRainVolume));
   }

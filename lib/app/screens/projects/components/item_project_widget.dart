@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/shared/models/project_model.dart';
+import 'package:flutter_barraginha/app/screens/projects/models/responses/project_list_response.dart';
 
 import 'text_icon_widget.dart';
 
 class ItemProjectWidget extends StatelessWidget {
-  final ProjectModel project;
-  final Function(ProjectModel project)? onTap;
-  final Function(ProjectModel project)? onLongPress;
+  final ProjectListResponse project;
+  final Function(ProjectListResponse project)? onTap;
+  final Function(ProjectListResponse project)? onLongPress;
   const ItemProjectWidget(
     this.project, {
     Key? key,
