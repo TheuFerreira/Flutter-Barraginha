@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/about/abaut_page.dart';
 import 'package:flutter_barraginha/app/screens/map/map_page.dart';
 import 'package:flutter_barraginha/app/screens/partners/partners_page.dart';
 import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
