@@ -160,14 +160,22 @@ class _PartsPageState extends State<PartsPage> {
                           shrinkWrap: true,
                           itemCount: parts.length,
                           itemBuilder: (builder, i) {
-                            return ItemPartWidget(
-                              parts[i],
-                              title: 'Trecho ${i + 1}',
-                              onInfo: () {
-                                // TODO: Info Part
-                              },
-                              onEdit: () {
-                                // TODO: Edit Part
+                            return Observer(
+                              builder: (ctx) {
+                                final part = parts[i];
+                                final calculate = part.calculateResponse;
+                                return ItemPartWidget(
+                                  part,
+                                  title: 'Trecho ${i + 1}',
+                                  calculate: calculate,
+                                  onInfo: () {
+                                    // TODO: Info Part
+                                  },
+                                  onEdit: () {
+                                    // TODO: Edit Part
+                                  },
+                                  onCalculate: _controller.calculatePart,
+                                );
                               },
                             );
                           },

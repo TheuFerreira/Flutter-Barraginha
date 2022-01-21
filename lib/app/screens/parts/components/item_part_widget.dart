@@ -1,46 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/shared/models/part_model.dart';
-import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
+import 'package:flutter_barraginha/app/screens/parts/models/responses/part_response.dart';
+import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
-class ItemPartWidget extends StatefulWidget {
-  final PartModel part;
+class ItemPartWidget extends StatelessWidget {
+  final PartResponse part;
   final String title;
+  final CalculateResponse? calculate;
   final Function()? onInfo;
   final Function()? onEdit;
+  final Function(PartResponse)? onCalculate;
   const ItemPartWidget(
     this.part, {
     Key? key,
     required this.title,
+    required this.calculate,
     this.onInfo,
     this.onEdit,
+    this.onCalculate,
   }) : super(key: key);
-
-  @override
-  State<ItemPartWidget> createState() => _ItemPartWidgetState();
-}
-
-class _ItemPartWidgetState extends State<ItemPartWidget> {
-  Map<String, dynamic>? map = {};
-  @override
-  void initState() {
-    super.initState();
-
-    final part = widget.part;
-    final start = part.points[0];
-    final end = part.points[1];
-    final roadWidth = part.roadWidth!;
-    final soilType = 1.25; // TODO: Mudar
-    final rainVolume = 0.125; // TODO: Mudar
-    CalculatorService.calculate(
-      start: start.position,
-      end: end.position,
-      soilType: soilType,
-      roadWidth: roadWidth,
-      rainVolume: rainVolume,
-    ).then(
-      (value) => map = value,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +43,7 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        widget.title,
+                        title,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                       IconButton(
@@ -78,60 +56,73 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                       ),
                     ],
                   ),
-                  if (map != null)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Tamanho',
-                              style: Theme.of(context).textTheme.headline5,
-                            ),
-                            Text(
-                              'Raio: ${map!['radius']}m',
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                            Text(
-                              'Profundidade: ${map!['depth']}m',
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                            Text(
-                              'Volume: ${map!['barrageVolume']}m³',
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Bolsões',
-                              style: Theme.of(context).textTheme.headline5,
-                            ),
-                            Text(
-                              '${map!['barrageNumbersAdjusted']}',
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              'Distância',
-                              style: Theme.of(context).textTheme.headline5,
-                            ),
-                            Text(
-                              '${map!['spacing']}m',
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                  Observer(
+                    builder: (_) {
+                      final state = part.state;
+                      if (state == StateResponse.loading) {
+                        return const LoadingWidget('Calculando...');
+                      } else if (state == StateResponse.calculate) {
+                        return ElevatedButton(
+                          onPressed: () => onCalculate!(part),
+                          child: const Text('Calcular'),
+                        );
+                      }
+                      final calculate = part.calculateResponse!;
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Tamanho',
+                                style: Theme.of(context).textTheme.headline5,
+                              ),
+                              Text(
+                                'Raio: ${calculate.radius}m',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                              Text(
+                                'Profundidade: ${calculate.depth}m',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                              Text(
+                                'Volume: ${calculate.barrageVolume}m³',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Bolsões',
+                                style: Theme.of(context).textTheme.headline5,
+                              ),
+                              Text(
+                                '${calculate.barrageNumbersAdjusted}',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                'Distância',
+                                style: Theme.of(context).textTheme.headline5,
+                              ),
+                              Text(
+                                '${calculate.spacing}m',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -142,7 +133,7 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                 icon: const Icon(Icons.arrow_forward),
                 iconSize: 32,
                 color: const Color(0xFF00695C),
-                onPressed: widget.onEdit,
+                onPressed: onEdit,
               ),
             ),
           ],

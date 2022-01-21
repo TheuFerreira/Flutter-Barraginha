@@ -24,34 +24,12 @@ mixin _$PartController on _PartControllerBase, Store {
     });
   }
 
-  final _$partsAtom = Atom(name: '_PartControllerBase.parts');
+  final _$calculatePartAsyncAction =
+      AsyncAction('_PartControllerBase.calculatePart');
 
   @override
-  List<PartModel> get parts {
-    _$partsAtom.reportRead();
-    return super.parts;
-  }
-
-  @override
-  set parts(List<PartModel> value) {
-    _$partsAtom.reportWrite(value, super.parts, () {
-      super.parts = value;
-    });
-  }
-
-  final _$valuesAtom = Atom(name: '_PartControllerBase.values');
-
-  @override
-  Map<String, dynamic>? get values {
-    _$valuesAtom.reportRead();
-    return super.values;
-  }
-
-  @override
-  set values(Map<String, dynamic>? value) {
-    _$valuesAtom.reportWrite(value, super.values, () {
-      super.values = value;
-    });
+  Future<dynamic> calculatePart(PartResponse part) {
+    return _$calculatePartAsyncAction.run(() => super.calculatePart(part));
   }
 
   final _$updateTitleProjectAsyncAction =
@@ -75,9 +53,7 @@ mixin _$PartController on _PartControllerBase, Store {
   @override
   String toString() {
     return '''
-project: ${project},
-parts: ${parts},
-values: ${values}
+project: ${project}
     ''';
   }
 }

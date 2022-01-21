@@ -1,8 +1,7 @@
+import 'package:flutter_barraginha/app/screens/parts/models/responses/part_response.dart';
 import 'package:flutter_barraginha/app/screens/parts/models/responses/project_part_response.dart';
 import 'package:flutter_barraginha/app/screens/parts/usecases/get_project_part_usecases.dart';
 import 'package:flutter_barraginha/app/screens/parts/usecases/update_project_usecases.dart';
-import 'package:flutter_barraginha/app/shared/models/part_model.dart';
-import 'package:flutter_barraginha/app/shared/models/point_model.dart';
 import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
@@ -15,37 +14,55 @@ abstract class _PartControllerBase with Store {
   @observable
   ProjectPartResponse? project;
 
-  @observable
-  List<PartModel> parts = ObservableList.of(
-    const [
-      PartModel(
+  ObservableList<PartResponse> parts = ObservableList<PartResponse>.of([
+    PartResponse(
+      1,
+      CoordinateResponse(
         1,
-        3,
-        [
-          PointModel(1, LatLng(38.71980474264239, 9.140625000000002), 172),
-          PointModel(2, LatLng(38.7199219336158, 9.14040505886078), 162),
-        ],
+        38.71980474264239,
+        9.140625000000002,
+        172,
       ),
-    ],
-  );
-
-  @observable
-  Map<String, dynamic>? values;
+      CoordinateResponse(
+        1,
+        38.7199219336158,
+        9.14040505886078,
+        162,
+      ),
+      3,
+      null,
+    ),
+  ]);
 
   _PartControllerBase(int idProject) {
-    GetProjectPartUseCase().getProjectPart(idProject).then((value) {
-      project = value;
+    // TODO: Loading Screen
+    GetProjectPartUseCase().getProjectPart(idProject).then(
+      (value) {
+        project = value;
 
-      CalculatorService.calculate(
-        start: parts[0].points[0].position,
-        end: parts[0].points[1].position,
-        rainVolume: project!.rainVolume,
-        roadWidth: parts[0].roadWidth!,
-        soilType: 1.25, //project!.soilType.value,
-      ).then((value) {
-        values = value;
-      });
-    });
+        calculatePart(parts[0]);
+      },
+    );
+  }
+
+  @action
+  Future calculatePart(PartResponse part) async {
+    part.changeState(StateResponse.loading);
+
+    LatLng start =
+        LatLng(part.coordinate1.latitude, part.coordinate1.longitude);
+    LatLng end = LatLng(part.coordinate2.latitude, part.coordinate2.longitude);
+
+    final result = await CalculatorService.calculate(
+      start: start,
+      end: end,
+      rainVolume: project!.rainVolume,
+      roadWidth: part.roadWidth!,
+      soilType: 1.25, //project!.soilType.value,
+    );
+
+    part.calculateResponse = CalculateResponse.fromMap(result);
+    part.changeState(StateResponse.none);
   }
 
   @action
