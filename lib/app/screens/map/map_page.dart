@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
+import 'package:flutter_barraginha/app/screens/map/models/responses/map_response.dart';
+import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({Key? key}) : super(key: key);
+  final MapResponse map;
+  const MapPage(
+    this.map, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   _MapPageState createState() => _MapPageState();
@@ -14,12 +20,15 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   late MapController controller;
+  late TextEditingController roadWithController;
 
   @override
   void initState() {
     super.initState();
 
     controller = MapController();
+    roadWithController =
+        TextEditingController(text: widget.map.roadWidth.toString());
   }
 
   @override
@@ -125,20 +134,30 @@ class _MapPageState extends State<MapPage> {
                   vertical: 24.0,
                 ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 64.0),
+                      height: 36,
+                      child: TextFieldWidget(
+                        controller: roadWithController,
+                        hintText: 'Largura da Estrada',
+                        fillColor: const Color.fromARGB(50, 255, 255, 255),
+                        textColor: Colors.white,
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {},
+                      ),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.west),
+                          icon: const Icon(Icons.close),
                           color: Colors.white,
-                          onPressed: () {
-                            // TODO: Back to previous page
-                          },
+                          onPressed: () => Navigator.of(context).pop(),
                         ),
                         ElevatedButton(
-                          onPressed: controller.calculate,
+                          onPressed: _caculate,
                           child: const Text(
                             'Calcular',
                             style: TextStyle(
@@ -163,5 +182,11 @@ class _MapPageState extends State<MapPage> {
         },
       ),
     );
+  }
+
+  void _caculate() {
+    String roadWidthText = roadWithController.text.trim();
+    double roadWidth = double.parse(roadWidthText);
+    controller.calculate(widget.map);
   }
 }

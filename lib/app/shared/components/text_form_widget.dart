@@ -10,6 +10,7 @@ class TextFormWidget extends StatelessWidget {
   final String? errorText;
   final TextInputType? keyboardType;
   final Function(String)? onChanged;
+  final Function(String?)? validator;
   const TextFormWidget({
     Key? key,
     this.controller,
@@ -21,6 +22,7 @@ class TextFormWidget extends StatelessWidget {
     this.errorText,
     this.keyboardType,
     this.onChanged,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -56,6 +58,10 @@ class TextFormWidget extends StatelessWidget {
       validator: (value) {
         if (value!.isEmpty) {
           return errorText;
+        }
+
+        if (validator != null) {
+          validator!(value);
         }
       },
     );

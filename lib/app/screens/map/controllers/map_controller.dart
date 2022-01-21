@@ -1,14 +1,13 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/dialogs/edit_marker_dialog.dart';
 import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
+import 'package:flutter_barraginha/app/screens/map/models/responses/map_response.dart';
+import 'package:flutter_barraginha/app/screens/map/usecases/save_part_usecases.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
 import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
-import 'package:flutter_barraginha/app/shared/services/google_earth_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
@@ -145,20 +144,31 @@ abstract class _MapControllerBase with Store {
     );
   }
 
-  Future calculate() async {
+  Future calculate(MapResponse map) async {
     final start = markers[0];
     final end = markers[1];
 
+    map.coordinate1 = CoordinateResponse(
+      latitude: start.position.latitude,
+      longitude: start.position.longitude,
+    );
+
+    map.coordinate2 = CoordinateResponse(
+      latitude: end.position.latitude,
+      longitude: end.position.longitude,
+    );
+
+    SavePartUsecases().save(map);
+
     final soilType = 1.25; // TODO: Tipo de solo;
-    final roadWidth = 4.0; // TODO: Largura da estrada
     final rainVolume = 72.0; // TODO: Intensidade de chuva
 
-    await CalculatorService.calculate(
+    /*await CalculatorService.calculate(
       start: start.position,
       end: end.position,
       rainVolume: rainVolume,
       roadWidth: roadWidth,
       soilType: soilType,
-    );
+    );*/
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/map/map_page.dart';
+import 'package:flutter_barraginha/app/screens/map/models/responses/map_response.dart';
 import 'package:flutter_barraginha/app/screens/parts/controllers/part_controller.dart';
 import 'package:flutter_barraginha/app/screens/parts/dialogs/update_rain_dialog.dart';
 import 'package:flutter_barraginha/app/screens/projects/models/responses/project_list_response.dart';
@@ -66,9 +68,7 @@ class _PartsPageState extends State<PartsPage> {
             icon: const Icon(Icons.add_circle),
             iconSize: 32,
             color: Theme.of(context).colorScheme.secondary,
-            onPressed: () {
-              // TODO: Add Part
-            },
+            onPressed: _addPart,
           )
         ],
       ),
@@ -190,6 +190,24 @@ class _PartsPageState extends State<PartsPage> {
         ],
       ),
     );
+  }
+
+  void _addPart() async {
+    final project = _controller.project!;
+    MapResponse map = MapResponse(
+      idPart: null,
+      idProject: project.id,
+      rainVolume: project.rainVolume,
+      roadWidth: 0.0,
+    );
+
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => MapPage(map),
+      ),
+    );
+
+    await _controller.loadAll();
   }
 
   void _updateRainVolume(num rainVolume) async {

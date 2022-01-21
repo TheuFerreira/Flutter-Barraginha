@@ -48,9 +48,12 @@ class _UpdateRainDialogState extends State<UpdateRainDialog> {
   }
 
   void _onConfirm() {
-    if (_validForm() == false) return;
+    if (_validForm() == false) {
+      return;
+    }
 
-    final rainVolume = double.parse(_rainController.text.replaceAll(',', '.'));
+    String rainText = _rainController.text.replaceAll(',', '.');
+    final rainVolume = double.parse(rainText);
     Navigator.pop(context, rainVolume);
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter_barraginha/app/screens/parts/models/responses/part_response.dart';
 import 'package:flutter_barraginha/app/screens/parts/models/responses/project_part_response.dart';
+import 'package:flutter_barraginha/app/screens/parts/usecases/get_parts_usercases.dart';
 import 'package:flutter_barraginha/app/screens/parts/usecases/get_project_part_usecases.dart';
 import 'package:flutter_barraginha/app/screens/parts/usecases/update_project_usecases.dart';
 import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
@@ -14,35 +15,20 @@ abstract class _PartControllerBase with Store {
   @observable
   ProjectPartResponse? project;
 
-  ObservableList<PartResponse> parts = ObservableList<PartResponse>.of([
-    PartResponse(
-      1,
-      CoordinateResponse(
-        1,
-        38.71980474264239,
-        9.140625000000002,
-        172,
-      ),
-      CoordinateResponse(
-        1,
-        38.7199219336158,
-        9.14040505886078,
-        162,
-      ),
-      3,
-      null,
-    ),
-  ]);
+  @observable
+  List<PartResponse> parts = ObservableList<PartResponse>();
 
-  _PartControllerBase(int idProject) {
+  final int _idProject;
+
+  _PartControllerBase(this._idProject) {
     // TODO: Loading Screen
-    GetProjectPartUseCase().getProjectPart(idProject).then(
-      (value) {
-        project = value;
+    loadAll();
+  }
 
-        calculatePart(parts[0]);
-      },
-    );
+  @action
+  Future loadAll() async {
+    project = await GetProjectPartUseCase().getProjectPart(_idProject);
+    parts = await GetPartsUsecases().getAll(_idProject);
   }
 
   @action

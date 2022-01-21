@@ -24,6 +24,28 @@ mixin _$PartController on _PartControllerBase, Store {
     });
   }
 
+  final _$partsAtom = Atom(name: '_PartControllerBase.parts');
+
+  @override
+  List<PartResponse> get parts {
+    _$partsAtom.reportRead();
+    return super.parts;
+  }
+
+  @override
+  set parts(List<PartResponse> value) {
+    _$partsAtom.reportWrite(value, super.parts, () {
+      super.parts = value;
+    });
+  }
+
+  final _$loadAllAsyncAction = AsyncAction('_PartControllerBase.loadAll');
+
+  @override
+  Future<dynamic> loadAll() {
+    return _$loadAllAsyncAction.run(() => super.loadAll());
+  }
+
   final _$calculatePartAsyncAction =
       AsyncAction('_PartControllerBase.calculatePart');
 
@@ -53,7 +75,8 @@ mixin _$PartController on _PartControllerBase, Store {
   @override
   String toString() {
     return '''
-project: ${project}
+project: ${project},
+parts: ${parts}
     ''';
   }
 }
