@@ -26,7 +26,7 @@ class _MapPageState extends State<MapPage> {
   void initState() {
     super.initState();
 
-    controller = MapController();
+    controller = MapController(context, widget.map);
     roadWithController =
         TextEditingController(text: widget.map.roadWidth.toString());
   }
@@ -187,6 +187,6 @@ class _MapPageState extends State<MapPage> {
   void _caculate() {
     String roadWidthText = roadWithController.text.trim();
     double roadWidth = double.parse(roadWidthText);
-    controller.calculate(widget.map);
+    controller.calculate();
   }
 }

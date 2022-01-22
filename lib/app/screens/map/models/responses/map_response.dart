@@ -1,7 +1,9 @@
+import 'package:flutter_barraginha/app/screens/parts/models/responses/part_response.dart';
+
 class MapResponse {
   int idProject;
   int? idPart;
-  double roadWidth;
+  num? roadWidth;
   num rainVolume;
   CoordinateResponse? coordinate1;
   CoordinateResponse? coordinate2;
@@ -13,19 +15,5 @@ class MapResponse {
     required this.rainVolume,
     this.coordinate1,
     this.coordinate2,
-  });
-}
-
-class CoordinateResponse {
-  int? id;
-  double latitude;
-  double longitude;
-  double? altitude;
-
-  CoordinateResponse({
-    this.id,
-    required this.latitude,
-    required this.longitude,
-    this.altitude,
   });
 }

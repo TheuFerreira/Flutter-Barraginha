@@ -31,13 +31,13 @@ abstract class _PartResponseBase with Store {
 }
 
 class CoordinateResponse {
-  int id;
+  int? id;
   double latitude;
   double longitude;
   double? altitude;
 
   CoordinateResponse({
-    required this.id,
+    this.id,
     required this.latitude,
     required this.longitude,
     this.altitude,

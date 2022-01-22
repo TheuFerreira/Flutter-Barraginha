@@ -4,8 +4,8 @@ import 'package:flutter_barraginha/app/screens/map/dialogs/edit_marker_dialog.da
 import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
 import 'package:flutter_barraginha/app/screens/map/models/responses/map_response.dart';
 import 'package:flutter_barraginha/app/screens/map/usecases/save_part_usecases.dart';
+import 'package:flutter_barraginha/app/screens/parts/models/responses/part_response.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
-import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
@@ -29,12 +29,18 @@ abstract class _MapControllerBase with Store {
   OptionsController options = OptionsController();
   MarkerId? markerToMove;
   GoogleMapController? mapController;
+  final MapResponse _map;
 
-  _MapControllerBase() {
+  _MapControllerBase(BuildContext context, this._map) {
     status = PageStatus.loading;
-    getCurrentLocation();
+    if (_map.idPart == null) {
+      getCurrentLocation();
+    } else {
+      loadPositions(context);
+    }
   }
 
+  @action
   Future getCurrentLocation() async {
     final position = await GeolocatorService().getCurrentLocation();
     if (position == null) {
@@ -54,6 +60,28 @@ abstract class _MapControllerBase with Store {
   }
 
   @action
+  loadPositions(BuildContext context) {
+    final pos1 = LatLng(
+      _map.coordinate1!.latitude,
+      _map.coordinate1!.longitude,
+    );
+
+    final pos2 = LatLng(
+      _map.coordinate2!.latitude,
+      _map.coordinate2!.longitude,
+    );
+
+    addMarker(context, pos1);
+    addMarker(context, pos2);
+
+    initialPosition = CameraPosition(
+      target: pos1,
+      zoom: 15,
+    );
+    status = PageStatus.normal;
+  }
+
+  @action
   void clickMap(BuildContext context, LatLng position) {
     final selectedOption = options.selected;
     if (selectedOption == OptionsType.add) {
@@ -63,6 +91,7 @@ abstract class _MapControllerBase with Store {
     }
   }
 
+  @action
   void addMarker(BuildContext context, LatLng position) {
     if (markers.length == 2) {
       ToastService.show('Máximo de 2 Marcadores Adicionados!');
@@ -144,21 +173,21 @@ abstract class _MapControllerBase with Store {
     );
   }
 
-  Future calculate(MapResponse map) async {
+  Future calculate() async {
     final start = markers[0];
     final end = markers[1];
 
-    map.coordinate1 = CoordinateResponse(
+    _map.coordinate1 = CoordinateResponse(
       latitude: start.position.latitude,
       longitude: start.position.longitude,
     );
 
-    map.coordinate2 = CoordinateResponse(
+    _map.coordinate2 = CoordinateResponse(
       latitude: end.position.latitude,
       longitude: end.position.longitude,
     );
 
-    SavePartUsecases().save(map);
+    await SavePartUsecases().save(_map);
 
     final soilType = 1.25; // TODO: Tipo de solo;
     final rainVolume = 72.0; // TODO: Intensidade de chuva

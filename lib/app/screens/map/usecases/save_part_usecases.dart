@@ -2,15 +2,15 @@ import 'package:flutter_barraginha/app/screens/map/models/responses/map_response
 import 'package:flutter_barraginha/app/shared/database/connection.dart';
 
 class SavePartUsecases extends Connection {
-  void save(MapResponse map) {
+  Future save(MapResponse map) async {
     if (map.idPart == null) {
-      _add(map);
+      await _add(map);
     } else {
-      _update(map);
+      await _update(map);
     }
   }
 
-  void _add(MapResponse map) async {
+  Future _add(MapResponse map) async {
     final db = await getDatabase();
     await db.transaction((txn) async {
       final id = await txn.insert(
@@ -35,10 +35,34 @@ class SavePartUsecases extends Connection {
     });
   }
 
-  void _update(MapResponse map) async {
+  Future _update(MapResponse map) async {
     final db = await getDatabase();
     await db.transaction((txn) async {
-      // TODO: Update Map
+      await txn.rawUpdate(
+        'UPDATE part SET road_width = ? WHERE id = ?;',
+        [
+          map.roadWidth,
+          map.idPart,
+        ],
+      );
+      await txn.rawUpdate(
+        'UPDATE point SET latitude = ?, longitude = ?, altitude = ? WHERE id = ?;',
+        [
+          map.coordinate1!.latitude,
+          map.coordinate1!.longitude,
+          map.coordinate1!.altitude,
+          map.coordinate1!.id,
+        ],
+      );
+      await txn.rawUpdate(
+        'UPDATE point SET latitude = ?, longitude = ?, altitude = ? WHERE id = ?;',
+        [
+          map.coordinate2!.latitude,
+          map.coordinate2!.longitude,
+          map.coordinate2!.altitude,
+          map.coordinate2!.id,
+        ],
+      );
     });
   }
 }

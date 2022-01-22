@@ -55,8 +55,28 @@ mixin _$MapController on _MapControllerBase, Store {
     });
   }
 
+  final _$getCurrentLocationAsyncAction =
+      AsyncAction('_MapControllerBase.getCurrentLocation');
+
+  @override
+  Future<dynamic> getCurrentLocation() {
+    return _$getCurrentLocationAsyncAction
+        .run(() => super.getCurrentLocation());
+  }
+
   final _$_MapControllerBaseActionController =
       ActionController(name: '_MapControllerBase');
+
+  @override
+  dynamic loadPositions(BuildContext context) {
+    final _$actionInfo = _$_MapControllerBaseActionController.startAction(
+        name: '_MapControllerBase.loadPositions');
+    try {
+      return super.loadPositions(context);
+    } finally {
+      _$_MapControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void clickMap(BuildContext context, LatLng position) {
@@ -64,6 +84,17 @@ mixin _$MapController on _MapControllerBase, Store {
         name: '_MapControllerBase.clickMap');
     try {
       return super.clickMap(context, position);
+    } finally {
+      _$_MapControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addMarker(BuildContext context, LatLng position) {
+    final _$actionInfo = _$_MapControllerBaseActionController.startAction(
+        name: '_MapControllerBase.addMarker');
+    try {
+      return super.addMarker(context, position);
     } finally {
       _$_MapControllerBaseActionController.endAction(_$actionInfo);
     }

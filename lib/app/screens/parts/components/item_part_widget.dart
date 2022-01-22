@@ -8,7 +8,7 @@ class ItemPartWidget extends StatelessWidget {
   final String title;
   final CalculateResponse? calculate;
   final Function()? onInfo;
-  final Function()? onEdit;
+  final Function(PartResponse)? onEdit;
   final Function(PartResponse)? onCalculate;
   const ItemPartWidget(
     this.part, {
@@ -133,7 +133,7 @@ class ItemPartWidget extends StatelessWidget {
                 icon: const Icon(Icons.arrow_forward),
                 iconSize: 32,
                 color: const Color(0xFF00695C),
-                onPressed: onEdit,
+                onPressed: () => onEdit!(part),
               ),
             ),
           ],
