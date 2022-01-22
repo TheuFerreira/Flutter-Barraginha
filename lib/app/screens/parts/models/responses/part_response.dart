@@ -8,7 +8,7 @@ abstract class _PartResponseBase with Store {
   int id;
   CoordinateResponse coordinate1;
   CoordinateResponse coordinate2;
-  double? roadWidth;
+  num? roadWidth;
 
   @observable
   CalculateResponse? calculateResponse;
@@ -16,13 +16,13 @@ abstract class _PartResponseBase with Store {
   @observable
   StateResponse state = StateResponse.loading;
 
-  _PartResponseBase(
-    this.id,
-    this.coordinate1,
-    this.coordinate2,
+  _PartResponseBase({
+    required this.id,
+    required this.coordinate1,
+    required this.coordinate2,
     this.roadWidth,
     this.calculateResponse,
-  );
+  });
 
   @action
   void changeState(StateResponse newState) {
@@ -36,7 +36,12 @@ class CoordinateResponse {
   double longitude;
   double? altitude;
 
-  CoordinateResponse(this.id, this.latitude, this.longitude, this.altitude);
+  CoordinateResponse({
+    required this.id,
+    required this.latitude,
+    required this.longitude,
+    this.altitude,
+  });
 }
 
 class CalculateResponse {

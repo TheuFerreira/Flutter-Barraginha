@@ -21,7 +21,6 @@ abstract class _PartControllerBase with Store {
   final int _idProject;
 
   _PartControllerBase(this._idProject) {
-    // TODO: Loading Screen
     loadAll();
   }
 
@@ -29,6 +28,10 @@ abstract class _PartControllerBase with Store {
   Future loadAll() async {
     project = await GetProjectPartUseCase().getProjectPart(_idProject);
     parts = await GetPartsUsecases().getAll(_idProject);
+
+    for (var part in parts) {
+      calculatePart(part);
+    }
   }
 
   @action
