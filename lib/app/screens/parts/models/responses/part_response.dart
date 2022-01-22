@@ -61,18 +61,18 @@ class CalculateResponse {
 
   CalculateResponse.fromMap(Map<String, dynamic> map)
       : distance = map['distance'],
-        levelDifference = map['distance'],
-        horizontalDifference = map['distance'],
-        declivity = map['distance'],
-        horizontalSpacing = map['distance'],
-        verticalSpacing = map['distance'],
-        barrageNumbers = map['distance'],
-        barrageNumbersAdjusted = map['distance'],
-        spacing = map['distance'],
-        runoffVolume = map['distance'],
-        depth = map['distance'],
-        radius = map['distance'],
-        barrageVolume = map['distance'];
+        levelDifference = map['levelDifference'],
+        horizontalDifference = map['horizontalDifference'],
+        declivity = map['declivity'],
+        horizontalSpacing = map['horizontalSpacing'],
+        verticalSpacing = map['verticalSpacing'],
+        barrageNumbers = map['barrageNumbers'],
+        barrageNumbersAdjusted = map['barrageNumbersAdjusted'],
+        spacing = map['spacing'],
+        runoffVolume = map['runoffVolume'],
+        depth = map['depth'],
+        radius = map['radius'],
+        barrageVolume = map['barrageVolume'];
 }
 
 enum StateResponse {
