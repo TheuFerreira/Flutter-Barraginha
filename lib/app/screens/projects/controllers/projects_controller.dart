@@ -1,10 +1,7 @@
-import 'package:flutter_barraginha/app/screens/projects/models/requests/project_add_response.dart';
-import 'package:flutter_barraginha/app/screens/projects/models/responses/project_list_response.dart';
-import 'package:flutter_barraginha/app/screens/projects/usecases/project_add_usecases.dart';
-import 'package:flutter_barraginha/app/screens/projects/usecases/project_list_usecases.dart';
-import 'package:flutter_barraginha/app/screens/projects/usecases/project_remove_usecases.dart';
+import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
+import 'package:flutter_barraginha/app/shared/database/repositories/soil_type_repository.dart';
+import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
-import 'package:flutter_barraginha/app/shared/models/soil_type_model.dart';
 import 'package:mobx/mobx.dart';
 
 part 'projects_controller.g.dart';
@@ -13,7 +10,8 @@ class ProjectsController = _ProjectControllerBase with _$ProjectsController;
 
 abstract class _ProjectControllerBase with Store {
   @observable
-  List<ProjectListResponse> projects = ObservableList<ProjectListResponse>();
+  List<DisplayProjectResponse> projects =
+      ObservableList<DisplayProjectResponse>();
 
   @observable
   PageStatus status = PageStatus.normal;
@@ -24,38 +22,37 @@ abstract class _ProjectControllerBase with Store {
   @computed
   bool get isLoading => status == PageStatus.loading;
 
+  final IProjectRepository _projectRepository = ProjectRepository();
+  final ISoilTypeRepository _soilType = SoilTypeRepository();
+
   _ProjectControllerBase() {
     search('');
   }
 
   @action
-  Future delete(ProjectListResponse project) async {
+  Future delete(DisplayProjectResponse project) async {
+    project.status = 0;
+
     message = 'Deletando Projeto...';
     status = PageStatus.loading;
 
-    await ProjectRemoveUsecases().delete(project);
+    await _projectRepository.save(project);
 
     message = '';
     status = PageStatus.normal;
   }
 
   @action
-  Future<ProjectListResponse> add(
-    String title,
-    double rainVolume,
-    SoilTypeModel soilType,
+  Future<DisplayProjectResponse> add(
+    DisplayProjectResponse project,
   ) async {
     message = 'Criando novo Projeto...';
     status = PageStatus.loading;
 
-    final project = ProjectAddResponse(
-      title: title,
-      date: DateTime.now(),
-      rainVolume: rainVolume,
-      idSoilType: soilType.id,
-    );
+    project.date = DateTime.now();
+    project.status = 1;
 
-    final newProject = await ProjectAddUsecases().add(project);
+    final newProject = await _projectRepository.save(project);
 
     message = '';
     status = PageStatus.normal;
@@ -67,7 +64,10 @@ abstract class _ProjectControllerBase with Store {
     message = 'Pesquisando...';
     status = PageStatus.loading;
 
-    projects = await ProjectListUsecases().search(search: value);
+    projects = await _projectRepository.search(search: value);
+    for (DisplayProjectResponse project in projects) {
+      project.soilType = _soilType.getById(project.idSoilType!);
+    }
 
     message = '';
     status = PageStatus.normal;
