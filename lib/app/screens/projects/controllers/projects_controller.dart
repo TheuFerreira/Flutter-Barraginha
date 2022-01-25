@@ -59,6 +59,16 @@ abstract class _ProjectControllerBase with Store {
     return newProject;
   }
 
+  Future update(DisplayProjectResponse project) async {
+    message = 'Atualizando Projeto...';
+    status = PageStatus.loading;
+
+    await _projectRepository.save(project);
+
+    message = '';
+    status = PageStatus.normal;
+  }
+
   @action
   Future search(String value) async {
     message = 'Pesquisando...';

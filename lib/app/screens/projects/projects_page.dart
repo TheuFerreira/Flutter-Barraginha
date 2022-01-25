@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
-import 'package:flutter_barraginha/app/screens/projects/components/context_menu.dart';
+import 'package:flutter_barraginha/app/screens/projects/dialogs/context_dialog.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/controllers/projects_controller.dart';
 import 'package:flutter_barraginha/app/screens/projects/dialogs/save_project_dialog.dart';
@@ -110,7 +110,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
   void _onTapNewProject() async {
     final result = await showDialog<DisplayProjectResponse?>(
       context: context,
-      builder: (context) => SaveProjectDialog(DisplayProjectResponse()),
+      builder: (context) => SaveProjectDialog(
+        DisplayProjectResponse(),
+        title: 'Novo projeto',
+      ),
     );
 
     if (result == null) {
@@ -132,13 +135,39 @@ class _ProjectsPageState extends State<ProjectsPage> {
       ),
     );
 
-    
-
     await controller.search(searchController.text);
   }
 
-  void _onLongPressItemProject(DisplayProjectResponse project) async {
-   /* final result = await DialogService.showQuestionDialog(
+  void _onLongPressItemProject(DisplayProjectResponse project) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return ContextMenu(
+          project: project,
+          onEdit: onEdit,
+          onDelete: onDelete,
+        );
+      },
+    );
+  }
+
+  void onEdit(DisplayProjectResponse project) async {
+    final result = await showDialog<DisplayProjectResponse?>(
+      context: context,
+      builder: (BuildContext context) => SaveProjectDialog(
+        project,
+        title: 'Editar projeto ${project.title}',
+      ),
+    );
+
+    if (result == null) return;
+
+    await controller.update(result);
+    await controller.search(searchController.text);
+  }
+
+  void onDelete(DisplayProjectResponse project) async {
+    final result = await DialogService.showQuestionDialog(
       context,
       'Excluir',
       'Deseja realmente excluir o projeto ${project.title}?',
@@ -147,17 +176,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
     if (!result) return;
 
     await controller.delete(project);
-    await controller.search(searchController.text);*/
-
-    showDialog
-    (
-      
-      context: context, 
-      builder: (BuildContext context)
-      {
-        return ContextMenu(project: project, controller: controller, searchController: searchController,);
-      }
-      
-    );
+    await controller.search(searchController.text);
   }
 }

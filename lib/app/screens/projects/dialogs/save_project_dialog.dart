@@ -7,8 +7,13 @@ import 'package:flutter_barraginha/app/shared/database/responses/display_project
 import 'package:flutter_barraginha/app/shared/dialogs/base_dialog.dart';
 
 class SaveProjectDialog extends StatefulWidget {
+  final String title;
   final DisplayProjectResponse project;
-  const SaveProjectDialog(this.project, {Key? key}) : super(key: key);
+  const SaveProjectDialog(
+    this.project, {
+    required this.title,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<SaveProjectDialog> createState() => _SaveProjectDialogState();
@@ -16,8 +21,8 @@ class SaveProjectDialog extends StatefulWidget {
 
 class _SaveProjectDialogState extends State<SaveProjectDialog> {
   final _formController = GlobalKey<FormState>();
-  final _nameTextController = TextEditingController();
-  final _volumeTextController = TextEditingController();
+  late TextEditingController _nameTextController;
+  late TextEditingController _volumeTextController;
 
   late SoilType _soilTypeSelected;
   final ISoilTypeRepository _soilType = SoilTypeRepository();
@@ -27,12 +32,15 @@ class _SaveProjectDialogState extends State<SaveProjectDialog> {
     super.initState();
 
     _soilTypeSelected = _soilType.getById(widget.project.idSoilType!);
+    _nameTextController = TextEditingController(text: widget.project.title);
+    _volumeTextController =
+        TextEditingController(text: widget.project.rainVolume.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     return BaseDialog(
-      title: 'Nome do projeto',
+      title: widget.title,
       content: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40.0),
         child: Form(
@@ -109,6 +117,7 @@ class _SaveProjectDialogState extends State<SaveProjectDialog> {
     project.title = textName;
     project.rainVolume = double.parse(textRainVolume);
     project.idSoilType = _soilTypeSelected.id;
+    project.status = 1;
 
     Navigator.pop(context, project);
   }

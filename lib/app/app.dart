@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/parts/parts_info_page.dart';
-import 'package:flutter_barraginha/app/screens/projects/components/context_menu.dart';
-import 'package:flutter_barraginha/app/screens/projects/components/item_project_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/projects_page.dart';
 
 class App extends StatelessWidget {
@@ -56,6 +53,11 @@ class App extends StatelessWidget {
             fontSize: 20.0,
             color: Color(0xFF666666),
           ),
+          headline6: TextStyle(
+            color: Color(0xff666666),
+            fontSize: 20,
+            fontWeight: FontWeight.w400,
+          ),
           subtitle1: TextStyle(
             height: 1.5,
             fontSize: 16.0,
@@ -72,8 +74,11 @@ class App extends StatelessWidget {
             ),
           ),
         ),
+        dividerTheme: const DividerThemeData(
+          thickness: 1,
+        ),
       ),
-      home: const ProjectsPage()
+      home: const ProjectsPage(),
     );
   }
 }
