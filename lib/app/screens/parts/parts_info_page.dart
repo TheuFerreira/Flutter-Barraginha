@@ -20,7 +20,7 @@ class PartsInfoPage extends StatelessWidget {
        height: size.height,
 
        child: Column
-    (
+      (
         children: 
         [
           Expanded
