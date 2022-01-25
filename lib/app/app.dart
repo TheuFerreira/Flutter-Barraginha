@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/parts/parts_info_page.dart';
 import 'package:flutter_barraginha/app/screens/projects/projects_page.dart';
 
 class App extends StatelessWidget {
@@ -70,7 +71,7 @@ class App extends StatelessWidget {
           ),
         ),
       ),
-      home: const ProjectsPage(),
+      home: const PartsInfoPage(),
     );
   }
 }
