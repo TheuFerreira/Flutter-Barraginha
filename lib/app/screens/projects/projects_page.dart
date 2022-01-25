@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/controllers/projects_controller.dart';
-import 'package:flutter_barraginha/app/screens/projects/dialogs/add_dialog_widget.dart';
-import 'package:flutter_barraginha/app/screens/projects/models/responses/project_list_response.dart';
+import 'package:flutter_barraginha/app/screens/projects/dialogs/save_project_dialog.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
+import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
-import 'package:flutter_barraginha/app/shared/models/soil_type_model.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -107,27 +106,23 @@ class _ProjectsPageState extends State<ProjectsPage> {
   }
 
   void _onTapNewProject() async {
-    final result = await showDialog(
+    final result = await showDialog<DisplayProjectResponse?>(
       context: context,
-      builder: (context) => const AddDialogWidget(),
+      builder: (context) => SaveProjectDialog(DisplayProjectResponse()),
     );
 
     if (result == null) {
       return;
     }
 
-    final title = result['title'];
-    final rainVolume = result['rain_volume'] as double;
-    final soilType = result['soil_type'] as SoilTypeModel;
-
-    final project = await controller.add(title, rainVolume, soilType);
+    final project = await controller.add(result);
 
     searchController.text = '';
 
     _onTapItemProject(project);
   }
 
-  void _onTapItemProject(ProjectListResponse project) async {
+  void _onTapItemProject(DisplayProjectResponse project) async {
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -138,11 +133,11 @@ class _ProjectsPageState extends State<ProjectsPage> {
     await controller.search(searchController.text);
   }
 
-  void _onLongPressItemProject(project) async {
+  void _onLongPressItemProject(DisplayProjectResponse project) async {
     final result = await DialogService.showQuestionDialog(
       context,
       'Excluir',
-      'Deseja Realmente Excluir?',
+      'Deseja realmente excluir o projeto ${project.title}?',
     );
 
     if (!result) return;

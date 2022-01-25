@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/projects/models/responses/project_list_response.dart';
+import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 
 import 'text_icon_widget.dart';
 
 class ItemProjectWidget extends StatelessWidget {
-  final ProjectListResponse project;
-  final Function(ProjectListResponse project)? onTap;
-  final Function(ProjectListResponse project)? onLongPress;
+  final DisplayProjectResponse project;
+  final Function(DisplayProjectResponse project)? onTap;
+  final Function(DisplayProjectResponse project)? onLongPress;
   const ItemProjectWidget(
     this.project, {
     Key? key,
@@ -34,7 +34,7 @@ class ItemProjectWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                project.title,
+                project.title ?? '',
                 style: Theme.of(context).textTheme.headline2,
               ),
               const SizedBox(height: 8.0),
@@ -56,7 +56,10 @@ class ItemProjectWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   TextIconWidget(Icons.calendar_today, project.getShortDate()),
-                  TextIconWidget(Icons.timeline, '${project.parts} Trechos'),
+                  TextIconWidget(
+                    Icons.timeline,
+                    '${project.partCount} Trechos',
+                  ),
                 ],
               ),
             ],
