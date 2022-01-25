@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
+import 'package:flutter_barraginha/app/screens/projects/components/context_menu.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/controllers/projects_controller.dart';
 import 'package:flutter_barraginha/app/screens/projects/dialogs/save_project_dialog.dart';
@@ -23,6 +24,7 @@ class ProjectsPage extends StatefulWidget {
 class _ProjectsPageState extends State<ProjectsPage> {
   final controller = ProjectsController();
   final searchController = TextEditingController();
+  late DisplayProjectResponse project;
 
   @override
   Widget build(BuildContext context) {
@@ -130,11 +132,13 @@ class _ProjectsPageState extends State<ProjectsPage> {
       ),
     );
 
+    
+
     await controller.search(searchController.text);
   }
 
   void _onLongPressItemProject(DisplayProjectResponse project) async {
-    final result = await DialogService.showQuestionDialog(
+   /* final result = await DialogService.showQuestionDialog(
       context,
       'Excluir',
       'Deseja realmente excluir o projeto ${project.title}?',
@@ -143,6 +147,17 @@ class _ProjectsPageState extends State<ProjectsPage> {
     if (!result) return;
 
     await controller.delete(project);
-    await controller.search(searchController.text);
+    await controller.search(searchController.text);*/
+
+    showDialog
+    (
+      
+      context: context, 
+      builder: (BuildContext context)
+      {
+        return ContextMenu(project: project, controller: controller, searchController: searchController,);
+      }
+      
+    );
   }
 }
