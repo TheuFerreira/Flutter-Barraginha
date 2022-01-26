@@ -23,6 +23,13 @@ abstract class _PartControllerBase with Store {
   }
 
   @action
+  Future delete(DisplayPart part) async {
+    part.status = 0;
+
+    await _partRepository.save(part);
+  }
+
+  @action
   Future loadAll(int idProject) async {
     parts = await _partRepository.getAll(idProject);
   }

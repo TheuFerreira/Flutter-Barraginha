@@ -32,7 +32,7 @@ class ProjectRepository extends Connection implements IProjectRepository {
     final db = await getDatabase();
 
     await db.transaction((txn) async {
-      txn.update(
+      await txn.update(
         'project',
         project.toMap(),
         where: 'id = ?',

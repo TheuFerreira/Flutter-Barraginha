@@ -6,6 +6,7 @@ import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
+import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'components/item_info_widget.dart';
@@ -157,6 +158,7 @@ class _PartsPageState extends State<PartsPage> {
                               title: 'Trecho ${i + 1}',
                               onInfo: _onInfo,
                               onEdit: _editPart,
+                              onLongPress: (part) => _onLongPressPart(part, i),
                             );
                           },
                         );
@@ -216,5 +218,17 @@ class _PartsPageState extends State<PartsPage> {
     );
 
     await _controller.loadAll();*/
+  }
+
+  void _onLongPressPart(DisplayPart part, int i) async {
+    final result = await DialogService.showQuestionDialog(
+      context,
+      "Excluir",
+      "Tem certeza de que deseja excluir o Trecho ${i + 1}?",
+    );
+
+    if (result == false) return;
+    await _controller.delete(part);
+    await _controller.loadAll(widget.project.id!);
   }
 }

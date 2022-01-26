@@ -39,6 +39,13 @@ mixin _$PartController on _PartControllerBase, Store {
     });
   }
 
+  final _$deleteAsyncAction = AsyncAction('_PartControllerBase.delete');
+
+  @override
+  Future<dynamic> delete(DisplayPart part) {
+    return _$deleteAsyncAction.run(() => super.delete(part));
+  }
+
   final _$loadAllAsyncAction = AsyncAction('_PartControllerBase.loadAll');
 
   @override
