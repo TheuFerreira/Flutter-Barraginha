@@ -61,11 +61,19 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                         widget.title,
                         style: Theme.of(context).textTheme.headline3,
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.info),
-                        iconSize: 24,
-                        color: const Color(0xFF666666),
-                        onPressed: () => widget.onInfo!(_controller.info!),
+                      Observer(
+                        builder: (_) {
+                          final state = _controller.state;
+
+                          return IconButton(
+                            icon: const Icon(Icons.info),
+                            iconSize: 24,
+                            color: const Color(0xFF666666),
+                            onPressed: state != StateItem.none
+                                ? null
+                                : () => widget.onInfo!(_controller.info!),
+                          );
+                        },
                       ),
                     ],
                   ),
