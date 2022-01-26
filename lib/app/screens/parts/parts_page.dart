@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/map_page.dart';
 import 'package:flutter_barraginha/app/screens/map/models/responses/map_response.dart';
 import 'package:flutter_barraginha/app/screens/parts/controllers/part_controller.dart';
-import 'package:flutter_barraginha/app/screens/parts/dialogs/update_rain_dialog.dart';
-import 'package:flutter_barraginha/app/screens/parts/models/responses/part_response.dart';
-import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
+import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
+import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
+import 'package:flutter_barraginha/app/shared/database/entities/project.dart';
+import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'components/item_info_widget.dart';
 import 'components/item_part_widget.dart';
 
 class PartsPage extends StatefulWidget {
-  final DisplayProjectResponse project;
+  final Project project;
   const PartsPage(
     this.project, {
     Key? key,
@@ -24,7 +24,6 @@ class PartsPage extends StatefulWidget {
 
 class _PartsPageState extends State<PartsPage> {
   late PartController _controller;
-  late TextEditingController _projectNameController;
   final partsScroll = ScrollController();
 
   @override
@@ -32,7 +31,6 @@ class _PartsPageState extends State<PartsPage> {
     super.initState();
 
     _controller = PartController(widget.project.id!);
-    _projectNameController = TextEditingController(text: widget.project.title);
   }
 
   @override
@@ -50,17 +48,11 @@ class _PartsPageState extends State<PartsPage> {
         ),
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 48.0),
-          child: SizedBox(
-            height: 32,
-            child: TextFieldWidget(
-              controller: _projectNameController,
-              textColor: const Color(0xFF666666),
-              suffixIcon: const Icon(
-                Icons.edit,
-                size: 20.0,
-                color: Color(0xFF666666),
-              ),
-              onSubmitted: _controller.updateTitleProject,
+          child: Text(
+            widget.project.title ?? '',
+            style: const TextStyle(
+              fontSize: 24,
+              color: Color(0xFF666666),
             ),
           ),
         ),
@@ -95,11 +87,9 @@ class _PartsPageState extends State<PartsPage> {
                 Expanded(
                   child: Observer(
                     builder: (context) {
-                      if (_controller.project == null) {
-                        return Container();
-                      }
-                      final parts = _controller.project!.parts;
-                      final rainVolume = _controller.project!.rainVolume;
+                      final parts = _controller.countParts;
+                      final barrage = _controller.countBarrage;
+                      final rainVolume = widget.project.rainVolume;
                       return Row(
                         children: [
                           Flexible(
@@ -108,17 +98,16 @@ class _PartsPageState extends State<PartsPage> {
                               value: parts.toString(),
                             ),
                           ),
-                          const Expanded(
+                          Expanded(
                             child: ItemInfoWidget(
                               title: 'Bolsões',
-                              // TODO: Value total Bolsoes
+                              value: barrage.toString(),
                             ),
                           ),
                           Expanded(
                             child: ItemInfoWidget(
                               title: 'Volume de chuva',
                               value: rainVolume.toString(),
-                              onEdit: () => _updateRainVolume(rainVolume),
                             ),
                           ),
                         ],
@@ -161,21 +150,12 @@ class _PartsPageState extends State<PartsPage> {
                           shrinkWrap: true,
                           itemCount: parts.length,
                           itemBuilder: (builder, i) {
-                            return Observer(
-                              builder: (ctx) {
-                                final part = parts[i];
-                                final calculate = part.calculateResponse;
-                                return ItemPartWidget(
-                                  part,
-                                  title: 'Trecho ${i + 1}',
-                                  calculate: calculate,
-                                  onInfo: () {
-                                    // TODO: Info Part
-                                  },
-                                  onEdit: _editPart,
-                                  onCalculate: _controller.calculatePart,
-                                );
-                              },
+                            final part = parts[i];
+                            return ItemPartWidget(
+                              part,
+                              title: 'Trecho ${i + 1}',
+                              onInfo: _onInfo,
+                              onEdit: _editPart,
                             );
                           },
                         );
@@ -192,11 +172,11 @@ class _PartsPageState extends State<PartsPage> {
   }
 
   void _addPart() async {
-    final project = _controller.project!;
+    final project = widget.project;
     MapResponse map = MapResponse(
       idPart: null,
-      idProject: project.id,
-      rainVolume: project.rainVolume,
+      idProject: project.id!,
+      rainVolume: project.rainVolume!,
       roadWidth: 0.0,
     );
 
@@ -206,15 +186,23 @@ class _PartsPageState extends State<PartsPage> {
       ),
     );
 
-    await _controller.loadAll();
+    await _controller.loadAll(project.id!);
   }
 
-  void _editPart(PartResponse part) async {
-    final project = _controller.project!;
+  void _onInfo(InfoPart info) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (builder) => PartsInfoPage(info),
+      ),
+    );
+  }
+
+  void _editPart(DisplayPart part) async {
+    /*final project = _controller.project;
     MapResponse map = MapResponse(
       idPart: part.id,
-      idProject: project.id,
-      rainVolume: project.rainVolume,
+      idProject: project.id!,
+      rainVolume: project.rainVolume!,
       roadWidth: part.roadWidth,
       coordinate1: part.coordinate1,
       coordinate2: part.coordinate2,
@@ -226,18 +214,6 @@ class _PartsPageState extends State<PartsPage> {
       ),
     );
 
-    await _controller.loadAll();
-  }
-
-  void _updateRainVolume(num rainVolume) async {
-    final result = await showDialog(
-      context: context,
-      builder: (ctx) => UpdateRainDialog(
-        rainVolume.toString(),
-      ),
-    );
-    if (result == null) return;
-
-    await _controller.updateRainVolumeProject(result as double);
+    await _controller.loadAll();*/
   }
 }

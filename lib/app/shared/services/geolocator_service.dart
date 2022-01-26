@@ -30,11 +30,12 @@ class GeolocatorService {
   }
 
   static double getDistanceBetweenTwoPoints(LatLng start, LatLng end) {
-    return Geolocator.distanceBetween(
+    double value = Geolocator.distanceBetween(
       start.latitude,
       start.longitude,
       end.latitude,
       end.longitude,
     );
+    return value;
   }
 }

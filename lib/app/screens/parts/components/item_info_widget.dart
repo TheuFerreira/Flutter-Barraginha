@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 class ItemInfoWidget extends StatelessWidget {
   final String title;
   final String value;
-  final Function()? onEdit;
   const ItemInfoWidget({
     Key? key,
     this.title = 'Title',
     this.value = '0',
-    this.onEdit,
   }) : super(key: key);
 
   @override
@@ -34,16 +32,6 @@ class ItemInfoWidget extends StatelessWidget {
               ),
             ),
           ),
-          if (onEdit != null)
-            Positioned(
-              bottom: 0,
-              child: IconButton(
-                color: Colors.white,
-                iconSize: 16.0,
-                icon: const Icon(Icons.edit),
-                onPressed: onEdit,
-              ),
-            ),
           Center(
             child: Text(
               value,
