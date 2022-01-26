@@ -2,7 +2,9 @@ import 'dart:math' as mt;
 
 import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
+import 'package:flutter_barraginha/app/shared/database/entities/soil_type.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
+import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/google_earth_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -25,9 +27,10 @@ abstract class _ItemControllerBase with Store {
   @observable
   StateItem state = StateItem.loading;
 
+  final DisplayProjectResponse _project;
   final DisplayPart _part;
 
-  _ItemControllerBase(this._part) {
+  _ItemControllerBase(this._project, this._part) {
     calculate();
   }
 
@@ -40,7 +43,7 @@ abstract class _ItemControllerBase with Store {
       end: _part.points[1],
       roadWidth: _part.roadWidth!,
       rainVolume: 1,
-      soilType: 1,
+      soilType: _project.soilType!,
     );
 
     if (info == null) {
@@ -59,7 +62,7 @@ abstract class _ItemControllerBase with Store {
   Future<InfoPart?> _calculate({
     required Point start,
     required Point end,
-    required double soilType,
+    required SoilType soilType,
     required num roadWidth,
     required num rainVolume,
   }) async {
@@ -88,8 +91,9 @@ abstract class _ItemControllerBase with Store {
     final horizontalDifference =
         mt.sqrt(mt.pow(distance, 2) - mt.pow(levelDifference, 2));
     final declivity = (levelDifference * 100) / horizontalDifference;
-    final horizontalSpacing = 45.18 * soilType * mt.pow(declivity, -0.42);
-    final verticalSpacing = 0.4518 * soilType * mt.pow(declivity, 0.58);
+    final horizontalSpacing =
+        45.18 * soilType.value! * mt.pow(declivity, -0.42);
+    final verticalSpacing = 0.4518 * soilType.value! * mt.pow(declivity, 0.58);
     final barrageNumbers = horizontalDifference / horizontalSpacing;
     final barrageNumbersAdjusted = barrageNumbers.round();
     final spacing = distance / barrageNumbersAdjusted;
@@ -110,6 +114,7 @@ abstract class _ItemControllerBase with Store {
     info = InfoPart(
       pointA: start,
       pointB: end,
+      soilType: soilType,
       distance: distance.round(),
       levelDifference: levelDifference.round(),
       horizontalDifference: convert(horizontalDifference, decimal: 1),

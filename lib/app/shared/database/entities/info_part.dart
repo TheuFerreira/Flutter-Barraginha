@@ -1,8 +1,10 @@
 import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
+import 'package:flutter_barraginha/app/shared/database/entities/soil_type.dart';
 
 class InfoPart {
   Point pointA;
   Point pointB;
+  SoilType soilType;
   num distance;
   num levelDifference;
   num horizontalDifference;
@@ -21,6 +23,7 @@ class InfoPart {
   InfoPart({
     required this.pointA,
     required this.pointB,
+    required this.soilType,
     required this.distance,
     required this.levelDifference,
     required this.horizontalDifference,

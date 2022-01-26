@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/Consts/app_colors.dart';
 import 'package:flutter_barraginha/Consts/text_styles.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
 
@@ -12,50 +11,33 @@ class PartsInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SizedBox(
-        width: size.width,
-        height: size.height,
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(color: AppColors.primaryClor),
-                child: SafeArea(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, left: 10),
-                            child: IconButton(
-                              onPressed: () => Navigator.pop(context),
-                              icon: const Icon(
-                                Icons.arrow_back_ios,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: Center(
-                            child: Text(
-                              'Informações do Trecho',
-                              style: TextStyles.title,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+      appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      body: Column(
+        children: [
+          Container(
+            height: 160,
+            color: Theme.of(context).colorScheme.primary,
+            padding: const EdgeInsets.only(bottom: 20),
+            child: Center(
+              child: Text(
+                'Informações do Trecho',
+                style: TextStyles.title,
               ),
             ),
-            Expanded(
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
                   Row(
@@ -71,86 +53,79 @@ class PartsInfoPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 40),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Tamanho',
-                                  style: TextStyles.titleNormal,
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  'Raio: ${info.radius}m',
-                                  style: TextStyles.textNormal,
-                                  textAlign: TextAlign.left,
-                                ),
-                                const SizedBox(height: 3),
-                                Text(
-                                  'Profundidade: 21m', //TODO: trocar por parametro,
-                                  style: TextStyles.textNormal,
-                                  textAlign: TextAlign.left,
-                                ),
-                                const SizedBox(height: 3),
-                                Text(
-                                  'Volume: ${info.barrageVolume}L',
-                                  style: TextStyles.textNormal,
-                                  textAlign: TextAlign.left,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Bolsões',
+                                'Tamanho',
                                 style: TextStyles.titleNormal,
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                '${info.barrageNumbersAdjusted}',
+                                'Raio: ${info.radius}m',
                                 style: TextStyles.textNormal,
-                              )
+                                textAlign: TextAlign.left,
+                              ),
+                              const SizedBox(height: 3),
+                              Text(
+                                'Profundidade: ${info.depth}m',
+                                style: TextStyles.textNormal,
+                                textAlign: TextAlign.left,
+                              ),
+                              const SizedBox(height: 3),
+                              Text(
+                                'Volume: ${info.barrageVolume}L',
+                                style: TextStyles.textNormal,
+                                textAlign: TextAlign.left,
+                              ),
                             ],
                           ),
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'Distância',
-                                  style: TextStyles.titleNormal,
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  '${info.distance}m',
-                                  style: TextStyles.textNormal,
-                                  textAlign: TextAlign.end,
-                                ),
-                              ],
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Bolsões',
+                              style: TextStyles.titleNormal,
                             ),
+                            const SizedBox(height: 5),
+                            Text(
+                              '${info.barrageNumbersAdjusted}',
+                              style: TextStyles.textNormal,
+                            )
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                'Distância',
+                                style: TextStyles.titleNormal,
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                '${info.distance}m',
+                                style: TextStyles.textNormal,
+                                textAlign: TextAlign.end,
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const Divider(),
-            Expanded(
-              child: Column(
-                children: [
+                      ),
+                    ],
+                  ),
+                  const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -164,116 +139,115 @@ class PartsInfoPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 40),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Solo',
-                                  style: TextStyles.titleNormal,
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  'Tipo01', //TODO: trocar por parametro,
-                                  style: TextStyles.textNormal,
-                                  textAlign: TextAlign.left,
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  'Declividade',
-                                  style: TextStyles.titleNormal,
-                                  textAlign: TextAlign.left,
-                                ),
-                                const SizedBox(height: 3),
-                                Text(
-                                  '2111m', //TODO: trocar por parametro,
-                                  style: TextStyles.textNormal,
-                                  textAlign: TextAlign.left,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Altitude',
+                                'Solo',
                                 style: TextStyles.titleNormal,
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                'Ponto 1: ${info.pointA.altitude}m',
+                                '${info.soilType.text}',
                                 style: TextStyles.textNormal,
+                                textAlign: TextAlign.left,
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                'Declividade',
+                                style: TextStyles.titleNormal,
+                                textAlign: TextAlign.left,
+                              ),
+                              const SizedBox(height: 3),
+                              Text(
+                                '${info.declivity}m',
+                                style: TextStyles.textNormal,
+                                textAlign: TextAlign.left,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Altitude',
+                              style: TextStyles.titleNormal,
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              'Ponto 1: ${info.pointA.altitude}m',
+                              style: TextStyles.textNormal,
+                            ),
+                            Text(
+                              'Ponto 2: ${info.pointB.altitude}m',
+                              style: TextStyles.textNormal,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                'Coordenadas',
+                                style: TextStyles.titleNormal,
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                'Ponto1',
+                                style: TextStyles.textNormal,
+                                textAlign: TextAlign.end,
                               ),
                               Text(
-                                'Ponto 2: ${info.pointB.altitude}m',
+                                'Lat: ${info.pointA.latitude}',
                                 style: TextStyles.textNormal,
+                                textAlign: TextAlign.end,
+                              ),
+                              Text(
+                                'Long: ${info.pointA.longitude}',
+                                style: TextStyles.textNormal,
+                                textAlign: TextAlign.end,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                'Ponto2',
+                                style: TextStyles.textNormal,
+                                textAlign: TextAlign.end,
+                              ),
+                              Text(
+                                'Lat: ${info.pointB.latitude}',
+                                style: TextStyles.textNormal,
+                                textAlign: TextAlign.end,
+                              ),
+                              Text(
+                                'Long: ${info.pointB.longitude}',
+                                style: TextStyles.textNormal,
+                                textAlign: TextAlign.end,
                               ),
                             ],
                           ),
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'Coordenadas',
-                                  style: TextStyles.titleNormal,
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  'Ponto1',
-                                  style: TextStyles.textNormal,
-                                  textAlign: TextAlign.end,
-                                ),
-                                Text(
-                                  'Lat: ${info.pointA.latitude}',
-                                  style: TextStyles.textNormal,
-                                  textAlign: TextAlign.end,
-                                ),
-                                Text(
-                                  'Long: ${info.pointA.longitude}',
-                                  style: TextStyles.textNormal,
-                                  textAlign: TextAlign.end,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  'Ponto2',
-                                  style: TextStyles.textNormal,
-                                  textAlign: TextAlign.end,
-                                ),
-                                Text(
-                                  'Lat: ${info.pointB.latitude}',
-                                  style: TextStyles.textNormal,
-                                  textAlign: TextAlign.end,
-                                ),
-                                Text(
-                                  'Long: ${info.pointB.longitude}',
-                                  style: TextStyles.textNormal,
-                                  textAlign: TextAlign.end,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                      ),
+                    ],
+                  ),
                 ],
               ),
-            )
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }

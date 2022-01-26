@@ -4,15 +4,15 @@ import 'package:flutter_barraginha/app/screens/map/models/responses/map_response
 import 'package:flutter_barraginha/app/screens/parts/controllers/part_controller.dart';
 import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
-import 'package:flutter_barraginha/app/shared/database/entities/project.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
+import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'components/item_info_widget.dart';
 import 'components/item_part_widget.dart';
 
 class PartsPage extends StatefulWidget {
-  final Project project;
+  final DisplayProjectResponse project;
   const PartsPage(
     this.project, {
     Key? key,
@@ -152,6 +152,7 @@ class _PartsPageState extends State<PartsPage> {
                           itemBuilder: (builder, i) {
                             final part = parts[i];
                             return ItemPartWidget(
+                              widget.project,
                               part,
                               title: 'Trecho ${i + 1}',
                               onInfo: _onInfo,

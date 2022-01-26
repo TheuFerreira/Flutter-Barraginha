@@ -3,14 +3,17 @@ import 'package:flutter_barraginha/app/screens/parts/controllers/item_controller
 import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
+import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ItemPartWidget extends StatefulWidget {
+  final DisplayProjectResponse project;
   final DisplayPart part;
   final String title;
   final Function(InfoPart)? onInfo;
   final Function(DisplayPart)? onEdit;
   const ItemPartWidget(
+    this.project,
     this.part, {
     Key? key,
     required this.title,
@@ -29,7 +32,7 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
   void initState() {
     super.initState();
 
-    _controller = ItemController(widget.part);
+    _controller = ItemController(widget.project, widget.part);
   }
 
   @override
