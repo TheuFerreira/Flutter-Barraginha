@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/dialogs/edit_marker_dialog.dart';
 import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
-import 'package:flutter_barraginha/app/screens/map/models/responses/map_response.dart';
-import 'package:flutter_barraginha/app/screens/map/usecases/save_part_usecases.dart';
-import 'package:flutter_barraginha/app/screens/parts/models/responses/part_response.dart';
+import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
+import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
+import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
@@ -29,11 +29,12 @@ abstract class _MapControllerBase with Store {
   OptionsController options = OptionsController();
   MarkerId? markerToMove;
   GoogleMapController? mapController;
-  final MapResponse _map;
+  final DisplayPart _part;
+  final IPartRepository _partRepository = PartRepository();
 
-  _MapControllerBase(BuildContext context, this._map) {
+  _MapControllerBase(BuildContext context, this._part) {
     status = PageStatus.loading;
-    if (_map.idPart == null) {
+    if (_part.id == null) {
       getCurrentLocation();
     } else {
       loadPositions(context);
@@ -62,13 +63,13 @@ abstract class _MapControllerBase with Store {
   @action
   loadPositions(BuildContext context) {
     final pos1 = LatLng(
-      _map.coordinate1!.latitude,
-      _map.coordinate1!.longitude,
+      _part.points[0].latitude!.toDouble(),
+      _part.points[0].longitude!.toDouble(),
     );
 
     final pos2 = LatLng(
-      _map.coordinate2!.latitude,
-      _map.coordinate2!.longitude,
+      _part.points[1].latitude!.toDouble(),
+      _part.points[1].longitude!.toDouble(),
     );
 
     addMarker(context, pos1);
@@ -177,7 +178,7 @@ abstract class _MapControllerBase with Store {
     final start = markers[0];
     final end = markers[1];
 
-    _map.coordinate1 = CoordinateResponse(
+    /*_map.coordinate1 = CoordinateResponse(
       latitude: start.position.latitude,
       longitude: start.position.longitude,
     );
@@ -185,9 +186,7 @@ abstract class _MapControllerBase with Store {
     _map.coordinate2 = CoordinateResponse(
       latitude: end.position.latitude,
       longitude: end.position.longitude,
-    );
-
-    await SavePartUsecases().save(_map);
+    );*/
 
     final soilType = 1.25; // TODO: Tipo de solo;
     final rainVolume = 72.0; // TODO: Intensidade de chuva
@@ -199,5 +198,37 @@ abstract class _MapControllerBase with Store {
       roadWidth: roadWidth,
       soilType: soilType,
     );*/
+  }
+
+  Future save() async {
+    if (markers.isEmpty || markers.length > 2) {
+      ToastService.show('Insira 2 pontos para salvar!');
+      return;
+    }
+    final start = markers[0];
+    final end = markers[1];
+
+    if (_part.points.isEmpty) {
+      Point pointA = Point(
+        latitude: start.position.latitude,
+        longitude: start.position.longitude,
+      );
+
+      Point pointB = Point(
+        latitude: end.position.latitude,
+        longitude: end.position.longitude,
+      );
+
+      _part.points.add(pointA);
+      _part.points.add(pointB);
+    } else {
+      _part.points[0].latitude = start.position.latitude;
+      _part.points[0].longitude = start.position.longitude;
+
+      _part.points[1].latitude = end.position.latitude;
+      _part.points[1].longitude = end.position.longitude;
+    }
+
+    await _partRepository.save(_part);
   }
 }

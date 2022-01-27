@@ -14,7 +14,7 @@ class PartRepository extends Connection implements IPartRepository {
     final db = await getDatabase();
     final result = await db.transaction<List<DisplayPart>>((txn) async {
       final result = await txn.rawQuery(
-        'SELECT p.id, p.road_width, p.status '
+        'SELECT p.id, p.id_project, p.road_width, p.status '
         'FROM part AS p '
         'WHERE p.status = 1 AND p.id_project = ?',
         [idProject],
@@ -27,7 +27,9 @@ class PartRepository extends Connection implements IPartRepository {
           'SELECT * '
           'FROM point AS p '
           'WHERE p.id_part = ?',
-          [part['id']],
+          [
+            part['id'],
+          ],
         );
 
         for (dynamic point in points) {
@@ -53,7 +55,29 @@ class PartRepository extends Connection implements IPartRepository {
     }
   }
 
-  Future _insert(DisplayPart part) async {}
+  Future _insert(DisplayPart part) async {
+    final db = await getDatabase();
+
+    await db.transaction((txn) async {
+      int idPart = await txn.insert(
+        'part',
+        part.toMap(),
+      );
+
+      for (Point point in part.points) {
+        await txn.rawInsert(
+          'INSERT INTO point (id_part, latitude, longitude, altitude) '
+          'VALUES (?, ?, ?, ?);',
+          [
+            idPart,
+            point.latitude,
+            point.longitude,
+            point.altitude,
+          ],
+        );
+      }
+    });
+  }
 
   Future _update(DisplayPart part) async {
     final db = await getDatabase();
@@ -69,7 +93,7 @@ class PartRepository extends Connection implements IPartRepository {
       for (Point point in part.points) {
         await txn.rawUpdate(
           'UPDATE point '
-          'SET latitude = ?, longitude = ?, altitude = ? '
+          'SET  latitude = ?, longitude = ?, altitude = ? '
           'WHERE id = ?',
           [
             point.latitude,

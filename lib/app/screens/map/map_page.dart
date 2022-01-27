@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
-import 'package:flutter_barraginha/app/screens/map/models/responses/map_response.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
+import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapPage extends StatefulWidget {
-  final MapResponse map;
+  final DisplayPart part;
   const MapPage(
-    this.map, {
+    this.part, {
     Key? key,
   }) : super(key: key);
 
@@ -26,9 +26,9 @@ class _MapPageState extends State<MapPage> {
   void initState() {
     super.initState();
 
-    controller = MapController(context, widget.map);
+    controller = MapController(context, widget.part);
     roadWithController =
-        TextEditingController(text: widget.map.roadWidth.toString());
+        TextEditingController(text: widget.part.roadWidth.toString());
   }
 
   @override
@@ -166,11 +166,9 @@ class _MapPageState extends State<MapPage> {
                           ),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.settings),
+                          icon: const Icon(Icons.save_alt),
                           color: Colors.white,
-                          onPressed: () {
-                            // TODO: Ontap Settings
-                          },
+                          onPressed: controller.save,
                         ),
                       ],
                     ),

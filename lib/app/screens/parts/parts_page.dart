@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/map_page.dart';
-import 'package:flutter_barraginha/app/screens/map/models/responses/map_response.dart';
 import 'package:flutter_barraginha/app/screens/parts/controllers/part_controller.dart';
 import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
@@ -176,16 +175,13 @@ class _PartsPageState extends State<PartsPage> {
 
   void _addPart() async {
     final project = widget.project;
-    MapResponse map = MapResponse(
-      idPart: null,
+    DisplayPart part = DisplayPart(
       idProject: project.id!,
-      rainVolume: project.rainVolume!,
-      roadWidth: 0.0,
     );
 
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => MapPage(map),
+        builder: (ctx) => MapPage(part),
       ),
     );
 
@@ -201,23 +197,14 @@ class _PartsPageState extends State<PartsPage> {
   }
 
   void _editPart(DisplayPart part) async {
-    /*final project = _controller.project;
-    MapResponse map = MapResponse(
-      idPart: part.id,
-      idProject: project.id!,
-      rainVolume: project.rainVolume!,
-      roadWidth: part.roadWidth,
-      coordinate1: part.coordinate1,
-      coordinate2: part.coordinate2,
-    );
-
+    final project = widget.project;
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => MapPage(map),
+        builder: (ctx) => MapPage(part),
       ),
     );
 
-    await _controller.loadAll();*/
+    await _controller.loadAll(project.id!);
   }
 
   void _onLongPressPart(DisplayPart part, int i) async {
