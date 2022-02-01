@@ -5,6 +5,7 @@ import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/soil_type.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
+import 'package:flutter_barraginha/app/shared/exceptions/web_exception.dart';
 import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/google_earth_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -38,9 +39,12 @@ abstract class _ItemControllerBase with Store {
   Future calculate() async {
     changeItemState(StateItem.loading);
 
+    Point start = Point.copy(_part.points[0]);
+    Point end = Point.copy(_part.points[1]);
+
     info = await _calculate(
-      start: _part.points[0],
-      end: _part.points[1],
+      start: start,
+      end: end,
       roadWidth: _part.roadWidth!,
       rainVolume: 1,
       soilType: _project.soilType!,
@@ -74,13 +78,30 @@ abstract class _ItemControllerBase with Store {
     final endLongitude = end.longitude!.toDouble();
     final endLatLng = LatLng(endLatitude, endLongitude);
 
-    start.altitude = start.altitude == null
-        ? await GoogleEarthService.getAltitude(startLatitude, startLongitude)
-        : start.altitude!.toDouble();
+    if (start.altitude == null) {
+      try {
+        final value =
+            await GoogleEarthService.getAltitude(startLatitude, startLongitude);
+        start.altitude = value;
+      } on WebException {
+        return null;
+      }
+    } else {
+      start.altitude = start.altitude!.toDouble();
+    }
 
-    end.altitude = end.altitude == null
-        ? await GoogleEarthService.getAltitude(endLatitude, endLongitude)
-        : end.altitude!.toDouble();
+    if (end.altitude == null) {
+      try {
+        final value =
+            await GoogleEarthService.getAltitude(endLatitude, endLongitude);
+
+        end.altitude = value;
+      } on WebException {
+        return null;
+      }
+    } else {
+      end.altitude = end.altitude!.toDouble();
+    }
 
     final distance = GeolocatorService.getDistanceBetweenTwoPoints(
       startLatLng,

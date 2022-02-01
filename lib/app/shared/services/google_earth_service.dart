@@ -19,7 +19,7 @@ class GoogleEarthService {
     } on DioError {
       throw WebException();
     } on Exception {
-      throw Exception();
+      throw Exception('Unknown Error');
     }
   }
 }

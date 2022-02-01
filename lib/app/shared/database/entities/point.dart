@@ -10,4 +10,11 @@ class Point {
     this.longitude,
     this.altitude,
   });
+
+  Point.copy(Point point) {
+    id = point.id;
+    latitude = point.latitude;
+    longitude = point.longitude;
+    altitude = point.altitude;
+  }
 }

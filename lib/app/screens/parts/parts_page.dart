@@ -145,6 +145,11 @@ class _PartsPageState extends State<PartsPage> {
                     Observer(
                       builder: (context) {
                         final parts = _controller.parts;
+                        if (parts.isEmpty) {
+                          return const SizedBox(
+                            child: Text('Nenhum trecho encontrado!'),
+                          );
+                        }
                         return ListView.builder(
                           controller: partsScroll,
                           shrinkWrap: true,

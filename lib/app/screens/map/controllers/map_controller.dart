@@ -37,7 +37,7 @@ abstract class _MapControllerBase with Store {
     if (_part.id == null) {
       getCurrentLocation();
     } else {
-      loadPositions(context);
+      _loadPositions(context);
     }
   }
 
@@ -60,8 +60,7 @@ abstract class _MapControllerBase with Store {
     status = PageStatus.normal;
   }
 
-  @action
-  loadPositions(BuildContext context) {
+  Future _loadPositions(BuildContext context) async {
     final pos1 = LatLng(
       _part.points[0].latitude!.toDouble(),
       _part.points[0].longitude!.toDouble(),
@@ -113,7 +112,7 @@ abstract class _MapControllerBase with Store {
           deleteMarker(context, markerId);
         } else if (selectedOption == OptionsType.move) {
           markerToMove = markerId;
-          ToastService.show('Clique em um marcador do mapa.');
+          ToastService.show('Clique em um ponto do mapa.');
         }
       },
     );
@@ -200,13 +199,15 @@ abstract class _MapControllerBase with Store {
     );*/
   }
 
-  Future save() async {
+  Future save(double roadWidth) async {
     if (markers.isEmpty || markers.length > 2) {
       ToastService.show('Insira 2 pontos para salvar!');
       return;
     }
     final start = markers[0];
     final end = markers[1];
+
+    _part.roadWidth = roadWidth;
 
     if (_part.points.isEmpty) {
       Point pointA = Point(

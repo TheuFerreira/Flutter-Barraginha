@@ -31,6 +31,7 @@ abstract class _PartControllerBase with Store {
 
   @action
   Future loadAll(int idProject) async {
+    parts = [];
     parts = await _partRepository.getAll(idProject);
   }
 }

@@ -68,17 +68,6 @@ mixin _$MapController on _MapControllerBase, Store {
       ActionController(name: '_MapControllerBase');
 
   @override
-  dynamic loadPositions(BuildContext context) {
-    final _$actionInfo = _$_MapControllerBaseActionController.startAction(
-        name: '_MapControllerBase.loadPositions');
-    try {
-      return super.loadPositions(context);
-    } finally {
-      _$_MapControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void clickMap(BuildContext context, LatLng position) {
     final _$actionInfo = _$_MapControllerBaseActionController.startAction(
         name: '_MapControllerBase.clickMap');

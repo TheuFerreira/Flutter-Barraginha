@@ -145,7 +145,6 @@ class _MapPageState extends State<MapPage> {
                         fillColor: const Color.fromARGB(50, 255, 255, 255),
                         textColor: Colors.white,
                         keyboardType: TextInputType.number,
-                        onChanged: (value) {},
                       ),
                     ),
                     Row(
@@ -168,7 +167,7 @@ class _MapPageState extends State<MapPage> {
                         IconButton(
                           icon: const Icon(Icons.save_alt),
                           color: Colors.white,
-                          onPressed: controller.save,
+                          onPressed: _save,
                         ),
                       ],
                     ),
@@ -183,8 +182,12 @@ class _MapPageState extends State<MapPage> {
   }
 
   void _caculate() {
+    controller.calculate();
+  }
+
+  void _save() {
     String roadWidthText = roadWithController.text.trim();
     double roadWidth = double.parse(roadWidthText);
-    controller.calculate();
+    controller.save(roadWidth);
   }
 }
