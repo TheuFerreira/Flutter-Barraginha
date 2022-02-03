@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:mobx/mobx.dart';

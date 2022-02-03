@@ -199,10 +199,10 @@ abstract class _MapControllerBase with Store {
     );*/
   }
 
-  Future save(double roadWidth) async {
+  Future<bool> save(double roadWidth) async {
     if (markers.isEmpty || markers.length > 2) {
       ToastService.show('Insira 2 pontos para salvar!');
-      return;
+      return false;
     }
     final start = markers[0];
     final end = markers[1];
@@ -231,5 +231,8 @@ abstract class _MapControllerBase with Store {
     }
 
     await _partRepository.save(_part);
+    ToastService.show('Trecho salvo com sucesso.');
+
+    return true;
   }
 }

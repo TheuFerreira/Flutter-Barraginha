@@ -32,6 +32,12 @@ class _MapPageState extends State<MapPage> {
   }
 
   @override
+  void dispose() {
+    controller.mapController!.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -185,9 +191,13 @@ class _MapPageState extends State<MapPage> {
     controller.calculate();
   }
 
-  void _save() {
+  void _save() async {
     String roadWidthText = roadWithController.text.trim();
     double roadWidth = double.parse(roadWidthText);
-    controller.save(roadWidth);
+
+    final result = await controller.save(roadWidth);
+    if (result == false) return;
+
+    Navigator.of(context).pop();
   }
 }
