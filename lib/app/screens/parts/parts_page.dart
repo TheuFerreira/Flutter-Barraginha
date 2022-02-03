@@ -163,6 +163,7 @@ class _PartsPageState extends State<PartsPage> {
                               onInfo: _onInfo,
                               onEdit: _editPart,
                               onLongPress: (part) => _onLongPressPart(part, i),
+                              onCalculated: _controller.addBarrageNumber,
                             );
                           },
                         );

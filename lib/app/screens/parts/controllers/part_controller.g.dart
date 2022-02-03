@@ -16,13 +16,6 @@ mixin _$PartController on _PartControllerBase, Store {
       (_$countPartsComputed ??= Computed<int>(() => super.countParts,
               name: '_PartControllerBase.countParts'))
           .value;
-  Computed<num>? _$countBarrageComputed;
-
-  @override
-  num get countBarrage =>
-      (_$countBarrageComputed ??= Computed<num>(() => super.countBarrage,
-              name: '_PartControllerBase.countBarrage'))
-          .value;
 
   final _$partsAtom = Atom(name: '_PartControllerBase.parts');
 
@@ -36,6 +29,21 @@ mixin _$PartController on _PartControllerBase, Store {
   set parts(List<DisplayPart> value) {
     _$partsAtom.reportWrite(value, super.parts, () {
       super.parts = value;
+    });
+  }
+
+  final _$countBarrageAtom = Atom(name: '_PartControllerBase.countBarrage');
+
+  @override
+  num get countBarrage {
+    _$countBarrageAtom.reportRead();
+    return super.countBarrage;
+  }
+
+  @override
+  set countBarrage(num value) {
+    _$countBarrageAtom.reportWrite(value, super.countBarrage, () {
+      super.countBarrage = value;
     });
   }
 
@@ -53,12 +61,26 @@ mixin _$PartController on _PartControllerBase, Store {
     return _$loadAllAsyncAction.run(() => super.loadAll(idProject));
   }
 
+  final _$_PartControllerBaseActionController =
+      ActionController(name: '_PartControllerBase');
+
+  @override
+  void addBarrageNumber(num barrageNumber) {
+    final _$actionInfo = _$_PartControllerBaseActionController.startAction(
+        name: '_PartControllerBase.addBarrageNumber');
+    try {
+      return super.addBarrageNumber(barrageNumber);
+    } finally {
+      _$_PartControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 parts: ${parts},
-countParts: ${countParts},
-countBarrage: ${countBarrage}
+countBarrage: ${countBarrage},
+countParts: ${countParts}
     ''';
   }
 }

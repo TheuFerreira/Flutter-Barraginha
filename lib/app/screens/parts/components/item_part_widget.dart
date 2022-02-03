@@ -13,6 +13,7 @@ class ItemPartWidget extends StatefulWidget {
   final Function(InfoPart)? onInfo;
   final Function(DisplayPart)? onEdit;
   final Function(DisplayPart part)? onLongPress;
+  final Function(num barrageCount)? onCalculated;
   const ItemPartWidget(
     this.project,
     this.part, {
@@ -21,6 +22,7 @@ class ItemPartWidget extends StatefulWidget {
     this.onInfo,
     this.onEdit,
     this.onLongPress,
+    this.onCalculated,
   }) : super(key: key);
 
   @override
@@ -34,7 +36,8 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
   void initState() {
     super.initState();
 
-    _controller = ItemController(widget.project, widget.part);
+    _controller =
+        ItemController(widget.project, widget.part, widget.onCalculated!);
   }
 
   @override
@@ -93,7 +96,8 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                           return const LoadingWidget('Calculando...');
                         } else if (state == StateItem.calculate) {
                           return ElevatedButton(
-                            onPressed: _controller.calculate,
+                            onPressed: () =>
+                                _controller.calculate(widget.onCalculated!),
                             child: const Text('Calcular'),
                           );
                         }

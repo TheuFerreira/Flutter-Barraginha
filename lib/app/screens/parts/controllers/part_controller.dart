@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:mobx/mobx.dart';
@@ -13,8 +15,8 @@ abstract class _PartControllerBase with Store {
   @computed
   int get countParts => parts.length;
 
-  @computed
-  num get countBarrage => 0;
+  @observable
+  num countBarrage = 0;
 
   final IPartRepository _partRepository = PartRepository();
 
@@ -32,6 +34,12 @@ abstract class _PartControllerBase with Store {
   @action
   Future loadAll(int idProject) async {
     parts = [];
+    countBarrage = 0;
     parts = await _partRepository.getAll(idProject);
+  }
+
+  @action
+  void addBarrageNumber(num barrageNumber) {
+    countBarrage += barrageNumber;
   }
 }
