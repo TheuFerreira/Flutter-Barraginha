@@ -49,11 +49,11 @@ class ProjectRepository extends Connection implements IProjectRepository {
     final result = await db.rawQuery(
       'SELECT p.id, p.id_soil_type, p.title, p.date, p.rain_volume, p.status, COUNT(pt.id) AS parts '
               'FROM project AS p '
-              'LEFT JOIN part AS pt ON pt.id_project = p.id '
-              'WHERE p.status = 1 AND pt.status = 1 AND title LIKE \'%' +
+              'LEFT JOIN (SELECT id, id_project FROM part WHERE status = 1) AS pt ON pt.id_project = p.id '
+              'WHERE p.status = 1 AND title LIKE \'%' +
           search +
           '%\' '
-              'GROUP BY p.id '
+              'GROUP BY p.id'
               ';',
     );
 
