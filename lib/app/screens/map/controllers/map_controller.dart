@@ -4,8 +4,11 @@ import 'package:flutter_barraginha/app/screens/map/dialogs/edit_marker_dialog.da
 import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
+import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
+import 'package:flutter_barraginha/app/shared/database/repositories/soil_type_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
+import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
@@ -173,30 +176,36 @@ abstract class _MapControllerBase with Store {
     );
   }
 
-  Future calculate() async {
-    final start = markers[0];
-    final end = markers[1];
+  Future calculate(num roadWidth) async {
+    final mStart = markers[0];
+    final mEnd = markers[1];
 
-    /*_map.coordinate1 = CoordinateResponse(
-      latitude: start.position.latitude,
-      longitude: start.position.longitude,
+    final start = Point(
+      latitude: mStart.position.latitude,
+      longitude: mStart.position.longitude,
+    );
+    final end = Point(
+      latitude: mEnd.position.latitude,
+      longitude: mEnd.position.longitude,
     );
 
-    _map.coordinate2 = CoordinateResponse(
-      latitude: end.position.latitude,
-      longitude: end.position.longitude,
-    );*/
+    final project = await ProjectRepository().getById(_part.idProject!);
+    project.soilType = SoilTypeRepository().getById(project.idSoilType!);
 
-    final soilType = 1.25; // TODO: Tipo de solo;
-    final rainVolume = 72.0; // TODO: Intensidade de chuva
-
-    /*await CalculatorService.calculate(
-      start: start.position,
-      end: end.position,
-      rainVolume: rainVolume,
+    final result = await CalculatorService.calculate(
+      start: start,
+      end: end,
+      soilType: project.soilType!,
       roadWidth: roadWidth,
-      soilType: soilType,
-    );*/
+      rainVolume: project.rainVolume!,
+    );
+
+    if (result == null) {
+      ToastService.show("Houve um problema ao calcular");
+      return;
+    }
+
+    ToastService.show("Calculado com sucesso");
   }
 
   Future<bool> save(double roadWidth) async {

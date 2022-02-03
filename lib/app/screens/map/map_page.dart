@@ -188,7 +188,10 @@ class _MapPageState extends State<MapPage> {
   }
 
   void _caculate() {
-    controller.calculate();
+    String roadWidthText = roadWithController.text.trim();
+    double roadWidth = double.parse(roadWidthText);
+
+    controller.calculate(roadWidth);
   }
 
   void _save() async {
