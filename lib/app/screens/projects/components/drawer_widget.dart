@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/about/abaut_page.dart';
+import 'package:flutter_barraginha/app/screens/licenses/licenses_page.dart';
 import 'package:flutter_barraginha/app/screens/partners/partners_page.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/item_drawer_widget.dart';
 
@@ -59,9 +61,19 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 ItemDrawerWidget(
                   title: 'Sobre',
-                  onTap: () {
-                    // TODO: Sobre
-                  },
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (builder) => const AboutPage(),
+                    ),
+                  ),
+                ),
+                ItemDrawerWidget(
+                  title: 'Licenças',
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (builder) => const LicensesPage(),
+                    ),
+                  ),
                 ),
               ],
             ),
