@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/Consts/text_styles.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PartsInfoPage extends StatelessWidget {
   final InfoPart info;
@@ -31,7 +31,11 @@ class PartsInfoPage extends StatelessWidget {
             child: Center(
               child: Text(
                 'Informações do Trecho',
-                style: TextStyles.title,
+                style: GoogleFonts.roboto(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 25,
+                ),
               ),
             ),
           ),
@@ -47,7 +51,7 @@ class PartsInfoPage extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 30, left: 20),
                         child: Text(
                           'Básico',
-                          style: TextStyles.titleBold,
+                          style: Theme.of(context).textTheme.headline3,
                         ),
                       ),
                     ],
@@ -64,24 +68,24 @@ class PartsInfoPage extends StatelessWidget {
                             children: [
                               Text(
                                 'Tamanho',
-                                style: TextStyles.titleNormal,
+                                style: Theme.of(context).textTheme.headline5,
                               ),
                               const SizedBox(height: 5),
                               Text(
                                 'Raio: ${info.radius}m',
-                                style: TextStyles.textNormal,
+                                style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.left,
                               ),
                               const SizedBox(height: 3),
                               Text(
                                 'Profundidade: ${info.depth}m',
-                                style: TextStyles.textNormal,
+                                style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.left,
                               ),
                               const SizedBox(height: 3),
                               Text(
                                 'Volume: ${info.barrageVolume}L',
-                                style: TextStyles.textNormal,
+                                style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.left,
                               ),
                             ],
@@ -93,12 +97,12 @@ class PartsInfoPage extends StatelessWidget {
                           children: [
                             Text(
                               'Bolsões',
-                              style: TextStyles.titleNormal,
+                              style: Theme.of(context).textTheme.headline5,
                             ),
                             const SizedBox(height: 5),
                             Text(
                               '${info.barrageNumbersAdjusted}',
-                              style: TextStyles.textNormal,
+                              style: Theme.of(context).textTheme.subtitle1,
                             )
                           ],
                         ),
@@ -111,12 +115,12 @@ class PartsInfoPage extends StatelessWidget {
                             children: [
                               Text(
                                 'Distância',
-                                style: TextStyles.titleNormal,
+                                style: Theme.of(context).textTheme.headline5,
                               ),
                               const SizedBox(height: 5),
                               Text(
                                 '${info.distance}m',
-                                style: TextStyles.textNormal,
+                                style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.end,
                               ),
                             ],
@@ -133,7 +137,7 @@ class PartsInfoPage extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 30, left: 20),
                         child: Text(
                           'Extra',
-                          style: TextStyles.titleBold,
+                          style: Theme.of(context).textTheme.headline3,
                         ),
                       ),
                     ],
@@ -150,24 +154,24 @@ class PartsInfoPage extends StatelessWidget {
                             children: [
                               Text(
                                 'Solo',
-                                style: TextStyles.titleNormal,
+                                style: Theme.of(context).textTheme.headline5,
                               ),
                               const SizedBox(height: 5),
                               Text(
                                 '${info.soilType.text}',
-                                style: TextStyles.textNormal,
+                                style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.left,
                               ),
                               const SizedBox(height: 10),
                               Text(
                                 'Declividade',
-                                style: TextStyles.titleNormal,
+                                style: Theme.of(context).textTheme.headline5,
                                 textAlign: TextAlign.left,
                               ),
                               const SizedBox(height: 3),
                               Text(
                                 '${info.declivity}m',
-                                style: TextStyles.textNormal,
+                                style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.left,
                               )
                             ],
@@ -179,16 +183,16 @@ class PartsInfoPage extends StatelessWidget {
                           children: [
                             Text(
                               'Altitude',
-                              style: TextStyles.titleNormal,
+                              style: Theme.of(context).textTheme.headline5,
                             ),
                             const SizedBox(height: 5),
                             Text(
                               'Ponto 1: ${info.pointA.altitude}m',
-                              style: TextStyles.textNormal,
+                              style: Theme.of(context).textTheme.subtitle1,
                             ),
                             Text(
                               'Ponto 2: ${info.pointB.altitude}m',
-                              style: TextStyles.textNormal,
+                              style: Theme.of(context).textTheme.subtitle1,
                             ),
                           ],
                         ),
@@ -201,22 +205,22 @@ class PartsInfoPage extends StatelessWidget {
                             children: [
                               Text(
                                 'Coordenadas',
-                                style: TextStyles.titleNormal,
+                                style: Theme.of(context).textTheme.headline5,
                               ),
                               const SizedBox(height: 5),
                               Text(
                                 'Ponto1',
-                                style: TextStyles.textNormal,
+                                style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.end,
                               ),
                               Text(
                                 'Lat: ${info.pointA.latitude}',
-                                style: TextStyles.textNormal,
+                                style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.end,
                               ),
                               Text(
                                 'Long: ${info.pointA.longitude}',
-                                style: TextStyles.textNormal,
+                                style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.end,
                               ),
                               const SizedBox(
@@ -224,17 +228,17 @@ class PartsInfoPage extends StatelessWidget {
                               ),
                               Text(
                                 'Ponto2',
-                                style: TextStyles.textNormal,
+                                style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.end,
                               ),
                               Text(
                                 'Lat: ${info.pointB.latitude}',
-                                style: TextStyles.textNormal,
+                                style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.end,
                               ),
                               Text(
                                 'Long: ${info.pointB.longitude}',
-                                style: TextStyles.textNormal,
+                                style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.end,
                               ),
                             ],

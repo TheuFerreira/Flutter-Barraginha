@@ -50,8 +50,9 @@ class App extends StatelessWidget {
             color: Color(0xFF666666),
           ),
           headline5: TextStyle(
-            fontSize: 20.0,
-            color: Color(0xFF666666),
+            color: Color(0xff666666),
+            fontWeight: FontWeight.normal,
+            fontSize: 17,
           ),
           headline6: TextStyle(
             color: Color(0xff666666),
@@ -59,9 +60,9 @@ class App extends StatelessWidget {
             fontWeight: FontWeight.w400,
           ),
           subtitle1: TextStyle(
-            height: 1.5,
-            fontSize: 16.0,
-            color: Color(0xFFA8A8A8),
+            color: Color(0xffA8A8A8),
+            fontWeight: FontWeight.normal,
+            fontSize: 15,
           ),
         ),
         cardTheme: const CardTheme(
