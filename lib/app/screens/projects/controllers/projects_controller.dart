@@ -53,6 +53,7 @@ abstract class _ProjectControllerBase with Store {
     project.status = 1;
 
     final newProject = await _projectRepository.save(project);
+    newProject.soilType = SoilTypeRepository().getById(newProject.idSoilType!);
 
     message = '';
     status = PageStatus.normal;
