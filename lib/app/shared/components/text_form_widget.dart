@@ -10,7 +10,7 @@ class TextFormWidget extends StatelessWidget {
   final String? errorText;
   final TextInputType? keyboardType;
   final Function(String)? onChanged;
-  final Function(String?)? validator;
+  final String? Function(String?)? validator;
   const TextFormWidget({
     Key? key,
     this.controller,
@@ -61,7 +61,7 @@ class TextFormWidget extends StatelessWidget {
         }
 
         if (validator != null) {
-          validator!(value);
+          return validator!(value);
         }
       },
     );

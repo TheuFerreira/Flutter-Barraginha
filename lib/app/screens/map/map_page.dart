@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
 import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
-import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
+import 'package:flutter_barraginha/app/shared/components/text_form_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
@@ -23,6 +23,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   late MapController controller;
   late TextEditingController roadWithController;
+  final roadWidthForm = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -136,7 +137,7 @@ class _MapPageState extends State<MapPage> {
                 ),
               ),
               Container(
-                height: 150,
+                height: 165,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 8.0,
                   vertical: 24.0,
@@ -146,13 +147,19 @@ class _MapPageState extends State<MapPage> {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 64.0),
-                      height: 36,
-                      child: TextFieldWidget(
-                        controller: roadWithController,
-                        hintText: 'Largura da Estrada',
-                        fillColor: const Color.fromARGB(50, 255, 255, 255),
-                        textColor: Colors.white,
-                        keyboardType: TextInputType.number,
+                      height: 62,
+                      child: Form(
+                        key: roadWidthForm,
+                        child: TextFormWidget(
+                          controller: roadWithController,
+                          labelText: 'Estrada',
+                          hintText: 'Largura da Estrada',
+                          errorText: 'Insira um valor',
+                          fillColor: const Color.fromARGB(50, 255, 255, 255),
+                          textColor: Colors.white,
+                          keyboardType: TextInputType.number,
+                          validator: _validateRoadWidth,
+                        ),
                       ),
                     ),
                     Row(
@@ -189,7 +196,26 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
+  String? _validateRoadWidth(String? value) {
+    if (value == null) {
+      return 'Insira um valor';
+    } else if (value.isEmpty) {
+      return 'O valor não pode estar em branco';
+    } else {
+      final result = double.tryParse(value.trim());
+      if (result == null) {
+        return 'Insira um valor válido';
+      }
+    }
+
+    return null;
+  }
+
   void _caculate() async {
+    if (roadWidthForm.currentState!.validate() == false) {
+      return;
+    }
+
     String roadWidthText = roadWithController.text.trim();
     double roadWidth = double.parse(roadWidthText);
 
