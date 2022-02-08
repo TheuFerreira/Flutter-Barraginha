@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
+import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
+import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -187,11 +189,22 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
-  void _caculate() {
+  void _caculate() async {
     String roadWidthText = roadWithController.text.trim();
     double roadWidth = double.parse(roadWidthText);
 
-    controller.calculate(roadWidth);
+    final info = await controller.calculate(roadWidth);
+    if (info == null) {
+      ToastService.show("Houve um problema ao calcular");
+      return;
+    }
+
+    ToastService.show("Calculado com sucesso");
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => PartsInfoPage(info),
+      ),
+    );
   }
 
   void _save() async {

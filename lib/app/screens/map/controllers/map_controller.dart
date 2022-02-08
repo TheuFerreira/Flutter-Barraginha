@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/dialogs/edit_marker_dialog.dart';
 import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
+import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
@@ -176,7 +177,8 @@ abstract class _MapControllerBase with Store {
     );
   }
 
-  Future calculate(num roadWidth) async {
+  Future<InfoPart?> calculate(num roadWidth) async {
+    status = PageStatus.loading;
     final mStart = markers[0];
     final mEnd = markers[1];
 
@@ -200,12 +202,8 @@ abstract class _MapControllerBase with Store {
       rainVolume: project.rainVolume!,
     );
 
-    if (result == null) {
-      ToastService.show("Houve um problema ao calcular");
-      return;
-    }
-
-    ToastService.show("Calculado com sucesso");
+    status = PageStatus.normal;
+    return result;
   }
 
   Future<bool> save(double roadWidth) async {
