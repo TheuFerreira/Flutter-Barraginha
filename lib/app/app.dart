@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/partners/partners_page.dart';
 import 'package:flutter_barraginha/app/screens/projects/projects_page.dart';
 
 class App extends StatelessWidget {
@@ -79,7 +80,7 @@ class App extends StatelessWidget {
           thickness: 1,
         ),
       ),
-      home: const ProjectsPage(),
+      home: const PartnersPage(),
     );
   }
 }
