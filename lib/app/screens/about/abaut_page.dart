@@ -6,61 +6,40 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold
-    (
+    return Scaffold(
       drawer: const DrawerWidget(),
-      appBar: AppBar
-      (
+      appBar: AppBar(
         toolbarHeight: 180,
         centerTitle: true,
-
         leading: Padding(
           padding: const EdgeInsets.only(bottom: 120),
-
-          child: Builder
-          (
-            builder: (context) =>
-             IconButton
-            (
-              icon: const Icon
-              (
+          child: Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(
                 Icons.reorder,
                 size: 30,
               ),
-
-              onPressed: ()
-              {
-                Scaffold.of(context).openDrawer();
-              },
+              onPressed: () => Scaffold.of(context).openDrawer(),
             ),
           ),
         ),
-
-        title: Container
-        (
+        title: Container(
           padding: const EdgeInsets.only(top: 30),
-
-          child: const Text
-          (
+          child: const Text(
             'Sobre',
-            style: TextStyle
-            (
+            style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.w600,
             ),
           ),
         ),
       ),
-
-      body: Column
-      (
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: 
-        [
-          const Padding(
+      body: const SingleChildScrollView(
+        child: Center(
+          child: Padding(
             padding: EdgeInsets.all(40),
-            child: Text
-            (
+            child: Text(
+              // TODO: About APP
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
               'sed do eiusmod tempor incididunt ut labore et dolore magna'
               'aliqua. Ut enim ad minim veniam, quis nostrud exercitation '
@@ -77,38 +56,18 @@ class AboutPage extends StatelessWidget {
               'ugiat nulla pariatur. Excepteur sint occaecat cupidatat '
               'non proident, sunt in culpa qui officia deserunt mollit '
               'anim id est laborum.',
-              style: TextStyle
-              (
-                fontSize: 17
-              ),
+              style: TextStyle(fontSize: 17),
               textAlign: TextAlign.justify,
             ),
           ),
-
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: Row
-              (
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children:
-                const [
-                  Text
-                  (
-                    'Nome do App v2021.001.7',
-                    style: TextStyle
-                    (
-                      fontWeight: FontWeight.normal
-                    ),
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
+        ),
       ),
-
+      persistentFooterButtons: const [
+        Text(
+          'Nome do App v2021.001.7',
+          style: TextStyle(fontWeight: FontWeight.normal),
+        ),
+      ],
     );
   }
 }
