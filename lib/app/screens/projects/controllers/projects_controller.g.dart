@@ -62,25 +62,41 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
     });
   }
 
-  final _$deleteAsyncAction = AsyncAction('_ProjectControllerBase.delete');
+  final _$addNewProjectAsyncAction =
+      AsyncAction('_ProjectControllerBase.addNewProject');
 
   @override
-  Future<dynamic> delete(DisplayProjectResponse project) {
-    return _$deleteAsyncAction.run(() => super.delete(project));
+  Future<dynamic> addNewProject(
+      BuildContext context, TextEditingController searchController) {
+    return _$addNewProjectAsyncAction
+        .run(() => super.addNewProject(context, searchController));
   }
 
-  final _$addAsyncAction = AsyncAction('_ProjectControllerBase.add');
+  final _$_editProjectAsyncAction =
+      AsyncAction('_ProjectControllerBase._editProject');
 
   @override
-  Future<DisplayProjectResponse> add(DisplayProjectResponse project) {
-    return _$addAsyncAction.run(() => super.add(project));
+  Future<dynamic> _editProject(BuildContext context,
+      DisplayProjectResponse project, TextEditingController searchController) {
+    return _$_editProjectAsyncAction
+        .run(() => super._editProject(context, project, searchController));
+  }
+
+  final _$_deleteProjectAsyncAction =
+      AsyncAction('_ProjectControllerBase._deleteProject');
+
+  @override
+  Future<dynamic> _deleteProject(BuildContext context,
+      DisplayProjectResponse project, TextEditingController searchController) {
+    return _$_deleteProjectAsyncAction
+        .run(() => super._deleteProject(context, project, searchController));
   }
 
   final _$searchAsyncAction = AsyncAction('_ProjectControllerBase.search');
 
   @override
-  Future<dynamic> search(String value) {
-    return _$searchAsyncAction.run(() => super.search(value));
+  Future<dynamic> search({String value = ''}) {
+    return _$searchAsyncAction.run(() => super.search(value: value));
   }
 
   @override

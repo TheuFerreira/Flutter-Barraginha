@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomBar extends StatelessWidget {
   final Widget? top;
   final Widget? bottom;
+
   const CustomBar({
     Key? key,
     this.top,
@@ -20,23 +21,17 @@ class CustomBar extends StatelessWidget {
               children: [
                 Container(
                   height: 140,
-                  
-                  // ignore: prefer_const_constructors
-                  decoration: BoxDecoration
-                  (
+                  decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
-                    boxShadow: 
-                    [
-                      BoxShadow
-                      (
+                    boxShadow: [
+                      BoxShadow(
                         color: Colors.black26,
                         blurRadius: 1,
                         spreadRadius: 1,
                         offset: Offset.fromDirection(90),
-                        blurStyle: BlurStyle.normal
+                        blurStyle: BlurStyle.normal,
                       )
                     ],
-                   // border: Border(bottom: BorderSide(color: Colors.black12, width: 1, style: BorderStyle.solid))
                   ),
                 ),
                 SafeArea(
@@ -51,9 +46,7 @@ class CustomBar extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              height: 35,
-            ),
+            Container(height: 35),
           ],
         ),
         Positioned(

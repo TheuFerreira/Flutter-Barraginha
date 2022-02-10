@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class TextIconWidget extends StatelessWidget {
   final IconData icon;
   final String data;
+
   const TextIconWidget(
     this.icon,
     this.data, {

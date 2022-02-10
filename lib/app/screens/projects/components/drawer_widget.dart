@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/about/abaut_page.dart';
 import 'package:flutter_barraginha/app/screens/licenses/licenses_page.dart';
@@ -31,8 +29,7 @@ class DrawerWidget extends StatelessWidget {
                         color: Colors.white,
                         height: 200,
                         width: 200,
-                        child: Image.asset
-                        (
+                        child: Image.asset(
                           'images/logoApp.png',
                         ),
                       ),
@@ -45,7 +42,7 @@ class DrawerWidget extends StatelessWidget {
                         fontSize: 30.0,
                       ),
                     ),
-                    SizedBox(height: 10,)
+                    const SizedBox(height: 10)
                   ],
                 ),
               ),
@@ -54,38 +51,26 @@ class DrawerWidget extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-
-                ItemDrawerWidget
-                (
+                ItemDrawerWidget(
                   title: 'Início',
-                  icon: Icon
-                  (
-                    Icons.home
-                    
-                  ), 
-                  onTap: () 
-                  { 
-                    Navigator.push
-                    (
-                      context, 
-                      MaterialPageRoute
-                      (
-                        builder: (_) => ProjectsPage()
-                      )
-                    );
-                  },
+                  icon: const Icon(Icons.home),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const ProjectsPage(),
+                    ),
+                  ),
                 ),
-
                 ItemDrawerWidget(
                   title: 'Tutorial',
-                  icon: Icon(Icons.live_help),
+                  icon: const Icon(Icons.live_help),
                   onTap: () {
                     // TODO: Tutorial
-},
+                  },
                 ),
                 ItemDrawerWidget(
                   title: 'Parceiros',
-                  icon: Icon(Icons.people),
+                  icon: const Icon(Icons.people),
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -95,7 +80,7 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 ItemDrawerWidget(
                   title: 'Sobre',
-                  icon: Icon(Icons.info),
+                  icon: const Icon(Icons.info),
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (builder) => const AboutPage(),
@@ -104,7 +89,7 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 ItemDrawerWidget(
                   title: 'Licenças',
-                  icon: Icon(Icons.android),
+                  icon: const Icon(Icons.android),
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (builder) => const LicensesPage(),

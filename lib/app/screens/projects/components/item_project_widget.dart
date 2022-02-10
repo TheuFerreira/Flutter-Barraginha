@@ -7,6 +7,7 @@ class ItemProjectWidget extends StatelessWidget {
   final DisplayProjectResponse project;
   final Function(DisplayProjectResponse project)? onTap;
   final Function(DisplayProjectResponse project)? onLongPress;
+
   const ItemProjectWidget(
     this.project, {
     Key? key,

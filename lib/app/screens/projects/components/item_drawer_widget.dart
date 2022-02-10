@@ -4,6 +4,7 @@ class ItemDrawerWidget extends StatelessWidget {
   final String title;
   final Icon icon;
   final Function()? onTap;
+
   const ItemDrawerWidget({
     Key? key,
     this.title = 'Title',
@@ -14,10 +15,7 @@ class ItemDrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: /*const Icon(
-        Icons.live_help,
-        size: 32.0,
-      ),*/ icon,
+      leading: icon,
       title: Text(
         title,
         style: Theme.of(context).textTheme.headline5,

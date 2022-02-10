@@ -1,7 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
+import 'package:flutter_barraginha/app/screens/projects/dialogs/context_dialog.dart';
+import 'package:flutter_barraginha/app/screens/projects/dialogs/save_project_dialog.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/soil_type_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
+import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:mobx/mobx.dart';
 
 part 'projects_controller.g.dart';
@@ -10,8 +15,7 @@ class ProjectsController = _ProjectControllerBase with _$ProjectsController;
 
 abstract class _ProjectControllerBase with Store {
   @observable
-  List<DisplayProjectResponse> projects =
-      ObservableList<DisplayProjectResponse>();
+  List<DisplayProjectResponse> projects = ObservableList<DisplayProjectResponse>();
 
   @observable
   PageStatus status = PageStatus.normal;
@@ -26,26 +30,29 @@ abstract class _ProjectControllerBase with Store {
   final ISoilTypeRepository _soilType = SoilTypeRepository();
 
   _ProjectControllerBase() {
-    search('');
+    search();
   }
 
   @action
-  Future delete(DisplayProjectResponse project) async {
-    project.status = 0;
+  Future addNewProject(BuildContext context, TextEditingController searchController) async {
+    final result = await showDialog<DisplayProjectResponse?>(
+      context: context,
+      builder: (ctx) => SaveProjectDialog(
+        DisplayProjectResponse(),
+        title: 'Novo projeto',
+      ),
+    );
 
-    message = 'Deletando Projeto...';
-    status = PageStatus.loading;
+    if (result == null) {
+      return;
+    }
 
-    await _projectRepository.save(project);
+    final project = await _insertProject(result);
 
-    message = '';
-    status = PageStatus.normal;
+    toPartsPage(context, project, searchController);
   }
 
-  @action
-  Future<DisplayProjectResponse> add(
-    DisplayProjectResponse project,
-  ) async {
+  Future<DisplayProjectResponse> _insertProject(DisplayProjectResponse project) async {
     message = 'Criando novo Projeto...';
     status = PageStatus.loading;
 
@@ -57,10 +64,52 @@ abstract class _ProjectControllerBase with Store {
 
     message = '';
     status = PageStatus.normal;
+
     return newProject;
   }
 
-  Future update(DisplayProjectResponse project) async {
+  Future toPartsPage(
+    BuildContext context,
+    DisplayProjectResponse project,
+    TextEditingController searchController,
+  ) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => PartsPage(project),
+      ),
+    );
+
+    await search(value: searchController.text);
+  }
+
+  void showOptions(BuildContext context, DisplayProjectResponse project, TextEditingController searchController) {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) => ContextMenu(
+        project: project,
+        onEdit: (prj) => _editProject(ctx, prj, searchController),
+        onDelete: (prj) => _deleteProject(context, prj, searchController),
+      ),
+    );
+  }
+
+  @action
+  Future _editProject(
+    BuildContext context,
+    DisplayProjectResponse project,
+    TextEditingController searchController,
+  ) async {
+    final result = await showDialog<DisplayProjectResponse?>(
+      context: context,
+      builder: (BuildContext ctx) => SaveProjectDialog(
+        project,
+        title: 'Editar projeto ${project.title}',
+      ),
+    );
+
+    if (result == null) return;
+
     message = 'Atualizando Projeto...';
     status = PageStatus.loading;
 
@@ -68,10 +117,43 @@ abstract class _ProjectControllerBase with Store {
 
     message = '';
     status = PageStatus.normal;
+
+    await search(value: searchController.text);
   }
 
   @action
-  Future search(String value) async {
+  Future _deleteProject(
+    BuildContext context,
+    DisplayProjectResponse project,
+    TextEditingController searchController,
+  ) async {
+    final result = await DialogService.showQuestionDialog(
+      context,
+      'Excluir',
+      'Deseja realmente excluir o projeto ${project.title}?',
+    );
+
+    if (!result) return;
+
+    project.status = 0;
+
+    message = 'Deletando Projeto...';
+    status = PageStatus.loading;
+
+    await _projectRepository.save(project);
+
+    message = '';
+    status = PageStatus.normal;
+
+    await search(value: searchController.text);
+  }
+
+  @action
+  Future search({String value = ''}) async {
+    if (isLoading) {
+      return;
+    }
+
     message = 'Pesquisando...';
     status = PageStatus.loading;
 
