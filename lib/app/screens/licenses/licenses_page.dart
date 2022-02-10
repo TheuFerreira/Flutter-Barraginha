@@ -6,8 +6,8 @@ class LicensesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LicensePage
     (
-    applicationName: 'Nome do app',
-    applicationIcon: Image.asset('images/funcao.png', width: 50, height: 50,),
+    applicationName: 'Calculand',
+    applicationIcon: Image.asset('images/logoApp.png', width: 100, height: 100,),
     applicationVersion: '0.0.1',
     applicationLegalese: 'Copyright ${DateTime.now().year}',
   );

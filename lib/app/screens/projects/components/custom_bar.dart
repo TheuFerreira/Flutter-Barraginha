@@ -19,8 +19,25 @@ class CustomBar extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  height: 100,
-                  color: Theme.of(context).colorScheme.primary,
+                  height: 140,
+                  
+                  // ignore: prefer_const_constructors
+                  decoration: BoxDecoration
+                  (
+                    color: Theme.of(context).colorScheme.primary,
+                    boxShadow: 
+                    [
+                      BoxShadow
+                      (
+                        color: Colors.black26,
+                        blurRadius: 1,
+                        spreadRadius: 1,
+                        offset: Offset.fromDirection(90),
+                        blurStyle: BlurStyle.normal
+                      )
+                    ],
+                   // border: Border(bottom: BorderSide(color: Colors.black12, width: 1, style: BorderStyle.solid))
+                  ),
                 ),
                 SafeArea(
                   child: Padding(
@@ -47,7 +64,7 @@ class CustomBar extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
             elevation: 2,
             margin: const EdgeInsets.symmetric(
-              horizontal: 80.0,
+              horizontal: 60.0,
               vertical: 5,
             ),
             shape: RoundedRectangleBorder(

@@ -43,7 +43,7 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Observer(
         builder: (context) {
           final status = controller.status;
@@ -63,7 +63,7 @@ class _MapPageState extends State<MapPage> {
                           child: Card(
                             margin: const EdgeInsets.all(0),
                             color: Colors.white,
-                            elevation: 6,
+                            elevation: 3,
                             clipBehavior: Clip.antiAlias,
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
@@ -146,19 +146,20 @@ class _MapPageState extends State<MapPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 64.0),
-                      height: 62,
+                      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                      height: 40,
                       child: Form(
                         key: roadWidthForm,
                         child: TextFormWidget(
                           controller: roadWithController,
-                          labelText: 'Estrada',
+                          //labelText: 'Estrada',
                           hintText: 'Largura da Estrada',
                           errorText: 'Insira um valor',
-                          fillColor: const Color.fromARGB(50, 255, 255, 255),
-                          textColor: Colors.white,
+                          fillColor: const Color.fromARGB(255, 255, 255, 255),
+                          textColor: Color(0xff666666),
                           keyboardType: TextInputType.number,
                           validator: _validateRoadWidth,
+                          
                         ),
                       ),
                     ),
@@ -167,21 +168,24 @@ class _MapPageState extends State<MapPage> {
                       children: [
                         IconButton(
                           icon: const Icon(Icons.close),
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.primary,
                           onPressed: () => Navigator.of(context).pop(),
                         ),
-                        ElevatedButton(
-                          onPressed: _caculate,
-                          child: const Text(
-                            'Calcular',
-                            style: TextStyle(
-                              fontSize: 20.0,
+                        SizedBox(
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: _caculate,
+                            child: const Text(
+                              'Calcular',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                              ),
                             ),
                           ),
                         ),
                         IconButton(
                           icon: const Icon(Icons.save_alt),
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.primary,
                           onPressed: _save,
                         ),
                       ],

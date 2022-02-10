@@ -48,19 +48,26 @@ class _ProjectsPageState extends State<ProjectsPage> {
         children: [
           CustomBar(
             top: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 64.0),
+              padding: const EdgeInsets.only(
+                left: 30,
+                right: 30,
+                top: 20,
+                bottom: 30
+              ),
               child: Observer(
                 builder: (_) => SizedBox(
-                  height: 36,
+                  height: 40,
+                  width: MediaQuery.of(context).size.width,
                   child: TextFieldWidget(
+                    
                     controller: searchController,
                     suffixIcon: const Icon(
                       Icons.search,
-                      color: Colors.white,
+                      color: Color(0xff666666),
                     ),
                     hintText: 'Pesquisar',
-                    fillColor: const Color.fromARGB(50, 255, 255, 255),
-                    textColor: Colors.white,
+                    fillColor: const Color.fromARGB(255, 255, 255, 255),
+                    textColor: Color(0xff666666),
                     onChanged: controller.isLoading ? null : controller.search,
                   ),
                 ),

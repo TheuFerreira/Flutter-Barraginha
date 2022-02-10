@@ -70,7 +70,7 @@ class TextFormWidget extends StatelessWidget {
   _defaultBorder() {
     return OutlineInputBorder(
       borderSide: const BorderSide(
-        color: Colors.transparent,
+        color: Color(0xff666666)
       ),
       borderRadius: BorderRadius.circular(24),
     );

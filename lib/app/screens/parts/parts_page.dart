@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/map_page.dart';
 import 'package:flutter_barraginha/app/screens/parts/controllers/part_controller.dart';
@@ -69,21 +71,22 @@ class _PartsPageState extends State<PartsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
+           
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            height: 180,
+            height: 200,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 18.0),
+                const SizedBox(height: 30.0),
                 Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
+                  padding: const EdgeInsets.only(left: 12.0),
                   child: Text(
                     'Projeto',
                     style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
-                const SizedBox(height: 8.0),
+                const SizedBox(height: 0.0),
                 Expanded(
                   child: Observer(
                     builder: (context) {
@@ -92,7 +95,7 @@ class _PartsPageState extends State<PartsPage> {
                       final rainVolume = widget.project.rainVolume;
                       return Row(
                         children: [
-                          Flexible(
+                          Expanded(
                             child: ItemInfoWidget(
                               title: 'Trechos',
                               value: parts.toString(),
@@ -115,13 +118,14 @@ class _PartsPageState extends State<PartsPage> {
                     },
                   ),
                 ),
-                const SizedBox(height: 8.0),
+                const SizedBox(height: 2.0),
               ],
             ),
           ),
           const Divider(
             color: Color(0xFFC0C0C0),
-            thickness: 2,
+            thickness: 1.5,
+
           ),
           Expanded(
             child: SingleChildScrollView(
@@ -146,8 +150,35 @@ class _PartsPageState extends State<PartsPage> {
                       builder: (context) {
                         final parts = _controller.parts;
                         if (parts.isEmpty) {
-                          return const SizedBox(
-                            child: Text('Nenhum trecho encontrado!'),
+                          return Container
+                          (
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height/2,
+
+                            child: Row
+                            (
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+
+                              children: 
+                              [
+                                Icon
+                                (
+                                  Icons.extension_off_rounded,
+                                  color: Color(0xffaaaaaa),
+                                  size: 60,
+                                ),
+                                Text
+                                (
+                                  'Não há nada aqui ainda...',
+                                  style: TextStyle
+                                  (
+                                    color: Color(0xffaaaaaa),
+                                    fontSize: 20
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
                         }
                         return ListView.builder(
