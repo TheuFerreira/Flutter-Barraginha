@@ -178,30 +178,47 @@ abstract class _MapControllerBase with Store {
   }
 
   Future<InfoPart?> calculate(num roadWidth) async {
-    // TODO: Save Values on Calculate
     status = PageStatus.loading;
-    final mStart = markers[0];
-    final mEnd = markers[1];
+    final markerStart = markers[0];
+    final markerEnd = markers[1];
 
-    final start = Point(
-      latitude: mStart.position.latitude,
-      longitude: mStart.position.longitude,
+    Point start = Point(
+      latitude: markerStart.position.latitude,
+      longitude: markerStart.position.longitude,
     );
-    final end = Point(
-      latitude: mEnd.position.latitude,
-      longitude: mEnd.position.longitude,
+
+    Point end = Point(
+      latitude: markerEnd.position.latitude,
+      longitude: markerEnd.position.longitude,
     );
+
+    if (_part.points.isEmpty) {
+      _part.points.add(start);
+      _part.points.add(end);
+    } else {
+      _part.points[0] = start;
+      _part.points[1] = end;
+    }
 
     final project = await ProjectRepository().getById(_part.idProject!);
     project.soilType = SoilTypeRepository().getById(project.idSoilType!);
 
     final result = await CalculatorService.calculate(
-      start: start,
-      end: end,
+      start: Point.copy(_part.points[0]),
+      end: Point.copy(_part.points[1]),
       soilType: project.soilType!,
       roadWidth: roadWidth,
       rainVolume: project.rainVolume!,
     );
+
+    if (result == null) {
+      return null;
+    }
+
+    _part.points[0].altitude = result.pointA.altitude;
+    _part.points[1].altitude = result.pointB.altitude;
+
+    await _partRepository.save(_part);
 
     status = PageStatus.normal;
     return result;
@@ -217,25 +234,22 @@ abstract class _MapControllerBase with Store {
 
     _part.roadWidth = roadWidth;
 
+    Point pointA = Point(
+      latitude: start.position.latitude,
+      longitude: start.position.longitude,
+    );
+
+    Point pointB = Point(
+      latitude: end.position.latitude,
+      longitude: end.position.longitude,
+    );
+
     if (_part.points.isEmpty) {
-      Point pointA = Point(
-        latitude: start.position.latitude,
-        longitude: start.position.longitude,
-      );
-
-      Point pointB = Point(
-        latitude: end.position.latitude,
-        longitude: end.position.longitude,
-      );
-
       _part.points.add(pointA);
       _part.points.add(pointB);
     } else {
-      _part.points[0].latitude = start.position.latitude;
-      _part.points[0].longitude = start.position.longitude;
-
-      _part.points[1].latitude = end.position.latitude;
-      _part.points[1].longitude = end.position.longitude;
+      _part.points[0] = pointA;
+      _part.points[1] = pointB;
     }
 
     await _partRepository.save(_part);
