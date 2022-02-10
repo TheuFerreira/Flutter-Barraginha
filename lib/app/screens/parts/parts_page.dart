@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/map_page.dart';
 import 'package:flutter_barraginha/app/screens/parts/controllers/part_controller.dart';
 import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
+import 'package:flutter_barraginha/app/shared/components/nothing_here_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
@@ -15,6 +16,7 @@ import 'components/item_part_widget.dart';
 
 class PartsPage extends StatefulWidget {
   final DisplayProjectResponse project;
+
   const PartsPage(
     this.project, {
     Key? key,
@@ -71,7 +73,6 @@ class _PartsPageState extends State<PartsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-           
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             height: 200,
             child: Column(
@@ -125,7 +126,6 @@ class _PartsPageState extends State<PartsPage> {
           const Divider(
             color: Color(0xFFC0C0C0),
             thickness: 1.5,
-
           ),
           Expanded(
             child: SingleChildScrollView(
@@ -150,36 +150,7 @@ class _PartsPageState extends State<PartsPage> {
                       builder: (context) {
                         final parts = _controller.parts;
                         if (parts.isEmpty) {
-                          return Container
-                          (
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height/2,
-
-                            child: Row
-                            (
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-
-                              children: 
-                              [
-                                Icon
-                                (
-                                  Icons.extension_off_rounded,
-                                  color: Color(0xffaaaaaa),
-                                  size: 60,
-                                ),
-                                Text
-                                (
-                                  'Não há nada aqui ainda...',
-                                  style: TextStyle
-                                  (
-                                    color: Color(0xffaaaaaa),
-                                    fontSize: 20
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
+                          return NothingHereWidget();
                         }
                         return ListView.builder(
                           controller: partsScroll,

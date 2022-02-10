@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
-import 'package:flutter_barraginha/app/screens/projects/dialogs/context_dialog.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/controllers/projects_controller.dart';
+import 'package:flutter_barraginha/app/screens/projects/dialogs/context_dialog.dart';
 import 'package:flutter_barraginha/app/screens/projects/dialogs/save_project_dialog.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
+import 'package:flutter_barraginha/app/shared/components/nothing_here_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
@@ -48,18 +49,12 @@ class _ProjectsPageState extends State<ProjectsPage> {
         children: [
           CustomBar(
             top: Padding(
-              padding: const EdgeInsets.only(
-                left: 30,
-                right: 30,
-                top: 20,
-                bottom: 30
-              ),
+              padding: const EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 30),
               child: Observer(
                 builder: (_) => SizedBox(
                   height: 40,
                   width: MediaQuery.of(context).size.width,
                   child: TextFieldWidget(
-                    
                     controller: searchController,
                     suffixIcon: const Icon(
                       Icons.search,
@@ -91,6 +86,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
                   if (status == PageStatus.loading) {
                     return LoadingWidget(message);
+                  } else if (projects.isEmpty) {
+                    return const NothingHereWidget();
                   }
 
                   return ListView.builder(
