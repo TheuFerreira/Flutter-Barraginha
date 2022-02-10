@@ -32,30 +32,26 @@ class PartnersPage extends StatelessWidget {
         ),
         toolbarHeight: 180,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Column(
-              children: const [
-                InfoPartnerWidget(
-                  imagePath: 'images/epamig.png',
-                  title: 'EPAMIG',
-                  description:
-                      'A EPAMIG é uma empresa com a finalidade de desenvolver pesquisas relacionadas à agropecuária em Patos de Minas.',
-                ),
-                SizedBox(height: 40),
-                InfoPartnerWidget(
-                  imagePath: 'images/if.png',
-                  title: 'IFMG - BAMBUÍ',
-                  description:
-                      'É uma instituição de ensino da Rede Federal de Educação, que oferta, cursos técnicos e superiores de forma gratuita.',
-                ),
-              ],
-            ),
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: const [
+              InfoPartnerWidget(
+                imagePath: 'images/epamig.png',
+                title: 'EPAMIG',
+                description:
+                    'A EPAMIG é uma empresa com a finalidade de desenvolver pesquisas relacionadas à agropecuária em Patos de Minas.',
+              ),
+              SizedBox(height: 40),
+              InfoPartnerWidget(
+                imagePath: 'images/if.png',
+                title: 'IFMG - BAMBUÍ',
+                description:
+                    'É uma instituição de ensino da Rede Federal de Educação, que oferta, cursos técnicos e superiores de forma gratuita.',
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
