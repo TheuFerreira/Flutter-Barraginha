@@ -43,22 +43,8 @@ mixin _$ItemPartController on _ItemPartControllerBase, Store {
       AsyncAction('_ItemPartControllerBase.calculate');
 
   @override
-  Future<dynamic> calculate(dynamic Function(int) onCaculated) {
-    return _$calculateAsyncAction.run(() => super.calculate(onCaculated));
-  }
-
-  final _$_ItemPartControllerBaseActionController =
-      ActionController(name: '_ItemPartControllerBase');
-
-  @override
-  void changeItemState(StateItem newState) {
-    final _$actionInfo = _$_ItemPartControllerBaseActionController.startAction(
-        name: '_ItemPartControllerBase.changeItemState');
-    try {
-      return super.changeItemState(newState);
-    } finally {
-      _$_ItemPartControllerBaseActionController.endAction(_$actionInfo);
-    }
+  Future<bool> calculate() {
+    return _$calculateAsyncAction.run(() => super.calculate());
   }
 
   @override

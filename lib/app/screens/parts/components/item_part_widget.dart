@@ -36,7 +36,15 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
   void initState() {
     super.initState();
 
-    _controller = ItemPartController(widget.project, widget.part, widget.onCalculated!);
+    _controller = ItemPartController(widget.project, widget.part);
+    _controller.calculate().then((value) {
+      if (value == false) {
+        return;
+      }
+
+      int barrageNumber = _controller.info!.barrageNumbersAdjusted.toInt();
+      widget.onCalculated!(barrageNumber);
+    });
   }
 
   @override
@@ -93,12 +101,20 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                           return const LoadingWidget('Calculando...');
                         } else if (state == StateItem.calculate) {
                           return ElevatedButton(
-                            onPressed: () => _controller.calculate(widget.onCalculated!),
+                            onPressed: () async {
+                              final calculated = await _controller.calculate();
+                              if (calculated == false) {
+                                return;
+                              }
+
+                              int barrageNumber = _controller.info!.barrageNumbersAdjusted.toInt();
+                              widget.onCalculated!(barrageNumber);
+                            },
                             child: const Text('Calcular'),
                           );
                         }
 
-                        final calculate = _controller.info!;
+                        final info = _controller.info!;
 
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,15 +128,15 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                                   style: Theme.of(context).textTheme.headline5,
                                 ),
                                 Text(
-                                  'Raio: ${calculate.radius}m',
+                                  'Raio: ${info.radius}m',
                                   style: Theme.of(context).textTheme.subtitle1,
                                 ),
                                 Text(
-                                  'Profundidade: ${calculate.depth}m',
+                                  'Profundidade: ${info.depth}m',
                                   style: Theme.of(context).textTheme.subtitle1,
                                 ),
                                 Text(
-                                  'Volume: ${calculate.barrageVolume}m³',
+                                  'Volume: ${info.barrageVolume}m³',
                                   style: Theme.of(context).textTheme.subtitle1,
                                 ),
                               ],
@@ -133,7 +149,7 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                                   style: Theme.of(context).textTheme.headline5,
                                 ),
                                 Text(
-                                  '${calculate.barrageNumbersAdjusted}',
+                                  '${info.barrageNumbersAdjusted}',
                                   style: Theme.of(context).textTheme.subtitle1,
                                 ),
                               ],
@@ -146,7 +162,7 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                                   style: Theme.of(context).textTheme.headline5,
                                 ),
                                 Text(
-                                  '${calculate.spacing}m',
+                                  '${info.spacing}m',
                                   style: Theme.of(context).textTheme.subtitle1,
                                 ),
                               ],
