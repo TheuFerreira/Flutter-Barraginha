@@ -25,12 +25,12 @@ abstract class _ItemControllerBase with Store {
   final DisplayProjectResponse _project;
   final DisplayPart _part;
 
-  _ItemControllerBase(this._project, this._part, Function(num) onCaculated) {
+  _ItemControllerBase(this._project, this._part, Function(int) onCaculated) {
     calculate(onCaculated);
   }
 
   @action
-  Future calculate(Function(num) onCaculated) async {
+  Future calculate(Function(int) onCaculated) async {
     changeItemState(StateItem.loading);
 
     Point start = Point.copy(_part.points[0]);
@@ -49,7 +49,7 @@ abstract class _ItemControllerBase with Store {
       return;
     }
 
-    onCaculated(info!.barrageNumbersAdjusted);
+    onCaculated(info!.barrageNumbersAdjusted.toInt());
 
     changeItemState(StateItem.none);
   }

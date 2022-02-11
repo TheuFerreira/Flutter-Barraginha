@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/parts/controllers/item_controller.dart';
-import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
+import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,7 +13,7 @@ class ItemPartWidget extends StatefulWidget {
   final Function(InfoPart)? onInfo;
   final Function(DisplayPart)? onEdit;
   final Function(DisplayPart part)? onLongPress;
-  final Function(num barrageCount)? onCalculated;
+  final Function(int barrageCount)? onCalculated;
   const ItemPartWidget(
     this.project,
     this.part, {
@@ -36,8 +36,7 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
   void initState() {
     super.initState();
 
-    _controller =
-        ItemController(widget.project, widget.part, widget.onCalculated!);
+    _controller = ItemController(widget.project, widget.part, widget.onCalculated!);
   }
 
   @override
@@ -81,9 +80,7 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                               icon: const Icon(Icons.info),
                               iconSize: 24,
                               color: const Color(0xFF666666),
-                              onPressed: state != StateItem.none
-                                  ? null
-                                  : () => widget.onInfo!(_controller.info!),
+                              onPressed: state != StateItem.none ? null : () => widget.onInfo!(_controller.info!),
                             );
                           },
                         ),
@@ -96,8 +93,7 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                           return const LoadingWidget('Calculando...');
                         } else if (state == StateItem.calculate) {
                           return ElevatedButton(
-                            onPressed: () =>
-                                _controller.calculate(widget.onCalculated!),
+                            onPressed: () => _controller.calculate(widget.onCalculated!),
                             child: const Text('Calcular'),
                           );
                         }

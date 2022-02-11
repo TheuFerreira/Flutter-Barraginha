@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/map/map_page.dart';
 import 'package:flutter_barraginha/app/screens/parts/controllers/item_info_controller.dart';
 import 'package:flutter_barraginha/app/screens/parts/controllers/part_controller.dart';
-import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
 import 'package:flutter_barraginha/app/shared/components/nothing_here_widget.dart';
-import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
-import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'components/item_info_widget.dart';
@@ -35,7 +30,7 @@ class _PartsPageState extends State<PartsPage> {
     super.initState();
 
     _infoController = ItemInfoController(widget.project);
-    _controller = PartController(widget.project.id!);
+    _controller = PartController(widget.project, _infoController);
   }
 
   @override
@@ -66,7 +61,7 @@ class _PartsPageState extends State<PartsPage> {
             icon: const Icon(Icons.add_circle),
             iconSize: 32,
             color: Theme.of(context).colorScheme.secondary,
-            onPressed: _addPart,
+            onPressed: () => _controller.addNew(context),
           )
         ],
       ),
@@ -160,10 +155,10 @@ class _PartsPageState extends State<PartsPage> {
                               widget.project,
                               part,
                               title: 'Trecho ${i + 1}',
-                              onInfo: _onInfo,
-                              onEdit: _editPart,
-                              onLongPress: (part) => _onLongPressPart(part, i),
-                              onCalculated: _controller.addBarrageNumber,
+                              onInfo: (info) => _controller.showInfoPart(context, info),
+                              onEdit: (part) => _controller.showEditPart(context, part),
+                              onLongPress: (part) => _controller.deletePart(builder, part, i),
+                              onCalculated: _infoController.setCountBarrage,
                             );
                           },
                         );
@@ -177,51 +172,5 @@ class _PartsPageState extends State<PartsPage> {
         ],
       ),
     );
-  }
-
-  void _addPart() async {
-    final project = widget.project;
-    DisplayPart part = DisplayPart(
-      idProject: project.id!,
-    );
-
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => MapPage(part),
-      ),
-    );
-
-    await _controller.loadAll(project.id!);
-  }
-
-  void _onInfo(InfoPart info) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (builder) => PartsInfoPage(info),
-      ),
-    );
-  }
-
-  void _editPart(DisplayPart part) async {
-    final project = widget.project;
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => MapPage(part),
-      ),
-    );
-
-    await _controller.loadAll(project.id!);
-  }
-
-  void _onLongPressPart(DisplayPart part, int i) async {
-    final result = await DialogService.showQuestionDialog(
-      context,
-      "Excluir",
-      "Tem certeza de que deseja excluir o Trecho ${i + 1}?",
-    );
-
-    if (result == false) return;
-    await _controller.delete(part);
-    await _controller.loadAll(widget.project.id!);
   }
 }

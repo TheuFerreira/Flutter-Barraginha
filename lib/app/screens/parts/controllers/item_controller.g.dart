@@ -42,7 +42,7 @@ mixin _$ItemController on _ItemControllerBase, Store {
   final _$calculateAsyncAction = AsyncAction('_ItemControllerBase.calculate');
 
   @override
-  Future<dynamic> calculate(dynamic Function(num) onCaculated) {
+  Future<dynamic> calculate(dynamic Function(int) onCaculated) {
     return _$calculateAsyncAction.run(() => super.calculate(onCaculated));
   }
 
