@@ -56,10 +56,6 @@ class TextFormWidget extends StatelessWidget {
       ),
       onChanged: onChanged,
       validator: (value) {
-        if (value!.isEmpty) {
-          return errorText;
-        }
-
         if (validator != null) {
           return validator!(value);
         }
@@ -69,9 +65,7 @@ class TextFormWidget extends StatelessWidget {
 
   _defaultBorder() {
     return OutlineInputBorder(
-      borderSide: const BorderSide(
-        color: Color(0xff666666)
-      ),
+      borderSide: const BorderSide(color: Color(0xff666666)),
       borderRadius: BorderRadius.circular(24),
     );
   }

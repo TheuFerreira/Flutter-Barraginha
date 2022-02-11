@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/projects/controllers/save_project_controller.dart';
 import 'package:flutter_barraginha/app/shared/components/dropdown_button_form_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/text_form_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/soil_type.dart';
-import 'package:flutter_barraginha/app/shared/database/repositories/soil_type_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_barraginha/app/shared/dialogs/base_dialog.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class SaveProjectDialog extends StatefulWidget {
   final String title;
@@ -20,21 +21,13 @@ class SaveProjectDialog extends StatefulWidget {
 }
 
 class _SaveProjectDialogState extends State<SaveProjectDialog> {
-  final _formController = GlobalKey<FormState>();
-  late TextEditingController _nameTextController;
-  late TextEditingController _volumeTextController;
-
-  late SoilType _soilTypeSelected;
-  final ISoilTypeRepository _soilType = SoilTypeRepository();
+  late SaveProjectController _controller;
 
   @override
   void initState() {
     super.initState();
 
-    _soilTypeSelected = _soilType.getById(widget.project.idSoilType!);
-    _nameTextController = TextEditingController(text: widget.project.title);
-    _volumeTextController =
-        TextEditingController(text: widget.project.rainVolume.toString());
+    _controller = SaveProjectController(widget.project);
   }
 
   @override
@@ -44,7 +37,7 @@ class _SaveProjectDialogState extends State<SaveProjectDialog> {
       content: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40.0),
         child: Form(
-          key: _formController,
+          key: _controller.formController,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -53,10 +46,11 @@ class _SaveProjectDialogState extends State<SaveProjectDialog> {
                   minHeight: 42,
                 ),
                 child: TextFormWidget(
-                  controller: _nameTextController,
+                  controller: _controller.nameController,
                   labelText: 'Nome do Projeto',
                   hintText: 'Ex: Roça do Zé',
                   errorText: 'Informe o nome',
+                  validator: _controller.validateName,
                 ),
               ),
               const SizedBox(height: 16.0),
@@ -65,11 +59,12 @@ class _SaveProjectDialogState extends State<SaveProjectDialog> {
                   minHeight: 42,
                 ),
                 child: TextFormWidget(
-                  controller: _volumeTextController,
+                  controller: _controller.volumeRainController,
                   labelText: 'Volume de Chuva',
                   hintText: 'Ex: 22',
                   keyboardType: TextInputType.number,
                   errorText: 'Informe o volume de chuva',
+                  validator: _controller.validateVolumeRain,
                 ),
               ),
               const SizedBox(height: 16.0),
@@ -77,48 +72,33 @@ class _SaveProjectDialogState extends State<SaveProjectDialog> {
                 constraints: const BoxConstraints(
                   minHeight: 42,
                 ),
-                child: DropdownButtonFormWidget<SoilType>(
-                  labelText: 'Tipo de solo',
-                  onChanged: _changeSoilType,
-                  value: _soilTypeSelected,
-                  items: _soilType
-                      .getAll()
-                      .map(
-                        (e) => DropdownMenuItem(
-                          child: Text(e.text ?? ''),
-                          value: e,
-                        ),
-                      )
-                      .toList(),
-                ),
+                child: Observer(builder: (context) {
+                  final soilTypeSelected = _controller.soilTypeSelected;
+                  final soilTypes = _controller.soilTypes;
+
+                  if (soilTypeSelected == null || soilTypes.isEmpty) {
+                    return Container();
+                  }
+
+                  return DropdownButtonFormWidget<SoilType>(
+                    labelText: 'Tipo de solo',
+                    onChanged: _controller.changeSoilType,
+                    value: soilTypeSelected,
+                    items: soilTypes
+                        .map((e) => DropdownMenuItem(
+                              child: Text(e.text ?? ''),
+                              value: e,
+                            ))
+                        .toList(),
+                  );
+                }),
               ),
             ],
           ),
         ),
       ),
       onCancel: () => Navigator.pop(context),
-      onConfirm: () => _onConfirm(context),
+      onConfirm: () => _controller.onConfirm(context),
     );
-  }
-
-  void _changeSoilType(SoilType? soilType) {
-    setState(() => _soilTypeSelected = soilType!);
-  }
-
-  void _onConfirm(BuildContext context) {
-    if (_formController.currentState!.validate() == false) {
-      return;
-    }
-
-    final textRainVolume = _volumeTextController.text.replaceAll(',', '.');
-    final textName = _nameTextController.text.trim();
-
-    final project = widget.project;
-    project.title = textName;
-    project.rainVolume = double.parse(textRainVolume);
-    project.idSoilType = _soilTypeSelected.id;
-    project.status = 1;
-
-    Navigator.pop(context, project);
   }
 }

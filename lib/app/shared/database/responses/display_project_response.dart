@@ -10,7 +10,7 @@ class DisplayProjectResponse extends Project {
     int idSoilType = 1,
     String title = '',
     DateTime? date,
-    num rainVolume = 0,
+    num? rainVolume,
     int status = 1,
     this.soilType,
   }) : super(
