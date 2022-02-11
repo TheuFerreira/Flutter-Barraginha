@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/parts/controllers/item_controller.dart';
+import 'package:flutter_barraginha/app/screens/parts/controllers/item_part_controller.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
@@ -30,13 +30,13 @@ class ItemPartWidget extends StatefulWidget {
 }
 
 class _ItemPartWidgetState extends State<ItemPartWidget> {
-  late ItemController _controller;
+  late ItemPartController _controller;
 
   @override
   void initState() {
     super.initState();
 
-    _controller = ItemController(widget.project, widget.part, widget.onCalculated!);
+    _controller = ItemPartController(widget.project, widget.part, widget.onCalculated!);
   }
 
   @override

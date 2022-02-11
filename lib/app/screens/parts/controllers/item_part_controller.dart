@@ -5,7 +5,7 @@ import 'package:flutter_barraginha/app/shared/database/responses/display_project
 import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
 import 'package:mobx/mobx.dart';
 
-part 'item_controller.g.dart';
+part 'item_part_controller.g.dart';
 
 enum StateItem {
   loading,
@@ -13,9 +13,9 @@ enum StateItem {
   calculate,
 }
 
-class ItemController = _ItemControllerBase with _$ItemController;
+class ItemPartController = _ItemPartControllerBase with _$ItemPartController;
 
-abstract class _ItemControllerBase with Store {
+abstract class _ItemPartControllerBase with Store {
   @observable
   InfoPart? info;
 
@@ -25,7 +25,7 @@ abstract class _ItemControllerBase with Store {
   final DisplayProjectResponse _project;
   final DisplayPart _part;
 
-  _ItemControllerBase(this._project, this._part, Function(int) onCaculated) {
+  _ItemPartControllerBase(this._project, this._part, Function(int) onCaculated) {
     calculate(onCaculated);
   }
 

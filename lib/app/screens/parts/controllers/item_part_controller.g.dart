@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'item_controller.dart';
+part of 'item_part_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'item_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$ItemController on _ItemControllerBase, Store {
-  final _$infoAtom = Atom(name: '_ItemControllerBase.info');
+mixin _$ItemPartController on _ItemPartControllerBase, Store {
+  final _$infoAtom = Atom(name: '_ItemPartControllerBase.info');
 
   @override
   InfoPart? get info {
@@ -24,7 +24,7 @@ mixin _$ItemController on _ItemControllerBase, Store {
     });
   }
 
-  final _$stateAtom = Atom(name: '_ItemControllerBase.state');
+  final _$stateAtom = Atom(name: '_ItemPartControllerBase.state');
 
   @override
   StateItem get state {
@@ -39,24 +39,25 @@ mixin _$ItemController on _ItemControllerBase, Store {
     });
   }
 
-  final _$calculateAsyncAction = AsyncAction('_ItemControllerBase.calculate');
+  final _$calculateAsyncAction =
+      AsyncAction('_ItemPartControllerBase.calculate');
 
   @override
   Future<dynamic> calculate(dynamic Function(int) onCaculated) {
     return _$calculateAsyncAction.run(() => super.calculate(onCaculated));
   }
 
-  final _$_ItemControllerBaseActionController =
-      ActionController(name: '_ItemControllerBase');
+  final _$_ItemPartControllerBaseActionController =
+      ActionController(name: '_ItemPartControllerBase');
 
   @override
   void changeItemState(StateItem newState) {
-    final _$actionInfo = _$_ItemControllerBaseActionController.startAction(
-        name: '_ItemControllerBase.changeItemState');
+    final _$actionInfo = _$_ItemPartControllerBaseActionController.startAction(
+        name: '_ItemPartControllerBase.changeItemState');
     try {
       return super.changeItemState(newState);
     } finally {
-      _$_ItemControllerBaseActionController.endAction(_$actionInfo);
+      _$_ItemPartControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
