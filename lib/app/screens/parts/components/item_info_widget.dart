@@ -4,6 +4,7 @@ import 'package:marquee/marquee.dart';
 class ItemInfoWidget extends StatelessWidget {
   final String title;
   final String value;
+
   const ItemInfoWidget({
     Key? key,
     this.title = 'Title',
@@ -13,25 +14,21 @@ class ItemInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width/3.5,
-      height: MediaQuery.of(context).size.width/3.5,
+      width: MediaQuery.of(context).size.width / 3.5,
+      height: MediaQuery.of(context).size.width / 3.5,
       margin: const EdgeInsets.symmetric(horizontal: 8.0),
       padding: const EdgeInsets.only(top: 16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-
-        boxShadow: 
-        [
-          BoxShadow
-          (
+        boxShadow: [
+          BoxShadow(
             color: Colors.black26,
             spreadRadius: 0,
             blurRadius: 1,
             blurStyle: BlurStyle.normal,
-            offset: Offset.fromDirection(90)
-          )
+            offset: Offset.fromDirection(90),
+          ),
         ],
-        
         color: Theme.of(context).colorScheme.primary,
       ),
       child: Stack(

@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/map_page.dart';
+import 'package:flutter_barraginha/app/screens/parts/controllers/item_info_controller.dart';
 import 'package:flutter_barraginha/app/screens/parts/controllers/part_controller.dart';
 import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
 import 'package:flutter_barraginha/app/shared/components/nothing_here_widget.dart';
@@ -27,6 +26,7 @@ class PartsPage extends StatefulWidget {
 }
 
 class _PartsPageState extends State<PartsPage> {
+  late ItemInfoController _infoController;
   late PartController _controller;
   final partsScroll = ScrollController();
 
@@ -34,6 +34,7 @@ class _PartsPageState extends State<PartsPage> {
   void initState() {
     super.initState();
 
+    _infoController = ItemInfoController(widget.project);
     _controller = PartController(widget.project.id!);
   }
 
@@ -91,27 +92,24 @@ class _PartsPageState extends State<PartsPage> {
                 Expanded(
                   child: Observer(
                     builder: (context) {
-                      final parts = _controller.countParts;
-                      final barrage = _controller.countBarrage;
-                      final rainVolume = widget.project.rainVolume;
                       return Row(
                         children: [
                           Expanded(
                             child: ItemInfoWidget(
                               title: 'Trechos',
-                              value: parts.toString(),
+                              value: _infoController.countParts,
                             ),
                           ),
                           Expanded(
                             child: ItemInfoWidget(
                               title: 'Bolsões',
-                              value: barrage.toString(),
+                              value: _infoController.countBarrage,
                             ),
                           ),
                           Expanded(
                             child: ItemInfoWidget(
                               title: 'Volume de chuva',
-                              value: rainVolume.toString(),
+                              value: _infoController.rainVolume,
                             ),
                           ),
                         ],
@@ -150,7 +148,7 @@ class _PartsPageState extends State<PartsPage> {
                       builder: (context) {
                         final parts = _controller.parts;
                         if (parts.isEmpty) {
-                          return NothingHereWidget();
+                          return const NothingHereWidget();
                         }
                         return ListView.builder(
                           controller: partsScroll,
