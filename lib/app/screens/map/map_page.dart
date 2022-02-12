@@ -24,15 +24,13 @@ class _MapPageState extends State<MapPage> {
   final _optionsController = OptionsController();
   late MapController _mapController;
   late ButtonsController _buttonsController;
-  late TextEditingController roadWithController;
 
   @override
   void initState() {
     super.initState();
 
     _mapController = MapController(context, widget.part, _optionsController);
-    _buttonsController = ButtonsController();
-    roadWithController = TextEditingController(text: widget.part.roadWidth.toString());
+    _buttonsController = ButtonsController(widget.part, _mapController);
   }
 
   @override
@@ -155,7 +153,7 @@ class _MapPageState extends State<MapPage> {
                       child: Form(
                         key: _buttonsController.form,
                         child: TextFormWidget(
-                          controller: roadWithController,
+                          controller: _buttonsController.roadWithController,
                           //labelText: 'Estrada',
                           hintText: 'Largura da Estrada',
                           errorText: 'Insira um valor',
@@ -189,7 +187,7 @@ class _MapPageState extends State<MapPage> {
                         IconButton(
                           icon: const Icon(Icons.save_alt),
                           color: Theme.of(context).colorScheme.primary,
-                          onPressed: _save,
+                          onPressed: _buttonsController.save,
                         ),
                       ],
                     ),
@@ -204,13 +202,6 @@ class _MapPageState extends State<MapPage> {
   }
 
   void _caculate() async {
-    if (_buttonsController.form.currentState!.validate() == false) {
-      return;
-    }
-
-    String roadWidthText = roadWithController.text.trim();
-    double roadWidth = double.parse(roadWidthText);
-
     //final info = await _mapController.calculate(roadWidth);
     /*if (info == null) {
       ToastService.show("Houve um problema ao calcular");
@@ -226,9 +217,6 @@ class _MapPageState extends State<MapPage> {
   }
 
   void _save() async {
-    String roadWidthText = roadWithController.text.trim();
-    double roadWidth = double.parse(roadWidthText);
-
     //final result = await _mapController.save(roadWidth);
     //if (result == false) return;
 

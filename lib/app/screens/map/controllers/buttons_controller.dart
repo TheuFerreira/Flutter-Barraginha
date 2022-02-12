@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
+import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
+import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:mobx/mobx.dart';
 
 part 'buttons_controller.g.dart';
@@ -7,6 +10,16 @@ class ButtonsController = _ButtonsControllerBase with _$ButtonsController;
 
 abstract class _ButtonsControllerBase with Store {
   final form = GlobalKey<FormState>();
+  final roadWithController = TextEditingController();
+
+  final DisplayPart _part;
+  final MapController _mapController;
+
+  _ButtonsControllerBase(this._part, this._mapController) {
+    if (_part.id != null) {
+      roadWithController.text = _part.roadWidth.toString();
+    }
+  }
 
   String? validateRoadWidth(String? value) {
     if (value == null || value.isEmpty) {
@@ -26,6 +39,15 @@ abstract class _ButtonsControllerBase with Store {
       return;
     }
 
+    if (_mapController.markers.length < 2) {
+      ToastService.show('Insira 2 pontos para calcular!');
+      return;
+    }
+
+    String text = roadWithController.text.trim().replaceAll(',', '.');
+    final roadWidth = double.parse(text);
+
+    // TODO: Calculate and Save
     /*status = PageStatus.loading;
     final markerStart = markers[0];
     final markerEnd = markers[1];
@@ -73,10 +95,21 @@ abstract class _ButtonsControllerBase with Store {
   }
 
   void save() {
-    /*if (markers.isEmpty || markers.length > 2) {
-      ToastService.show('Insira 2 pontos para salvar!');
-      return false;
+    if (form.currentState!.validate() == false) {
+      return;
     }
+
+    if (_mapController.markers.length < 2) {
+      ToastService.show('Insira 2 pontos para salvar!');
+      return;
+    }
+
+    String text = roadWithController.text.trim().replaceAll(',', '.');
+    final roadWidth = double.parse(text);
+
+    // TODO: Save
+
+    /*
     final start = markers[0];
     final end = markers[1];
 
