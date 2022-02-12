@@ -68,11 +68,15 @@ abstract class _PartControllerBase with Store {
   }
 
   Future showEditPart(BuildContext context, DisplayPart part) async {
-    await Navigator.of(context).push(
+    final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MapPage(part),
       ),
     );
+
+    if (result != true) {
+      return;
+    }
 
     await loadAll();
   }
