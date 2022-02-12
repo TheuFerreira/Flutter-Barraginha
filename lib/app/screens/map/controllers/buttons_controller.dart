@@ -76,6 +76,9 @@ abstract class _ButtonsControllerBase with Store {
 
       _part.points[1].latitude = endPoint.latitude;
       _part.points[1].longitude = endPoint.longitude;
+
+      _part.points[0].altitude = null;
+      _part.points[1].altitude = null;
     }
 
     final project = await _projectRepository.getById(_part.idProject!);
@@ -130,9 +133,15 @@ abstract class _ButtonsControllerBase with Store {
       _part.points.add(startPoint);
       _part.points.add(endPoint);
     } else {
+      if (_part.points[0].latitude != startPoint.latitude || _part.points[0].longitude != startPoint.longitude) {
+        _part.points[0].altitude = null;
+      }
       _part.points[0].latitude = startPoint.latitude;
       _part.points[0].longitude = startPoint.longitude;
 
+      if (_part.points[1].latitude != endPoint.latitude || _part.points[1].longitude != endPoint.longitude) {
+        _part.points[1].altitude = null;
+      }
       _part.points[1].latitude = endPoint.latitude;
       _part.points[1].longitude = endPoint.longitude;
     }
