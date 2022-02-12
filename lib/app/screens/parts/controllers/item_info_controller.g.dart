@@ -69,11 +69,11 @@ mixin _$ItemInfoController on _ItemInfoControllerBase, Store {
   }
 
   @override
-  void setCountBarrage(int value) {
+  void addCountBarrage(int value) {
     final _$actionInfo = _$_ItemInfoControllerBaseActionController.startAction(
-        name: '_ItemInfoControllerBase.setCountBarrage');
+        name: '_ItemInfoControllerBase.addCountBarrage');
     try {
-      return super.setCountBarrage(value);
+      return super.addCountBarrage(value);
     } finally {
       _$_ItemInfoControllerBaseActionController.endAction(_$actionInfo);
     }

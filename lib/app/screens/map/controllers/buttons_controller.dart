@@ -43,6 +43,7 @@ abstract class _ButtonsControllerBase with Store {
     return null;
   }
 
+  // TODO: Refactor code
   Future calculate(BuildContext context) async {
     if (form.currentState!.validate() == false) {
       return;
@@ -84,6 +85,7 @@ abstract class _ButtonsControllerBase with Store {
     final project = await _projectRepository.getById(_part.idProject!);
     project.soilType = _soilTypeRepository.getById(project.idSoilType!);
 
+    // TODO: Dialog with progress
     final result = await CalculatorService.calculate(
       start: Point.copy(_part.points[0]),
       end: Point.copy(_part.points[1]),

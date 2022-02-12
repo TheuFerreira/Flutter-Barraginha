@@ -158,7 +158,7 @@ class _PartsPageState extends State<PartsPage> {
                               onInfo: (info) => _controller.showInfoPart(context, info),
                               onEdit: (part) => _controller.showEditPart(context, part),
                               onLongPress: (part) => _controller.deletePart(builder, part, i),
-                              onCalculated: _infoController.setCountBarrage,
+                              onCalculated: _infoController.addCountBarrage,
                             );
                           },
                         );

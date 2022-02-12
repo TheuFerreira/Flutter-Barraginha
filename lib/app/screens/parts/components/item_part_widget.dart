@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/parts/controllers/item_part_controller.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
@@ -115,7 +117,6 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                         }
 
                         final info = _controller.info!;
-
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
