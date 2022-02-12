@@ -187,7 +187,7 @@ class _MapPageState extends State<MapPage> {
                         IconButton(
                           icon: const Icon(Icons.save_alt),
                           color: Theme.of(context).colorScheme.primary,
-                          onPressed: _buttonsController.save,
+                          onPressed: () => _buttonsController.save(context),
                         ),
                       ],
                     ),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
+import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
+import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
 
 part 'buttons_controller.g.dart';
@@ -14,6 +17,7 @@ abstract class _ButtonsControllerBase with Store {
 
   final DisplayPart _part;
   final MapController _mapController;
+  final IPartRepository _partRepository = PartRepository();
 
   _ButtonsControllerBase(this._part, this._mapController) {
     if (_part.id != null) {
@@ -94,46 +98,44 @@ abstract class _ButtonsControllerBase with Store {
     return result;*/
   }
 
-  void save() {
+  Future save(BuildContext context) async {
     if (form.currentState!.validate() == false) {
       return;
     }
 
-    if (_mapController.markers.length < 2) {
+    List<Marker> markers = _mapController.markers;
+    if (markers.length < 2) {
       ToastService.show('Insira 2 pontos para salvar!');
       return;
     }
 
     String text = roadWithController.text.trim().replaceAll(',', '.');
-    final roadWidth = double.parse(text);
+    _part.roadWidth = double.parse(text);
 
-    // TODO: Save
-
-    /*
-    final start = markers[0];
-    final end = markers[1];
-
-    _part.roadWidth = roadWidth;
-
-    Point pointA = Point(
-      latitude: start.position.latitude,
-      longitude: start.position.longitude,
+    final startPoint = Point(
+      latitude: markers[0].position.latitude,
+      longitude: markers[0].position.longitude,
     );
 
-    Point pointB = Point(
-      latitude: end.position.latitude,
-      longitude: end.position.longitude,
+    final endPoint = Point(
+      latitude: markers[1].position.latitude,
+      longitude: markers[1].position.longitude,
     );
 
     if (_part.points.isEmpty) {
-      _part.points.add(pointA);
-      _part.points.add(pointB);
+      _part.points.add(startPoint);
+      _part.points.add(endPoint);
     } else {
-      _part.points[0] = pointA;
-      _part.points[1] = pointB;
+      _part.points[0].latitude = startPoint.latitude;
+      _part.points[0].longitude = startPoint.longitude;
+
+      _part.points[1].latitude = endPoint.latitude;
+      _part.points[1].longitude = endPoint.longitude;
     }
 
     await _partRepository.save(_part);
-    ToastService.show('Trecho salvo com sucesso.');*/
+
+    ToastService.show('Trecho salvo com sucesso.');
+    Navigator.pop(context, true);
   }
 }
