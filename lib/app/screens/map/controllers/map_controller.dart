@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
-import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
-import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
+import 'package:flutter_barraginha/app/screens/map/dialogs/edit_marker_dialog.dart';
+import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
+import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -25,24 +26,22 @@ abstract class _MapControllerBase with Store {
 
   final OptionsController _options;
   MarkerId? markerToMove;
-  GoogleMapController? mapController;
+  GoogleMapController? googleMapController;
   final DisplayPart _part;
-  final IPartRepository _partRepository = PartRepository();
 
   _MapControllerBase(BuildContext context, this._part, this._options) {
-    getCurrentLocation();
-    /*status = PageStatus.loading;
     if (_part.id == null) {
-      getCurrentLocation();
+      _getCurrentLocation();
     } else {
       _loadPositions(context);
-    }*/
+    }
   }
 
   @action
-  Future getCurrentLocation() async {
+  Future _getCurrentLocation() async {
     final position = await GeolocatorService().getCurrentLocation();
     if (position == null) {
+      status = PageStatus.normal;
       ToastService.show('Um problema aconteceu');
       return;
     }
@@ -59,7 +58,7 @@ abstract class _MapControllerBase with Store {
   }
 
   Future _loadPositions(BuildContext context) async {
-    /*final pos1 = LatLng(
+    final pos1 = LatLng(
       _part.points[0].latitude!.toDouble(),
       _part.points[0].longitude!.toDouble(),
     );
@@ -76,22 +75,22 @@ abstract class _MapControllerBase with Store {
       target: pos1,
       zoom: 15,
     );
-    status = PageStatus.normal;*/
+    status = PageStatus.normal;
   }
 
   @action
   void clickMap(BuildContext context, LatLng position) {
-    /*final selectedOption = _options.selected;
+    final selectedOption = _options.selected;
     if (selectedOption == OptionsType.add) {
       addMarker(context, position);
     } else if (selectedOption == OptionsType.move) {
       moveMarker(position);
-    }*/
+    }
   }
 
   @action
   void addMarker(BuildContext context, LatLng position) {
-    /*if (markers.length == 2) {
+    if (markers.length == 2) {
       ToastService.show('Máximo de 2 Marcadores Adicionados!');
       return;
     }
@@ -115,11 +114,11 @@ abstract class _MapControllerBase with Store {
       },
     );
 
-    markers.add(marker);*/
+    markers.add(marker);
   }
 
   void editMarker(BuildContext context, MarkerId id) async {
-    /*final index = _getIndexOfMarkerById(id);
+    final index = _getIndexOfMarkerById(id);
     final oldPosition = markers[index].position;
 
     final newPosition = await showDialog<LatLng>(
@@ -132,11 +131,11 @@ abstract class _MapControllerBase with Store {
     }
 
     markers[index] = markers[index].copyWith(positionParam: newPosition);
-    mapController!.moveCamera(CameraUpdate.newLatLng(newPosition));*/
+    googleMapController!.moveCamera(CameraUpdate.newLatLng(newPosition));
   }
 
   void deleteMarker(BuildContext context, MarkerId id) async {
-    /*final result = await DialogService.showQuestionDialog(
+    final result = await DialogService.showQuestionDialog(
       context,
       'Excluir marcador',
       'Tem certeza de que deseja excluir o marcador marcado?',
@@ -150,105 +149,24 @@ abstract class _MapControllerBase with Store {
     final marker = markers[index];
     markers.remove(marker);
 
-    ToastService.show('Marcador excluido!!!');*/
+    ToastService.show('Marcador excluido!!!');
   }
 
   Future moveMarker(LatLng position) async {
-    /*if (markerToMove == null) {
+    if (markerToMove == null) {
       ToastService.show('Clique em um marcador primeiro!!!');
       return;
     }
 
     final index = _getIndexOfMarkerById(markerToMove!);
     markers[index] = markers[index].copyWith(positionParam: position);
-    mapController!.moveCamera(CameraUpdate.newLatLng(position));
-    markerToMove = null;*/
+    googleMapController!.moveCamera(CameraUpdate.newLatLng(position));
+    markerToMove = null;
   }
 
   int _getIndexOfMarkerById(MarkerId id) {
     return markers.indexWhere(
       (element) => element.markerId == id,
     );
-  }
-
-  Future<InfoPart?> calculate(num roadWidth) async {
-    /*status = PageStatus.loading;
-    final markerStart = markers[0];
-    final markerEnd = markers[1];
-
-    Point start = Point(
-      latitude: markerStart.position.latitude,
-      longitude: markerStart.position.longitude,
-    );
-
-    Point end = Point(
-      latitude: markerEnd.position.latitude,
-      longitude: markerEnd.position.longitude,
-    );
-
-    if (_part.points.isEmpty) {
-      _part.points.add(start);
-      _part.points.add(end);
-    } else {
-      _part.points[0] = start;
-      _part.points[1] = end;
-    }
-
-    final project = await ProjectRepository().getById(_part.idProject!);
-    project.soilType = SoilTypeRepository().getById(project.idSoilType!);
-
-    final result = await CalculatorService.calculate(
-      start: Point.copy(_part.points[0]),
-      end: Point.copy(_part.points[1]),
-      soilType: project.soilType!,
-      roadWidth: roadWidth,
-      rainVolume: project.rainVolume!,
-    );
-
-    if (result == null) {
-      return null;
-    }
-
-    _part.points[0].altitude = result.pointA.altitude;
-    _part.points[1].altitude = result.pointB.altitude;
-
-    await _partRepository.save(_part);
-
-    status = PageStatus.normal;
-    return result;*/
-  }
-
-  Future<bool> save(double roadWidth) async {
-    /*if (markers.isEmpty || markers.length > 2) {
-      ToastService.show('Insira 2 pontos para salvar!');
-      return false;
-    }
-    final start = markers[0];
-    final end = markers[1];
-
-    _part.roadWidth = roadWidth;
-
-    Point pointA = Point(
-      latitude: start.position.latitude,
-      longitude: start.position.longitude,
-    );
-
-    Point pointB = Point(
-      latitude: end.position.latitude,
-      longitude: end.position.longitude,
-    );
-
-    if (_part.points.isEmpty) {
-      _part.points.add(pointA);
-      _part.points.add(pointB);
-    } else {
-      _part.points[0] = pointA;
-      _part.points[1] = pointB;
-    }
-
-    await _partRepository.save(_part);
-    ToastService.show('Trecho salvo com sucesso.');*/
-
-    return true;
   }
 }

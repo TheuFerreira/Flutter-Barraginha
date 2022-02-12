@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/buttons_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
-import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
 import 'package:flutter_barraginha/app/shared/components/text_form_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
@@ -26,7 +25,6 @@ class _MapPageState extends State<MapPage> {
   late MapController _mapController;
   late ButtonsController _buttonsController;
   late TextEditingController roadWithController;
-  final roadWidthForm = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -39,7 +37,9 @@ class _MapPageState extends State<MapPage> {
 
   @override
   void dispose() {
-    _mapController.mapController!.dispose();
+    if (_mapController.googleMapController != null) {
+      _mapController.googleMapController!.dispose();
+    }
     super.dispose();
   }
 
@@ -77,13 +77,18 @@ class _MapPageState extends State<MapPage> {
                             child: Observer(
                               builder: (context) {
                                 final markers = _mapController.markers;
-                                final initialPosition = _mapController.initialPosition!;
+                                final initialPosition = _mapController.initialPosition;
+
+                                if (initialPosition == null) {
+                                  // TODO: Error loading Google Maps
+                                  return Container();
+                                }
 
                                 return GoogleMap(
                                   initialCameraPosition: initialPosition,
                                   mapType: MapType.terrain,
                                   markers: Set.from(markers),
-                                  onMapCreated: (map) => _mapController.mapController = map,
+                                  onMapCreated: (map) => _mapController.googleMapController = map,
                                   onTap: (position) => _mapController.clickMap(context, position),
                                 );
                               },
@@ -199,33 +204,33 @@ class _MapPageState extends State<MapPage> {
   }
 
   void _caculate() async {
-    if (roadWidthForm.currentState!.validate() == false) {
+    if (_buttonsController.form.currentState!.validate() == false) {
       return;
     }
 
     String roadWidthText = roadWithController.text.trim();
     double roadWidth = double.parse(roadWidthText);
 
-    final info = await _mapController.calculate(roadWidth);
-    if (info == null) {
+    //final info = await _mapController.calculate(roadWidth);
+    /*if (info == null) {
       ToastService.show("Houve um problema ao calcular");
       return;
-    }
+    }*/
 
     ToastService.show("Calculado com sucesso");
-    Navigator.of(context).push(
+    /*Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => PartsInfoPage(info),
       ),
-    );
+    );*/
   }
 
   void _save() async {
     String roadWidthText = roadWithController.text.trim();
     double roadWidth = double.parse(roadWidthText);
 
-    final result = await _mapController.save(roadWidth);
-    if (result == false) return;
+    //final result = await _mapController.save(roadWidth);
+    //if (result == false) return;
 
     Navigator.of(context).pop();
   }
