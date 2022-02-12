@@ -7,6 +7,7 @@ import 'package:flutter_barraginha/app/shared/database/repositories/part_reposit
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
+import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:mobx/mobx.dart';
 
 part 'part_controller.g.dart';
@@ -64,7 +65,7 @@ abstract class _PartControllerBase with Store {
     await loadAll();
 
     _infoController.setCountParts(parts.length);
-    // TODO: Toast info to deleted Part
+    ToastService.show('Trecho ${index + 1}, excluído.');
   }
 
   Future showEditPart(BuildContext context, DisplayPart part) async {
