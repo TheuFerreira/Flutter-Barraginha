@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
+import 'package:flutter_barraginha/app/screens/map/dialogs/calculating_dialog.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
@@ -85,7 +86,8 @@ abstract class _ButtonsControllerBase with Store {
     final project = await _projectRepository.getById(_part.idProject!);
     project.soilType = _soilTypeRepository.getById(project.idSoilType!);
 
-    // TODO: Dialog with progress
+    CalculatingDialog.show(context);
+
     final result = await CalculatorService.calculate(
       start: Point.copy(_part.points[0]),
       end: Point.copy(_part.points[1]),
@@ -97,6 +99,8 @@ abstract class _ButtonsControllerBase with Store {
       ToastService.show("Houve um problema ao calcular");
       return;
     }
+
+    CalculatingDialog.close(context);
 
     _part.points[0].altitude = result.pointA.altitude;
     _part.points[1].altitude = result.pointB.altitude;
