@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/screens/map/controllers/buttons_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
 import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
@@ -21,7 +22,9 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  late MapController controller;
+  final _optionsController = OptionsController();
+  late MapController _mapController;
+  late ButtonsController _buttonsController;
   late TextEditingController roadWithController;
   final roadWidthForm = GlobalKey<FormState>();
 
@@ -29,14 +32,14 @@ class _MapPageState extends State<MapPage> {
   void initState() {
     super.initState();
 
-    controller = MapController(context, widget.part);
-    roadWithController =
-        TextEditingController(text: widget.part.roadWidth.toString());
+    _mapController = MapController(context, widget.part, _optionsController);
+    _buttonsController = ButtonsController();
+    roadWithController = TextEditingController(text: widget.part.roadWidth.toString());
   }
 
   @override
   void dispose() {
-    controller.mapController!.dispose();
+    _mapController.mapController!.dispose();
     super.dispose();
   }
 
@@ -46,7 +49,7 @@ class _MapPageState extends State<MapPage> {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Observer(
         builder: (context) {
-          final status = controller.status;
+          final status = _mapController.status;
           if (status == PageStatus.loading) {
             return const Text('Carregando');
           }
@@ -73,18 +76,15 @@ class _MapPageState extends State<MapPage> {
                             ),
                             child: Observer(
                               builder: (context) {
-                                final markers = controller.markers;
-                                final initialPosition =
-                                    controller.initialPosition!;
+                                final markers = _mapController.markers;
+                                final initialPosition = _mapController.initialPosition!;
 
                                 return GoogleMap(
                                   initialCameraPosition: initialPosition,
                                   mapType: MapType.terrain,
                                   markers: Set.from(markers),
-                                  onMapCreated: (map) =>
-                                      controller.mapController = map,
-                                  onTap: (position) =>
-                                      controller.clickMap(context, position),
+                                  onMapCreated: (map) => _mapController.mapController = map,
+                                  onTap: (position) => _mapController.clickMap(context, position),
                                 );
                               },
                             ),
@@ -120,12 +120,11 @@ class _MapPageState extends State<MapPage> {
                                   hoverColor: Colors.transparent,
                                   splashColor: Colors.transparent,
                                   color: Colors.white,
-                                  selectedColor:
-                                      Theme.of(context).colorScheme.primary,
+                                  selectedColor: Theme.of(context).colorScheme.primary,
                                   renderBorder: false,
-                                  onPressed: controller.options.onSelect,
+                                  onPressed: _optionsController.onSelect,
                                   children: options,
-                                  isSelected: controller.options.values,
+                                  isSelected: _optionsController.values,
                                 ),
                               ),
                             ],
@@ -147,19 +146,18 @@ class _MapPageState extends State<MapPage> {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                      height: 40,
+                      height: 62,
                       child: Form(
-                        key: roadWidthForm,
+                        key: _buttonsController.form,
                         child: TextFormWidget(
                           controller: roadWithController,
                           //labelText: 'Estrada',
                           hintText: 'Largura da Estrada',
                           errorText: 'Insira um valor',
                           fillColor: const Color.fromARGB(255, 255, 255, 255),
-                          textColor: Color(0xff666666),
+                          textColor: const Color(0xff666666),
                           keyboardType: TextInputType.number,
-                          validator: _validateRoadWidth,
-                          
+                          validator: _buttonsController.validateRoadWidth,
                         ),
                       ),
                     ),
@@ -174,7 +172,7 @@ class _MapPageState extends State<MapPage> {
                         SizedBox(
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: _caculate,
+                            onPressed: _buttonsController.calculate,
                             child: const Text(
                               'Calcular',
                               style: TextStyle(
@@ -200,21 +198,6 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
-  String? _validateRoadWidth(String? value) {
-    if (value == null) {
-      return 'Insira um valor';
-    } else if (value.isEmpty) {
-      return 'O valor não pode estar em branco';
-    } else {
-      final result = double.tryParse(value.trim());
-      if (result == null) {
-        return 'Insira um valor válido';
-      }
-    }
-
-    return null;
-  }
-
   void _caculate() async {
     if (roadWidthForm.currentState!.validate() == false) {
       return;
@@ -223,7 +206,7 @@ class _MapPageState extends State<MapPage> {
     String roadWidthText = roadWithController.text.trim();
     double roadWidth = double.parse(roadWidthText);
 
-    final info = await controller.calculate(roadWidth);
+    final info = await _mapController.calculate(roadWidth);
     if (info == null) {
       ToastService.show("Houve um problema ao calcular");
       return;
@@ -241,7 +224,7 @@ class _MapPageState extends State<MapPage> {
     String roadWidthText = roadWithController.text.trim();
     double roadWidth = double.parse(roadWidthText);
 
-    final result = await controller.save(roadWidth);
+    final result = await _mapController.save(roadWidth);
     if (result == false) return;
 
     Navigator.of(context).pop();

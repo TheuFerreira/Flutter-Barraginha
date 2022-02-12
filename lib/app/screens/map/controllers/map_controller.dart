@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
-import 'package:flutter_barraginha/app/screens/map/dialogs/edit_marker_dialog.dart';
-import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
-import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
-import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
-import 'package:flutter_barraginha/app/shared/database/repositories/soil_type_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
-import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
-import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -30,19 +23,20 @@ abstract class _MapControllerBase with Store {
   @observable
   PageStatus status = PageStatus.loading;
 
-  OptionsController options = OptionsController();
+  final OptionsController _options;
   MarkerId? markerToMove;
   GoogleMapController? mapController;
   final DisplayPart _part;
   final IPartRepository _partRepository = PartRepository();
 
-  _MapControllerBase(BuildContext context, this._part) {
-    status = PageStatus.loading;
+  _MapControllerBase(BuildContext context, this._part, this._options) {
+    getCurrentLocation();
+    /*status = PageStatus.loading;
     if (_part.id == null) {
       getCurrentLocation();
     } else {
       _loadPositions(context);
-    }
+    }*/
   }
 
   @action
@@ -65,7 +59,7 @@ abstract class _MapControllerBase with Store {
   }
 
   Future _loadPositions(BuildContext context) async {
-    final pos1 = LatLng(
+    /*final pos1 = LatLng(
       _part.points[0].latitude!.toDouble(),
       _part.points[0].longitude!.toDouble(),
     );
@@ -82,22 +76,22 @@ abstract class _MapControllerBase with Store {
       target: pos1,
       zoom: 15,
     );
-    status = PageStatus.normal;
+    status = PageStatus.normal;*/
   }
 
   @action
   void clickMap(BuildContext context, LatLng position) {
-    final selectedOption = options.selected;
+    /*final selectedOption = _options.selected;
     if (selectedOption == OptionsType.add) {
       addMarker(context, position);
     } else if (selectedOption == OptionsType.move) {
       moveMarker(position);
-    }
+    }*/
   }
 
   @action
   void addMarker(BuildContext context, LatLng position) {
-    if (markers.length == 2) {
+    /*if (markers.length == 2) {
       ToastService.show('Máximo de 2 Marcadores Adicionados!');
       return;
     }
@@ -109,7 +103,7 @@ abstract class _MapControllerBase with Store {
       position: position,
       draggable: true,
       onTap: () {
-        final selectedOption = options.selected;
+        final selectedOption = _options.selected;
         if (selectedOption == OptionsType.edit) {
           editMarker(context, markerId);
         } else if (selectedOption == OptionsType.delete) {
@@ -121,11 +115,11 @@ abstract class _MapControllerBase with Store {
       },
     );
 
-    markers.add(marker);
+    markers.add(marker);*/
   }
 
   void editMarker(BuildContext context, MarkerId id) async {
-    final index = _getIndexOfMarkerById(id);
+    /*final index = _getIndexOfMarkerById(id);
     final oldPosition = markers[index].position;
 
     final newPosition = await showDialog<LatLng>(
@@ -138,11 +132,11 @@ abstract class _MapControllerBase with Store {
     }
 
     markers[index] = markers[index].copyWith(positionParam: newPosition);
-    mapController!.moveCamera(CameraUpdate.newLatLng(newPosition));
+    mapController!.moveCamera(CameraUpdate.newLatLng(newPosition));*/
   }
 
   void deleteMarker(BuildContext context, MarkerId id) async {
-    final result = await DialogService.showQuestionDialog(
+    /*final result = await DialogService.showQuestionDialog(
       context,
       'Excluir marcador',
       'Tem certeza de que deseja excluir o marcador marcado?',
@@ -156,11 +150,11 @@ abstract class _MapControllerBase with Store {
     final marker = markers[index];
     markers.remove(marker);
 
-    ToastService.show('Marcador excluido!!!');
+    ToastService.show('Marcador excluido!!!');*/
   }
 
   Future moveMarker(LatLng position) async {
-    if (markerToMove == null) {
+    /*if (markerToMove == null) {
       ToastService.show('Clique em um marcador primeiro!!!');
       return;
     }
@@ -168,7 +162,7 @@ abstract class _MapControllerBase with Store {
     final index = _getIndexOfMarkerById(markerToMove!);
     markers[index] = markers[index].copyWith(positionParam: position);
     mapController!.moveCamera(CameraUpdate.newLatLng(position));
-    markerToMove = null;
+    markerToMove = null;*/
   }
 
   int _getIndexOfMarkerById(MarkerId id) {
@@ -178,7 +172,7 @@ abstract class _MapControllerBase with Store {
   }
 
   Future<InfoPart?> calculate(num roadWidth) async {
-    status = PageStatus.loading;
+    /*status = PageStatus.loading;
     final markerStart = markers[0];
     final markerEnd = markers[1];
 
@@ -221,11 +215,11 @@ abstract class _MapControllerBase with Store {
     await _partRepository.save(_part);
 
     status = PageStatus.normal;
-    return result;
+    return result;*/
   }
 
   Future<bool> save(double roadWidth) async {
-    if (markers.isEmpty || markers.length > 2) {
+    /*if (markers.isEmpty || markers.length > 2) {
       ToastService.show('Insira 2 pontos para salvar!');
       return false;
     }
@@ -253,7 +247,7 @@ abstract class _MapControllerBase with Store {
     }
 
     await _partRepository.save(_part);
-    ToastService.show('Trecho salvo com sucesso.');
+    ToastService.show('Trecho salvo com sucesso.');*/
 
     return true;
   }
