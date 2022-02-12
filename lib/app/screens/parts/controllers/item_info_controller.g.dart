@@ -69,6 +69,17 @@ mixin _$ItemInfoController on _ItemInfoControllerBase, Store {
   }
 
   @override
+  void resetCountBarrage() {
+    final _$actionInfo = _$_ItemInfoControllerBaseActionController.startAction(
+        name: '_ItemInfoControllerBase.resetCountBarrage');
+    try {
+      return super.resetCountBarrage();
+    } finally {
+      _$_ItemInfoControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void addCountBarrage(int value) {
     final _$actionInfo = _$_ItemInfoControllerBaseActionController.startAction(
         name: '_ItemInfoControllerBase.addCountBarrage');

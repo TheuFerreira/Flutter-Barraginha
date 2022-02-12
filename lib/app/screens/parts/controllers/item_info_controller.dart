@@ -26,6 +26,12 @@ abstract class _ItemInfoControllerBase with Store {
   void setCountParts(int value) => countParts = value.toString();
 
   @action
+  void resetCountBarrage() {
+    _countParts = 0;
+    countBarrage = _countParts.toString();
+  }
+
+  @action
   void addCountBarrage(int value) {
     _countParts += value;
     countBarrage = _countParts.toString();

@@ -43,6 +43,7 @@ abstract class _PartControllerBase with Store {
       ),
     );
 
+    _infoController.resetCountBarrage();
     await loadAll();
     _infoController.setCountParts(parts.length);
   }
@@ -62,6 +63,7 @@ abstract class _PartControllerBase with Store {
     part.status = 0;
 
     await _partRepository.save(part);
+    _infoController.resetCountBarrage();
     await loadAll();
 
     _infoController.setCountParts(parts.length);
@@ -79,6 +81,7 @@ abstract class _PartControllerBase with Store {
       return;
     }
 
+    _infoController.resetCountBarrage();
     await loadAll();
   }
 
