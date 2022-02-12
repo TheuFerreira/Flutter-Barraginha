@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
+import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
+import 'package:flutter_barraginha/app/shared/database/repositories/soil_type_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
+import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
@@ -18,6 +21,8 @@ abstract class _ButtonsControllerBase with Store {
   final DisplayPart _part;
   final MapController _mapController;
   final IPartRepository _partRepository = PartRepository();
+  final IProjectRepository _projectRepository = ProjectRepository();
+  final ISoilTypeRepository _soilTypeRepository = SoilTypeRepository();
 
   _ButtonsControllerBase(this._part, this._mapController) {
     if (_part.id != null) {
@@ -38,55 +43,54 @@ abstract class _ButtonsControllerBase with Store {
     return null;
   }
 
-  void calculate() {
+  Future calculate(BuildContext context) async {
     if (form.currentState!.validate() == false) {
       return;
     }
 
-    if (_mapController.markers.length < 2) {
+    List<Marker> markers = _mapController.markers;
+    if (markers.length < 2) {
       ToastService.show('Insira 2 pontos para calcular!');
       return;
     }
 
     String text = roadWithController.text.trim().replaceAll(',', '.');
-    final roadWidth = double.parse(text);
+    _part.roadWidth = double.parse(text);
 
-    // TODO: Calculate and Save
-    /*status = PageStatus.loading;
-    final markerStart = markers[0];
-    final markerEnd = markers[1];
-
-    Point start = Point(
-      latitude: markerStart.position.latitude,
-      longitude: markerStart.position.longitude,
+    final startPoint = Point(
+      latitude: markers[0].position.latitude,
+      longitude: markers[0].position.longitude,
     );
 
-    Point end = Point(
-      latitude: markerEnd.position.latitude,
-      longitude: markerEnd.position.longitude,
+    final endPoint = Point(
+      latitude: markers[1].position.latitude,
+      longitude: markers[1].position.longitude,
     );
 
     if (_part.points.isEmpty) {
-      _part.points.add(start);
-      _part.points.add(end);
+      _part.points.add(startPoint);
+      _part.points.add(endPoint);
     } else {
-      _part.points[0] = start;
-      _part.points[1] = end;
+      _part.points[0].latitude = startPoint.latitude;
+      _part.points[0].longitude = startPoint.longitude;
+
+      _part.points[1].latitude = endPoint.latitude;
+      _part.points[1].longitude = endPoint.longitude;
     }
 
-    final project = await ProjectRepository().getById(_part.idProject!);
-    project.soilType = SoilTypeRepository().getById(project.idSoilType!);
+    final project = await _projectRepository.getById(_part.idProject!);
+    project.soilType = _soilTypeRepository.getById(project.idSoilType!);
 
     final result = await CalculatorService.calculate(
       start: Point.copy(_part.points[0]),
       end: Point.copy(_part.points[1]),
       soilType: project.soilType!,
-      roadWidth: roadWidth,
+      roadWidth: _part.roadWidth!,
       rainVolume: project.rainVolume!,
     );
-
     if (result == null) {
-      return null;
+      ToastService.show("Houve um problema ao calcular");
+      return;
     }
 
     _part.points[0].altitude = result.pointA.altitude;
@@ -94,8 +98,8 @@ abstract class _ButtonsControllerBase with Store {
 
     await _partRepository.save(_part);
 
-    status = PageStatus.normal;
-    return result;*/
+    ToastService.show("Calculado com sucesso");
+    Navigator.pop(context, true);
   }
 
   Future save(BuildContext context) async {

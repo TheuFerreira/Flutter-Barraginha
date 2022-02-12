@@ -5,7 +5,6 @@ import 'package:flutter_barraginha/app/screens/map/controllers/options_controlle
 import 'package:flutter_barraginha/app/shared/components/text_form_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
-import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -175,7 +174,7 @@ class _MapPageState extends State<MapPage> {
                         SizedBox(
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: _buttonsController.calculate,
+                            onPressed: () => _buttonsController.calculate(context),
                             child: const Text(
                               'Calcular',
                               style: TextStyle(
@@ -199,27 +198,5 @@ class _MapPageState extends State<MapPage> {
         },
       ),
     );
-  }
-
-  void _caculate() async {
-    //final info = await _mapController.calculate(roadWidth);
-    /*if (info == null) {
-      ToastService.show("Houve um problema ao calcular");
-      return;
-    }*/
-
-    ToastService.show("Calculado com sucesso");
-    /*Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => PartsInfoPage(info),
-      ),
-    );*/
-  }
-
-  void _save() async {
-    //final result = await _mapController.save(roadWidth);
-    //if (result == false) return;
-
-    Navigator.of(context).pop();
   }
 }
