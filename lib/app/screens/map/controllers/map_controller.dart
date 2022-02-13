@@ -46,6 +46,8 @@ abstract class _MapControllerBase with Store {
       return;
     }
 
+    await Future.delayed(const Duration(seconds: 1));
+
     initialPosition = CameraPosition(
       target: LatLng(
         position.latitude,
@@ -70,6 +72,8 @@ abstract class _MapControllerBase with Store {
 
     addMarker(context, pos1);
     addMarker(context, pos2);
+
+    await Future.delayed(const Duration(seconds: 1));
 
     initialPosition = CameraPosition(
       target: pos1,
