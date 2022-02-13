@@ -44,7 +44,6 @@ abstract class _ButtonsControllerBase with Store {
     return null;
   }
 
-  // TODO: Refactor code
   Future calculate(BuildContext context) async {
     if (form.currentState!.validate() == false) {
       return;
@@ -56,32 +55,8 @@ abstract class _ButtonsControllerBase with Store {
       return;
     }
 
-    String text = roadWithController.text.trim().replaceAll(',', '.');
-    _part.roadWidth = double.parse(text);
-
-    final startPoint = Point(
-      latitude: markers[0].position.latitude,
-      longitude: markers[0].position.longitude,
-    );
-
-    final endPoint = Point(
-      latitude: markers[1].position.latitude,
-      longitude: markers[1].position.longitude,
-    );
-
-    if (_part.points.isEmpty) {
-      _part.points.add(startPoint);
-      _part.points.add(endPoint);
-    } else {
-      _part.points[0].latitude = startPoint.latitude;
-      _part.points[0].longitude = startPoint.longitude;
-
-      _part.points[1].latitude = endPoint.latitude;
-      _part.points[1].longitude = endPoint.longitude;
-
-      _part.points[0].altitude = null;
-      _part.points[1].altitude = null;
-    }
+    _updateRoadWidth();
+    _generatePoints(markers);
 
     final project = await _projectRepository.getById(_part.idProject!);
     project.soilType = _soilTypeRepository.getById(project.idSoilType!);
@@ -95,6 +70,7 @@ abstract class _ButtonsControllerBase with Store {
       roadWidth: _part.roadWidth!,
       rainVolume: project.rainVolume!,
     );
+
     if (result == null) {
       ToastService.show("Houve um problema ao calcular");
       return;
@@ -122,9 +98,21 @@ abstract class _ButtonsControllerBase with Store {
       return;
     }
 
+    _updateRoadWidth();
+    _generatePoints(markers);
+
+    await _partRepository.save(_part);
+
+    ToastService.show('Trecho salvo com sucesso.');
+    Navigator.pop(context, true);
+  }
+
+  void _updateRoadWidth() {
     String text = roadWithController.text.trim().replaceAll(',', '.');
     _part.roadWidth = double.parse(text);
+  }
 
+  void _generatePoints(List<Marker> markers) {
     final startPoint = Point(
       latitude: markers[0].position.latitude,
       longitude: markers[0].position.longitude,
@@ -151,10 +139,5 @@ abstract class _ButtonsControllerBase with Store {
       _part.points[1].latitude = endPoint.latitude;
       _part.points[1].longitude = endPoint.longitude;
     }
-
-    await _partRepository.save(_part);
-
-    ToastService.show('Trecho salvo com sucesso.');
-    Navigator.pop(context, true);
   }
 }
