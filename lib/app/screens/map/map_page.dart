@@ -131,7 +131,7 @@ class _MapPageState extends State<MapPage> {
                                   hoverColor: Colors.transparent,
                                   splashColor: Colors.transparent,
                                   color: Colors.white,
-                                  selectedColor: Theme.of(context).colorScheme.primary,
+                                  selectedColor: const Color(0xFF439889),
                                   renderBorder: false,
                                   onPressed: _optionsController.onSelect,
                                   children: options,
