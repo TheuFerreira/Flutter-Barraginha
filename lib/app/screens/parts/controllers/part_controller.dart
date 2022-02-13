@@ -36,12 +36,14 @@ abstract class _PartControllerBase with Store {
       idProject: _project.id!,
     );
 
-    // TODO: Check if has changed
-    await Navigator.of(context).push(
+    final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MapPage(displayPart),
       ),
     );
+    if (result != true) {
+      return;
+    }
 
     _infoController.resetCountBarrage();
     await loadAll();
