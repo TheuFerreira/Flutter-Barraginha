@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/dialogs/calculating_dialog.dart';
+import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/soil_type_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
+import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
@@ -27,7 +29,7 @@ abstract class _ButtonsControllerBase with Store {
 
   _ButtonsControllerBase(this._part, this._mapController) {
     if (_part.id != null) {
-      roadWithController.text = _part.roadWidth.toString();
+      roadWithController.text = _part.roadWidth.toString().replaceAll('.', ',');
     }
   }
 
@@ -63,7 +65,7 @@ abstract class _ButtonsControllerBase with Store {
 
     CalculatingDialog.show(context);
 
-    final result = await CalculatorService.calculate(
+    final info = await CalculatorService.calculate(
       start: Point.copy(_part.points[0]),
       end: Point.copy(_part.points[1]),
       soilType: project.soilType!,
@@ -71,19 +73,33 @@ abstract class _ButtonsControllerBase with Store {
       rainVolume: project.rainVolume!,
     );
 
-    if (result == null) {
+    if (info == null) {
       ToastService.show("Houve um problema ao calcular");
+      CalculatingDialog.close(context);
       return;
     }
 
     CalculatingDialog.close(context);
 
-    _part.points[0].altitude = result.pointA.altitude;
-    _part.points[1].altitude = result.pointB.altitude;
+    _part.points[0].altitude = info.pointA.altitude;
+    _part.points[1].altitude = info.pointB.altitude;
 
     await _partRepository.save(_part);
 
-    ToastService.show("Calculado com sucesso");
+    final resultDialog = await DialogService.showQuestionDialog(
+      context,
+      'Calculador com sucesso.',
+      'Deseja ver os resultados?',
+    );
+
+    if (resultDialog == true) {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => PartsInfoPage(info),
+        ),
+      );
+    }
+
     Navigator.pop(context, true);
   }
 
