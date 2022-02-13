@@ -3,6 +3,7 @@ import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
+import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:mobx/mobx.dart';
 
 part 'item_part_controller.g.dart';
@@ -46,6 +47,7 @@ abstract class _ItemPartControllerBase with Store {
 
     if (info == null) {
       state = StateItem.calculate;
+      ToastService.show('Houve um problema para calcular o trecho.');
       return false;
     }
 
