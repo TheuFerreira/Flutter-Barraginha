@@ -124,19 +124,22 @@ class _MapPageState extends State<MapPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Observer(
-                                builder: (context) => ToggleButtons(
-                                  fillColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  splashColor: Colors.transparent,
-                                  color: Colors.white,
-                                  selectedColor: const Color(0xFF439889),
-                                  renderBorder: false,
-                                  onPressed: _optionsController.onSelect,
-                                  children: options,
-                                  isSelected: _optionsController.values,
-                                ),
+                                builder: (context) {
+                                  final values = _optionsController.values;
+                                  return ToggleButtons(
+                                    fillColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    splashColor: Colors.transparent,
+                                    color: Colors.white,
+                                    selectedColor: Theme.of(context).colorScheme.primary,
+                                    renderBorder: false,
+                                    onPressed: _optionsController.onSelect,
+                                    children: options,
+                                    isSelected: values.map((e) => e).toList(),
+                                  );
+                                },
                               ),
                             ],
                           ),

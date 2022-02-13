@@ -9,9 +9,7 @@ class OptionsController = _OptionsControllerBase with _$OptionsController;
 
 abstract class _OptionsControllerBase with Store {
   @observable
-  List<bool> values = ObservableList<bool>.of(
-    options.map((e) => false).toList(),
-  );
+  List<bool> values = ObservableList<bool>();
 
   @computed
   OptionsType get selected {
@@ -21,6 +19,10 @@ abstract class _OptionsControllerBase with Store {
     }
 
     return options[index].type;
+  }
+
+  _OptionsControllerBase() {
+    values.addAll(options.map((e) => false).toList());
   }
 
   @action
