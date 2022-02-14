@@ -76,7 +76,7 @@ class DrawerWidget extends StatelessWidget {
                   title: 'Sobre',
                   icon: const Icon(Icons.info),
                   onTap: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (builder) => const AboutPage()),
+                    MaterialPageRoute(builder: (builder) => AboutPage()),
                   ),
                 ),
                 ItemDrawerWidget(
