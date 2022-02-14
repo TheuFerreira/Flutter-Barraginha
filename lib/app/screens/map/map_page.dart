@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/buttons_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
-import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
+import 'package:flutter_barraginha/app/shared/components/loader.dart';
 import 'package:flutter_barraginha/app/shared/components/text_form_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
@@ -52,10 +52,7 @@ class _MapPageState extends State<MapPage> {
             return Container(
               color: Theme.of(context).colorScheme.primary,
               child: const Center(
-                child: LoadingWidget(
-                  'Carregando Trecho...',
-                  color: Colors.white,
-                ),
+                child: Loader(),
               ),
             );
           }
