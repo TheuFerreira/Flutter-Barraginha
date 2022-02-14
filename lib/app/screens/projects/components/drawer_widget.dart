@@ -54,7 +54,7 @@ class DrawerWidget extends StatelessWidget {
                 ItemDrawerWidget(
                   title: 'Início',
                   icon: const Icon(Icons.home),
-                  onTap: () => Navigator.push(
+                  onTap: () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (_) => const ProjectsPage(),
@@ -71,7 +71,7 @@ class DrawerWidget extends StatelessWidget {
                 ItemDrawerWidget(
                   title: 'Parceiros',
                   icon: const Icon(Icons.people),
-                  onTap: () => Navigator.push(
+                  onTap: () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (ctx) => const PartnersPage(),
@@ -81,7 +81,7 @@ class DrawerWidget extends StatelessWidget {
                 ItemDrawerWidget(
                   title: 'Sobre',
                   icon: const Icon(Icons.info),
-                  onTap: () => Navigator.of(context).push(
+                  onTap: () => Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (builder) => const AboutPage(),
                     ),
@@ -90,7 +90,7 @@ class DrawerWidget extends StatelessWidget {
                 ItemDrawerWidget(
                   title: 'Licenças',
                   icon: const Icon(Icons.android),
-                  onTap: () => Navigator.of(context).push(
+                  onTap: () => Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (builder) => const LicensesPage(),
                     ),
