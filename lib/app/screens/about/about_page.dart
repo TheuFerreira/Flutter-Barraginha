@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
+import 'package:flutter_barraginha/app/shared/components/drawer_widget.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);

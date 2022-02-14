@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/controllers/projects_controller.dart';
+import 'package:flutter_barraginha/app/shared/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/nothing_here_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/text_field_widget.dart';

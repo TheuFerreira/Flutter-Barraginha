@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/partners/components/info_partner_widget.dart';
-import 'package:flutter_barraginha/app/screens/projects/components/drawer_widget.dart';
+import 'package:flutter_barraginha/app/shared/components/drawer_widget.dart';
 
 class PartnersPage extends StatelessWidget {
   const PartnersPage({Key? key}) : super(key: key);
