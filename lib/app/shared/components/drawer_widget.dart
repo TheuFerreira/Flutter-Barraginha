@@ -29,9 +29,7 @@ class DrawerWidget extends StatelessWidget {
                         color: Colors.white,
                         height: 200,
                         width: 200,
-                        child: Image.asset(
-                          'images/logoApp.png',
-                        ),
+                        child: Image.asset('images/logoApp.png'),
                       ),
                     ),
                     const SizedBox(height: 14.0),
@@ -56,9 +54,7 @@ class DrawerWidget extends StatelessWidget {
                   icon: const Icon(Icons.home),
                   onTap: () => Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => const ProjectsPage(),
-                    ),
+                    MaterialPageRoute(builder: (_) => const ProjectsPage()),
                   ),
                 ),
                 ItemDrawerWidget(
@@ -73,27 +69,21 @@ class DrawerWidget extends StatelessWidget {
                   icon: const Icon(Icons.people),
                   onTap: () => Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                      builder: (ctx) => const PartnersPage(),
-                    ),
+                    MaterialPageRoute(builder: (ctx) => const PartnersPage()),
                   ),
                 ),
                 ItemDrawerWidget(
                   title: 'Sobre',
                   icon: const Icon(Icons.info),
                   onTap: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (builder) => const AboutPage(),
-                    ),
+                    MaterialPageRoute(builder: (builder) => const AboutPage()),
                   ),
                 ),
                 ItemDrawerWidget(
                   title: 'Licenças',
                   icon: const Icon(Icons.android),
-                  onTap: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (builder) => const LicensesPage(),
-                    ),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (builder) => const LicensesPage()),
                   ),
                 ),
               ],

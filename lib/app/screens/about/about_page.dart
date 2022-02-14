@@ -1,40 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/shared/components/drawer_widget.dart';
+import 'package:flutter_barraginha/app/shared/components/large_app_bar_widget.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const DrawerWidget(),
-      appBar: AppBar(
-        toolbarHeight: 180,
-        centerTitle: true,
-        leading: Padding(
-          padding: const EdgeInsets.only(bottom: 120),
-          child: Builder(
-            builder: (context) => IconButton(
-              icon: const Icon(
-                Icons.reorder,
-                size: 30,
-              ),
-              onPressed: () => Scaffold.of(context).openDrawer(),
-            ),
-          ),
-        ),
-        title: Container(
-          padding: const EdgeInsets.only(top: 30),
-          child: const Text(
-            'Sobre',
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-      ),
-      body: const SingleChildScrollView(
+    return const Scaffold(
+      drawer: DrawerWidget(),
+      appBar: LargeAppBarWidget(title: 'Sobre'),
+      body: SingleChildScrollView(
         child: Center(
           child: Padding(
             padding: EdgeInsets.all(40),
@@ -62,7 +38,7 @@ class AboutPage extends StatelessWidget {
           ),
         ),
       ),
-      persistentFooterButtons: const [
+      persistentFooterButtons: [
         Text(
           'Nome do App v2021.001.7',
           style: TextStyle(fontWeight: FontWeight.normal),
