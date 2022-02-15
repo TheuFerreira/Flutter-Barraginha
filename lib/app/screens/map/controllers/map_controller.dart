@@ -28,8 +28,31 @@ abstract class _MapControllerBase with Store {
   MarkerId? markerToMove;
   GoogleMapController? googleMapController;
   final DisplayPart _part;
+  final IGeolocationService _geolocationService = GeolocatorService();
 
   _MapControllerBase(BuildContext context, this._part, this._options) {
+    _enableLocation(context);
+  }
+
+  void _enableLocation(BuildContext context) async {
+    final isLocationEnabled = await _geolocationService.isLocationEnabled();
+    if (!isLocationEnabled) {
+      final result = await DialogService.showQuestionDialog(
+        context,
+        'GPS/Localização',
+        'Para continuar, precisamos que você habilite o GPS/Localização do seu telegone!',
+      );
+
+      if (result != true) {
+        Navigator.pop(context);
+        return;
+      }
+
+      _geolocationService.enableLocation();
+      Navigator.pop(context);
+      return;
+    }
+
     if (_part.id == null) {
       _getCurrentLocation();
     } else {
@@ -39,7 +62,7 @@ abstract class _MapControllerBase with Store {
 
   @action
   Future _getCurrentLocation() async {
-    final position = await GeolocatorService().getCurrentLocation();
+    final position = await _geolocationService.getCurrentLocation();
     if (position == null) {
       status = PageStatus.normal;
       ToastService.show('Um problema aconteceu');

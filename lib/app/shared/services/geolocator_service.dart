@@ -3,18 +3,30 @@ import 'dart:developer';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class GeolocatorService {
-  Future<Position?> getCurrentLocation() async {
-    final serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      log('Location services are disabled.');
-      return null;
-    }
+abstract class IGeolocationService {
+  Future<bool> isLocationEnabled();
+  void enableLocation();
+  Future<Position?> getCurrentLocation();
+}
 
+class GeolocatorService implements IGeolocationService {
+  @override
+  Future<bool> isLocationEnabled() async {
+    final result = await Geolocator.isLocationServiceEnabled();
+    return result;
+  }
+
+  @override
+  void enableLocation() async {
+    await Geolocator.openLocationSettings();
+  }
+
+  @override
+  Future<Position?> getCurrentLocation() async {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
+      if (permission != LocationPermission.denied || permission == LocationPermission.whileInUse) {
         log('Location permissions are denied.');
         return null;
       }
