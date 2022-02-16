@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/projects/projects_page.dart';
+import 'package:flutter_barraginha/app/screens/tutorial/components/main_container.dart';
+import 'package:flutter_barraginha/app/screens/tutorial/tutorial_page.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -73,13 +75,12 @@ class App extends StatelessWidget {
               topLeft: Radius.circular(24),
               topRight: Radius.circular(24),
             ),
-          ),
-        ),
+          ),),
         dividerTheme: const DividerThemeData(
           thickness: 1,
         ),
       ),
-      home: const ProjectsPage(),
+      home: const TutorialPage(),
     );
   }
 }
