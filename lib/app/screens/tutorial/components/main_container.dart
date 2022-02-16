@@ -29,7 +29,7 @@ class _TutorialPageState extends State<MainContainer> {
                 child: Container
                 (
                 width: double.infinity,
-                height: 300,//MediaQuery.of(context).size.height/2,
+                height: 600,//MediaQuery.of(context).size.height/2,
                 decoration: BoxDecoration
                 (
                  

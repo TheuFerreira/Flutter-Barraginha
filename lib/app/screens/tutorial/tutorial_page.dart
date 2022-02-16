@@ -17,48 +17,57 @@ class _TutorialPageState extends State<TutorialPage> {
   Widget build(BuildContext context) {
     return Scaffold
     (
-      backgroundColor: Colors.white,
-      body: Stack
+      body: Column
       (
         children: 
         [
-          Positioned
+          Expanded
           (
-            top: 0,
+            flex: 1,
             child: Container
             (
-              height: 100,
-              color: Colors.black,
-            ),
+              color: Colors.amber,
+            )
           ),
 
-         /* Positioned
+          Expanded
           (
-            bottom: 200,
+            flex: 3,
             child: MainContainer()
           ),
-          
-          Positioned
+
+          Expanded
           (
-            bottom: 0,
-            child: RotatedBox
+            
+            child: Stack
             (
-              quarterTurns: 2,
-              child: ClipPath
-              (
-                clipper: BottomContainer(),
-                child: Container
+              fit: StackFit.loose,
+              children: 
+              [
+                Container(color: Colors.blue,),
+
+                Positioned
                 (
-                  width: double.infinity,
-                  height: 100,
-                  color: Color(0xff439889),
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: RotatedBox
+                (
+                  quarterTurns: 2,
+                  child: ClipPath
+                  (
+                    clipper: BottomContainer(),
+                    child: Container
+                    (
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-              ),
+                )
+              ],
             ),
           )
-          */
-          
-          
         ],
       ),
     );
