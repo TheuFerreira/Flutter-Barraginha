@@ -4,6 +4,7 @@ import 'package:flutter_barraginha/app/screens/licenses/licenses_page.dart';
 import 'package:flutter_barraginha/app/screens/partners/partners_page.dart';
 import 'package:flutter_barraginha/app/screens/projects/components/item_drawer_widget.dart';
 import 'package:flutter_barraginha/app/screens/projects/projects_page.dart';
+import 'package:flutter_barraginha/app/screens/tutorial/tutorial_page.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -60,9 +61,9 @@ class DrawerWidget extends StatelessWidget {
                 ItemDrawerWidget(
                   title: 'Tutorial',
                   icon: const Icon(Icons.live_help),
-                  onTap: () {
-                    // TODO: Tutorial
-                  },
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (ctx) => const TutorialPage()),
+                  ),
                 ),
                 ItemDrawerWidget(
                   title: 'Parceiros',
