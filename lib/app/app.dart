@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/projects/projects_page.dart';
 import 'package:flutter_barraginha/app/screens/tutorial/components/main_container.dart';
+import 'package:flutter_barraginha/app/screens/tutorial/tutorial.dart';
 import 'package:flutter_barraginha/app/screens/tutorial/tutorial_page.dart';
 
 class App extends StatelessWidget {
@@ -80,7 +81,7 @@ class App extends StatelessWidget {
           thickness: 1,
         ),
       ),
-      home: const TutorialPage(),
+      home: const Tutorial(),
     );
   }
 }
