@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class BottomContainer extends CustomClipper<Path> {
+class BottomCustomClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();

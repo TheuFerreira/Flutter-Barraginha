@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/tutorial/components/bottom_container.dart';
+import 'package:flutter_barraginha/app/screens/tutorial/components/bottom_container_widget.dart';
 import 'package:flutter_barraginha/app/screens/tutorial/components/top_container_widget.dart';
 
 class TutorialPage extends StatefulWidget {
@@ -57,67 +57,36 @@ class _TutorialPageState extends State<TutorialPage> {
           ),
           Expanded(
             flex: 2,
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child: Column(
                 children: [
                   Expanded(
                     child: Stack(
                       children: [
-                        RotatedBox(
-                          quarterTurns: 2,
-                          child: ClipPath(
-                            clipper: BottomContainer(),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 0),
-                              margin: EdgeInsets.symmetric(vertical: 0),
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        const BottomContainerWidget(),
                         Positioned(
                           top: 35,
                           bottom: 0,
                           left: 0,
                           right: 0,
-                          child: Stack(
-                            fit: StackFit.passthrough,
-                            children: [
-                              RotatedBox(
-                                quarterTurns: 2,
-                                child: ClipPath(
-                                  clipper: BottomContainer(),
-                                  child: Container(
-                                    height: 100,
-                                    width: double.infinity,
-                                    color: Theme.of(context).colorScheme.primary,
-                                  ),
+                          child: BottomContainerWidget(
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 10, left: 10),
+                              child: Text(
+                                widget.descr,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  letterSpacing: 0.1,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 0),
-                    height: MediaQuery.of(context).size.height / 7,
-                    color: Theme.of(context).colorScheme.primary,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 8, right: 10, left: 10),
-                            child: Text(
-                              widget.descr,
-                              style: TextStyle(color: Colors.white, fontSize: 20, letterSpacing: 0.1),
-                              textAlign: TextAlign.center,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
