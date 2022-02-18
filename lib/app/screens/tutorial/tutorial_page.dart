@@ -13,6 +13,8 @@ class _TutorialPageState extends State<TutorialPage> {
   int selectedIndex = 0;
   final _pageController = PageController(initialPage: 0);
   late List<PageWidget> pages = [];
+  bool showPrevious = true;
+  bool showContinue = false;
 
   @override
   void initState() {
@@ -50,21 +52,65 @@ class _TutorialPageState extends State<TutorialPage> {
               itemCount: pages.length,
               itemBuilder: (ctx, i) => pages[i],
               onPageChanged: (index) {
+                bool _showContinue = false;
+                if (index == pages.length - 1) {
+                  _showContinue = true;
+                }
+
+                bool _showPrevious = false;
+                if (index == 0) {
+                  _showPrevious = true;
+                }
+
                 setState(() {
+                  showPrevious = _showPrevious;
                   selectedIndex = index;
+                  showContinue = _showContinue;
                 });
               },
             ),
           ),
           Container(
             color: Theme.of(context).colorScheme.primary,
-            height: 40,
+            height: 55,
             width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                for (var i = 0; i < pages.length; i++) DotWidget(isSelected: i == selectedIndex),
+                AnimatedOpacity(
+                  opacity: showPrevious ? 1 : 0,
+                  duration: const Duration(milliseconds: 300),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(50, 35),
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                    ),
+                    child: const Text('Voltar'),
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    for (var i = 0; i < pages.length; i++) DotWidget(isSelected: i == selectedIndex),
+                  ],
+                ),
+                AnimatedOpacity(
+                  opacity: showContinue ? 1 : 0,
+                  duration: const Duration(milliseconds: 300),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(50, 35),
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                    ),
+                    child: const Text('Continuar'),
+                  ),
+                ),
               ],
             ),
           ),

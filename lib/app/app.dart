@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/tutorial/tutorial_page.dart';
+import 'package:flutter_barraginha/app/screens/projects/projects_page.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -79,7 +79,7 @@ class App extends StatelessWidget {
           thickness: 1,
         ),
       ),
-      home: const TutorialPage(),
+      home: const ProjectsPage(),
     );
   }
 }

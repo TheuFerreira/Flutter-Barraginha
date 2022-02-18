@@ -32,18 +32,11 @@ class PageWidget extends StatelessWidget {
         ),
         Expanded(
           flex: 3,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ClipRRect(
-                child: Image.asset(
-                  image,
-                  width: size.width / 1.3,
-                  height: size.height / 2.5,
-                ),
-                borderRadius: BorderRadius.circular(30),
-              )
-            ],
+          child: ClipRRect(
+            child: Image.asset(
+              image,
+            ),
+            borderRadius: BorderRadius.circular(30),
           ),
         ),
         Expanded(

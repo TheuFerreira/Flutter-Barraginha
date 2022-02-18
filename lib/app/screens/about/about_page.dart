@@ -18,7 +18,6 @@ class AboutPage extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(40),
             child: Text(
-              // TODO: About APP
               'A drenagem das estradas rurais no Brasil era pouco discutida, '
               'mesmo com a importância econômica da agropecuária. Práticas '
               'antrópicas como por exemplo o desmatamento de árvores e o '
