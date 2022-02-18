@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/tutorial/components/dot_widget.dart';
-import 'package:flutter_barraginha/app/screens/tutorial/components/page_widget.dart';
+import 'package:flutter_barraginha/app/screens/tutorial/controllers/tutorial_controller.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class TutorialPage extends StatefulWidget {
   const TutorialPage({Key? key}) : super(key: key);
@@ -10,35 +11,10 @@ class TutorialPage extends StatefulWidget {
 }
 
 class _TutorialPageState extends State<TutorialPage> {
-  int selectedIndex = 0;
+  final _controller = TutorialController();
   final _pageController = PageController(initialPage: 0);
-  late List<PageWidget> pages = [];
   bool showPrevious = true;
   bool showContinue = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    pages = const [
-      PageWidget(
-        title: 'Página principal',
-        image: 'images/inicio.png',
-        description: 'Para editar ou excluir um projeto clique nele e segure',
-      ),
-      PageWidget(
-        title: 'Página de trechos',
-        image: 'images/trechos.png',
-        description: 'Para editar ou excluir um trecho clique nele e segure',
-      ),
-      PageWidget(
-        title: 'Página de mapa',
-        image: 'images/mapa.png',
-        description: 'Clique nos controles e depois no '
-            'ponto para realizar a ação desejada',
-      ),
-    ];
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,27 +23,13 @@ class _TutorialPageState extends State<TutorialPage> {
       body: Column(
         children: [
           Expanded(
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: pages.length,
-              itemBuilder: (ctx, i) => pages[i],
-              onPageChanged: (index) {
-                bool _showContinue = false;
-                if (index == pages.length - 1) {
-                  _showContinue = true;
-                }
-
-                bool _showPrevious = false;
-                if (index == 0) {
-                  _showPrevious = true;
-                }
-
-                setState(() {
-                  showPrevious = _showPrevious;
-                  selectedIndex = index;
-                  showContinue = _showContinue;
-                });
-              },
+            child: Observer(
+              builder: (context) => PageView.builder(
+                controller: _pageController,
+                itemCount: _controller.pages.length,
+                itemBuilder: (ctx, i) => _controller.pages[i],
+                onPageChanged: _controller.updatePage,
+              ),
             ),
           ),
           Container(
@@ -75,43 +37,48 @@ class _TutorialPageState extends State<TutorialPage> {
             height: 40,
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AnimatedOpacity(
-                  opacity: showPrevious ? 1 : 0,
-                  duration: const Duration(milliseconds: 300),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(50, 35),
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                    ),
-                    child: const Text('Voltar'),
-                  ),
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
+            child: Observer(
+              builder: (context) {
+                return Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    for (var i = 0; i < pages.length; i++) DotWidget(isSelected: i == selectedIndex),
-                  ],
-                ),
-                AnimatedOpacity(
-                  opacity: showContinue ? 1 : 0,
-                  duration: const Duration(milliseconds: 300),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(50, 35),
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                    AnimatedOpacity(
+                      opacity: _controller.showPrevious ? 1 : 0,
+                      duration: const Duration(milliseconds: 300),
+                      child: ElevatedButton(
+                        onPressed: Navigator.of(context).pop,
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(50, 35),
+                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                        ),
+                        child: const Text('Sair'),
+                      ),
                     ),
-                    child: const Text('Continuar'),
-                  ),
-                ),
-              ],
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        for (var i = 0; i < _controller.pages.length; i++)
+                          DotWidget(isSelected: i == _controller.selectedPage),
+                      ],
+                    ),
+                    AnimatedOpacity(
+                      opacity: _controller.showContinue ? 1 : 0,
+                      duration: const Duration(milliseconds: 300),
+                      child: ElevatedButton(
+                        onPressed: () => _controller.continueToExit(context),
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(50, 35),
+                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                        ),
+                        child: const Text('Continuar'),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ],
