@@ -15,11 +15,10 @@ class PageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         Expanded(
-          flex: 1,
+          flex: 2,
           child: TopContainerWidget(
             child: Text(
               title,
@@ -31,7 +30,7 @@ class PageWidget extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 2,
+          flex: 3,
           child: ClipRRect(
             child: Image.asset(
               image,
@@ -40,10 +39,6 @@ class PageWidget extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 2,
-          child: BottomContainerWidget()
-        )
-        /*Expanded(
           flex: 2,
           child: SizedBox(
             width: double.infinity,
@@ -80,7 +75,7 @@ class PageWidget extends StatelessWidget {
               ],
             ),
           ),
-        ),*/
+        ),
       ],
     );
   }
