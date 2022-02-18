@@ -81,7 +81,7 @@ class App extends StatelessWidget {
           thickness: 1,
         ),
       ),
-      home: const Tutorial(),
+      home: const ProjectsPage(),
     );
   }
 }

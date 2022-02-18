@@ -18,8 +18,7 @@ class LargeAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.only(bottom: 120),
         child: IconButton(
           icon: const Icon(
-            Icons.reorder,
-            size: 30,
+            Icons.menu,
           ),
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),

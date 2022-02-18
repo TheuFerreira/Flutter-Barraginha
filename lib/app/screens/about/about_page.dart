@@ -19,22 +19,24 @@ class AboutPage extends StatelessWidget {
             padding: EdgeInsets.all(40),
             child: Text(
               // TODO: About APP
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-              'sed do eiusmod tempor incididunt ut labore et dolore magna'
-              'aliqua. Ut enim ad minim veniam, quis nostrud exercitation '
-              'ullamco laboris nisi ut aliquip ex ea commodo consequat. '
-              'Duis aute irure dolor in reprehenderit in voluptate velit '
-              'esse cillum dolore eu fugiat nulla pariatur. Excepteur sint'
-              ' occaecat cupidatat non proident, sunt in culpa qui officia'
-              ' deserunt mollit anim id est laborum.Lorem ipsum dolor sit'
-              ' amet, consectetur adipiscing elit, sed do eiusmod tempor '
-              'incididunt ut labore et dolore magna aliqua. Ut enim ad '
-              'minim veniam, quis nostrud exercitation ullamco laboris nisi '
-              'ut aliquip ex ea commodo consequat. Duis aute irure dolor '
-              'in reprehenderit in voluptate velit esse cillum dolore eu '
-              'ugiat nulla pariatur. Excepteur sint occaecat cupidatat '
-              'non proident, sunt in culpa qui officia deserunt mollit '
-              'anim id est laborum.',
+              'A drenagem das estradas rurais no Brasil era pouco discutida, '
+              'mesmo com a importância econômica da agropecuária. Práticas '
+              'antrópicas como por exemplo o desmatamento de árvores e o '
+              'plantio de culturas sem o devido manejo, vem causando a erosão '
+              'no solo, devido à falta de práticas conservacionistas que vem '
+              'cada vez mais reduzindo a infiltração da água no solo, '
+              'acelerando o escoamento superficial, não havendo o '
+              'reabastecimento do lençol freático. Uma das formas para destinar'
+              ' as águas pluviais nas estradas ambientalmente adequados é a '
+              'utilizado do Bolsão de Contenção de Água. Tal técnica consiste '
+              'em escavar bacias nas margens das estradas em locais '
+              'pré-determinados para que possa armazenar a água pluvial, '
+              'facilitando a infiltração da água no solo, uma alternativa de '
+              'grande valor ambiental. Sendo assim, para facilitar o '
+              'dimensionamento de um bolsão e também não depender de um '
+              'profissional ir a campo, o aplicativo CalcuLand tem como '
+              'objetivo calcular a quantidade de bolsões ao longo de uma '
+              'estrada e suas dimensões.',
               style: TextStyle(fontSize: 17),
               textAlign: TextAlign.justify,
             ),

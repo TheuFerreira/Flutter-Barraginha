@@ -14,7 +14,9 @@ class PartnersPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Column(
+
             children: const [
+              SizedBox(height: 40),
               InfoPartnerWidget(
                 imagePath: 'images/epamig.png',
                 title: 'EPAMIG',
