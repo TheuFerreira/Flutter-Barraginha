@@ -19,7 +19,7 @@ class PageWidget extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          flex: 2,
+          flex: 1,
           child: TopContainerWidget(
             child: Text(
               title,
@@ -31,7 +31,7 @@ class PageWidget extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 3,
+          flex: 2,
           child: ClipRRect(
             child: Image.asset(
               image,
@@ -40,6 +40,10 @@ class PageWidget extends StatelessWidget {
           ),
         ),
         Expanded(
+          flex: 2,
+          child: BottomContainerWidget()
+        )
+        /*Expanded(
           flex: 2,
           child: SizedBox(
             width: double.infinity,
@@ -76,7 +80,7 @@ class PageWidget extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        ),*/
       ],
     );
   }

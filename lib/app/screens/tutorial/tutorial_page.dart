@@ -72,7 +72,7 @@ class _TutorialPageState extends State<TutorialPage> {
           ),
           Container(
             color: Theme.of(context).colorScheme.primary,
-            height: 55,
+            height: 40,
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(

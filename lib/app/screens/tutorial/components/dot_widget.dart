@@ -17,8 +17,8 @@ class DotWidget extends StatelessWidget {
       ),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        width: 15,
-        height: 15,
+        width: 10,
+        height: 10,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           color: isSelected == true ? Colors.white : Theme.of(context).colorScheme.secondary,
