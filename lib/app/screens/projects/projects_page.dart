@@ -19,9 +19,16 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> {
-  final controller = ProjectsController();
+  late ProjectsController controller;
   final searchController = TextEditingController();
   late DisplayProjectResponse project;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = ProjectsController(context);
+  }
 
   @override
   Widget build(BuildContext context) {
