@@ -1,17 +1,17 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class BottomContainer extends CustomClipper<Path> {
+class TopCustomClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
-    path.lineTo(0, size.height - 10);
+    path.lineTo(0, size.height - 80);
 
-    var firstStart = Offset(size.width / 4, size.height + 20);
-    var firstEnd = Offset(size.width / 2, size.height - 40);
+    var firstStart = Offset(size.width / 3, size.height + 15);
+    var firstEnd = Offset(size.width / 1.7, size.height - 50);
     path.quadraticBezierTo(firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);
 
-    var secondStart = Offset(size.width - (size.width / 5), size.height - 90);
-    var secondEnd = Offset(size.width, size.height - 10);
+    var secondStart = Offset(size.width - (size.width / 5), size.height - 95);
+    var secondEnd = Offset(size.width, size.height - 80);
 
     path.quadraticBezierTo(secondStart.dx, secondStart.dy, secondEnd.dx, secondEnd.dy);
 

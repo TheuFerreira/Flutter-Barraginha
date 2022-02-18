@@ -1,7 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/projects/projects_page.dart';
-import 'package:flutter_barraginha/app/screens/tutorial/components/navigation.dart';
 import 'package:flutter_barraginha/app/screens/tutorial/tutorial_page.dart';
+
 class Tutorial extends StatefulWidget {
   const Tutorial({Key? key}) : super(key: key);
 
@@ -11,61 +11,91 @@ class Tutorial extends StatefulWidget {
 
 class _TutorialState extends State<Tutorial> {
   int selectedIndex = 0;
-  late PageController pc;
+  final _pageController = PageController(initialPage: 0);
+  late List<Widget> pages = [];
 
   @override
-  void initState()
-  {
-    // TODO: implement initState
+  void initState() {
     super.initState();
-    pc = PageController(initialPage: selectedIndex);
+
+    pages = const [
+      TutorialPage(
+        title: 'Página principal',
+        image: 'images/inicio.png',
+        descr: 'Para editar ou excluir um projeto clique nele e segure',
+      ),
+      TutorialPage(
+        title: 'Página de trechos',
+        image: 'images/trechos.png',
+        descr: 'Para editar ou excluir um trecho clique nele e segure',
+      ),
+      TutorialPage(
+        title: 'Página de mapa',
+        image: 'images/mapa.png',
+        descr: 'Clique nos controles e depois no '
+            'ponto para realizar a ação desejada',
+      ),
+    ];
   }
 
-
-  void onItemTaped(int index)
-  {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
-
-      body: PageView
-        (
-          controller: pc,
-          children:
-          // ignore: prefer_const_literals_to_create_immutables
-          [
-            const TutorialPage
-            (
-              title: 'Página principal',
-              image: 'images/inicio.png',
-              descr: 'Para editar ou excluir um projeto clique nele e segure'
+      body: Column(
+        children: [
+          Expanded(
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: pages.length,
+              itemBuilder: (ctx, i) => pages[i],
+              onPageChanged: (index) {
+                setState(() {
+                  selectedIndex = index;
+                });
+              },
             ),
-
-            const TutorialPage
-              (
-                title: 'Página de trechos',
-                image: 'images/trechos.png',
-                descr: 'Para editar ou excluir um trecho clique nele e segure'
+          ),
+          SizedBox(
+            height: 40,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (var i = 0; i < pages.length; i++) DotWidget(isSelected: i == selectedIndex),
+              ],
             ),
-
-            const TutorialPage
-              (
-                title: 'Página de mapa',
-                image: 'images/mapa.png',
-                descr: 'Clique nos controles e depois no '
-                       'ponto para realizar a ação desejada'
-            ),
-          ],
-
-          onPageChanged: onItemTaped
+          ),
+        ],
       ),
+    );
+  }
+}
 
-      bottomNavigationBar: Navigation(index: selectedIndex, pc: pc,)
+class DotWidget extends StatelessWidget {
+  final bool isSelected;
+  const DotWidget({
+    Key? key,
+    this.isSelected = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 8.0,
+        right: 8.0,
+        bottom: 10.0,
+      ),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        width: 15,
+        height: 15,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: isSelected == true ? Colors.white : Theme.of(context).colorScheme.secondary,
+        ),
+      ),
     );
   }
 }
