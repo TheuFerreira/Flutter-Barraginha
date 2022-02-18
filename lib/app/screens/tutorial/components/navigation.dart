@@ -24,11 +24,12 @@ class _NavigationState extends State<Navigation> {
           {
             widget.pc.animateToPage(page,
                 duration: Duration(milliseconds: 400),
-                curve: Curves.ease);
+                curve: Curves.elasticInOut);
           },
           iconSize: 10,
           enableFeedback: false,
           selectedFontSize: 0,
+          unselectedFontSize: 0,
 
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem
@@ -60,24 +61,7 @@ class _NavigationState extends State<Navigation> {
               label: '',
             ),
 
-            BottomNavigationBarItem
-              (
-              icon: Icon
-                (
-                Icons.circle,
-                size: 10,
-              ),
-              label: '',
-            ),
-            BottomNavigationBarItem
-              (
-              icon: Icon
-                (
-                Icons.circle,
-                size: 10,
-              ),
-              label: '',
-            ),
+
           ],
 
 

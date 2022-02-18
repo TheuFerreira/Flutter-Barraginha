@@ -5,14 +5,14 @@ class BottomContainer extends CustomClipper<Path> {
   Path getClip(Size size) {
     Path path = Path();
     //inicio
-    path.lineTo(0, size.height - 10);
+    path.lineTo(0, size.height -10);
 
     var firstStart = Offset(size.width / 4, size.height + 20);
     var firstEnd = Offset(size.width / 2, size.height - 40);
     path.quadraticBezierTo(firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);
 
     var secondStart = Offset(size.width - (size.width / 5), size.height - 90);
-    var secondEnd = Offset(size.width, size.height);
+    var secondEnd = Offset(size.width, size.height-10);
 
     path.quadraticBezierTo(secondStart.dx, secondStart.dy, secondEnd.dx, secondEnd.dy);
 
