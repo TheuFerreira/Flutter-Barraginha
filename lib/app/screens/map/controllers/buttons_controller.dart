@@ -88,7 +88,7 @@ abstract class _ButtonsControllerBase with Store {
 
     final resultDialog = await DialogService.showQuestionDialog(
       context,
-      'Calculador com sucesso.',
+      'Calculado com sucesso.',
       'Deseja ver os resultados?',
     );
 
