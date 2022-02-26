@@ -30,6 +30,15 @@ class PartnersPage extends StatelessWidget {
                 description:
                     'É uma instituição de ensino da Rede Federal de Educação, que oferta, cursos técnicos e superiores de forma gratuita.',
               ),
+              SizedBox(height: 40,),
+              InfoPartnerWidget
+              (
+                  imagePath: 'images/ifSje.png',
+                title: 'IFMG - SJE',
+
+                description: 'É uma instituição pública federal que tem como missão consolidar-se como um centro de educação, promovendo o desenvolvimento humano.',
+              ),
+              SizedBox(height: 40,)
             ],
           ),
         ),
