@@ -72,26 +72,28 @@ class _SaveProjectDialogState extends State<SaveProjectDialog> {
                 constraints: const BoxConstraints(
                   minHeight: 42,
                 ),
-                child: Observer(builder: (context) {
-                  final soilTypeSelected = _controller.soilTypeSelected;
-                  final soilTypes = _controller.soilTypes;
+                child: Observer(
+                  builder: (context) {
+                    final soilTypeSelected = _controller.soilTypeSelected;
+                    final soilTypes = _controller.soilTypes;
 
-                  if (soilTypeSelected == null || soilTypes.isEmpty) {
-                    return Container();
-                  }
+                    if (soilTypeSelected == null || soilTypes.isEmpty) {
+                      return Container();
+                    }
 
-                  return DropdownButtonFormWidget<SoilType>(
-                    labelText: 'Tipo de solo',
-                    onChanged: _controller.changeSoilType,
-                    value: soilTypeSelected,
-                    items: soilTypes
-                        .map((e) => DropdownMenuItem(
-                              child: Text(e.text ?? ''),
-                              value: e,
-                            ))
-                        .toList(),
-                  );
-                }),
+                    return DropdownButtonFormWidget<SoilType>(
+                      labelText: 'Tipo de solo',
+                      onChanged: _controller.changeSoilType,
+                      value: soilTypeSelected,
+                      items: soilTypes
+                          .map((e) => DropdownMenuItem(
+                                child: Text(e.text ?? ''),
+                                value: e,
+                              ))
+                          .toList(),
+                    );
+                  },
+                ),
               ),
             ],
           ),

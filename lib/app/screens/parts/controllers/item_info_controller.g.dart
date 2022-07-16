@@ -6,10 +6,11 @@ part of 'item_info_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ItemInfoController on _ItemInfoControllerBase, Store {
-  final _$countPartsAtom = Atom(name: '_ItemInfoControllerBase.countParts');
+  late final _$countPartsAtom =
+      Atom(name: '_ItemInfoControllerBase.countParts', context: context);
 
   @override
   String get countParts {
@@ -24,7 +25,8 @@ mixin _$ItemInfoController on _ItemInfoControllerBase, Store {
     });
   }
 
-  final _$countBarrageAtom = Atom(name: '_ItemInfoControllerBase.countBarrage');
+  late final _$countBarrageAtom =
+      Atom(name: '_ItemInfoControllerBase.countBarrage', context: context);
 
   @override
   String get countBarrage {
@@ -39,7 +41,8 @@ mixin _$ItemInfoController on _ItemInfoControllerBase, Store {
     });
   }
 
-  final _$rainVolumeAtom = Atom(name: '_ItemInfoControllerBase.rainVolume');
+  late final _$rainVolumeAtom =
+      Atom(name: '_ItemInfoControllerBase.rainVolume', context: context);
 
   @override
   String get rainVolume {
@@ -54,8 +57,8 @@ mixin _$ItemInfoController on _ItemInfoControllerBase, Store {
     });
   }
 
-  final _$_ItemInfoControllerBaseActionController =
-      ActionController(name: '_ItemInfoControllerBase');
+  late final _$_ItemInfoControllerBaseActionController =
+      ActionController(name: '_ItemInfoControllerBase', context: context);
 
   @override
   void setCountParts(int value) {

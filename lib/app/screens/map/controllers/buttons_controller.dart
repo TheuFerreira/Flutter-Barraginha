@@ -62,7 +62,7 @@ abstract class _ButtonsControllerBase with Store {
     _generatePoints(markers);
 
     final project = await _projectRepository.getById(_part.idProject!);
-    project.soilType = await _getSoilTypeByIdCase(project.idSoilType!);
+    project.soilType = _getSoilTypeByIdCase(project.idSoilType!);
 
     CalculatingDialog.show(context);
 

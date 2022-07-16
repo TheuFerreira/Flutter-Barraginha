@@ -6,7 +6,7 @@ part of 'options_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$OptionsController on _OptionsControllerBase, Store {
   Computed<OptionsType>? _$selectedComputed;
@@ -17,7 +17,8 @@ mixin _$OptionsController on _OptionsControllerBase, Store {
               name: '_OptionsControllerBase.selected'))
           .value;
 
-  final _$valuesAtom = Atom(name: '_OptionsControllerBase.values');
+  late final _$valuesAtom =
+      Atom(name: '_OptionsControllerBase.values', context: context);
 
   @override
   List<bool> get values {
@@ -32,8 +33,8 @@ mixin _$OptionsController on _OptionsControllerBase, Store {
     });
   }
 
-  final _$_OptionsControllerBaseActionController =
-      ActionController(name: '_OptionsControllerBase');
+  late final _$_OptionsControllerBaseActionController =
+      ActionController(name: '_OptionsControllerBase', context: context);
 
   @override
   void onSelect(int index) {

@@ -6,10 +6,11 @@ part of 'part_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$PartController on _PartControllerBase, Store {
-  final _$partsAtom = Atom(name: '_PartControllerBase.parts');
+  late final _$partsAtom =
+      Atom(name: '_PartControllerBase.parts', context: context);
 
   @override
   List<DisplayPart> get parts {
@@ -24,7 +25,8 @@ mixin _$PartController on _PartControllerBase, Store {
     });
   }
 
-  final _$countBarrageAtom = Atom(name: '_PartControllerBase.countBarrage');
+  late final _$countBarrageAtom =
+      Atom(name: '_PartControllerBase.countBarrage', context: context);
 
   @override
   num get countBarrage {
@@ -39,7 +41,8 @@ mixin _$PartController on _PartControllerBase, Store {
     });
   }
 
-  final _$deletePartAsyncAction = AsyncAction('_PartControllerBase.deletePart');
+  late final _$deletePartAsyncAction =
+      AsyncAction('_PartControllerBase.deletePart', context: context);
 
   @override
   Future<dynamic> deletePart(
@@ -48,7 +51,8 @@ mixin _$PartController on _PartControllerBase, Store {
         .run(() => super.deletePart(context, part, index));
   }
 
-  final _$loadAllAsyncAction = AsyncAction('_PartControllerBase.loadAll');
+  late final _$loadAllAsyncAction =
+      AsyncAction('_PartControllerBase.loadAll', context: context);
 
   @override
   Future<dynamic> loadAll() {

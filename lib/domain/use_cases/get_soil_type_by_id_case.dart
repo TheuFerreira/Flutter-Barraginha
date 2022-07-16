@@ -2,7 +2,7 @@ import 'package:flutter_barraginha/app/shared/database/entities/soil_type.dart';
 import 'package:flutter_barraginha/domain/repositories/soil_type_repository.dart';
 
 abstract class GetSoilTypeByIdCase {
-  Future<SoilType> call(int idSoilType);
+  SoilType call(int idSoilType);
 }
 
 class GetSoilTypeByIdCaseImpl implements GetSoilTypeByIdCase {
@@ -11,8 +11,8 @@ class GetSoilTypeByIdCaseImpl implements GetSoilTypeByIdCase {
   GetSoilTypeByIdCaseImpl(this._soilTypeRepository);
 
   @override
-  Future<SoilType> call(int idSoilType) async {
-    final soilType = await _soilTypeRepository.getById(idSoilType);
+  SoilType call(int idSoilType) {
+    final soilType = _soilTypeRepository.getById(idSoilType);
     return soilType;
   }
 }

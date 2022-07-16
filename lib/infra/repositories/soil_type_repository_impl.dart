@@ -4,11 +4,11 @@ import 'package:flutter_barraginha/infra/utils/soil_types.dart';
 
 class SoilTypeRepositoryImpl implements SoilTypeRepository {
   @override
-  Future<List<SoilType>> getAll() async {
+  List<SoilType> getAll() {
     return soilTypes;
   }
 
   @override
-  Future<SoilType> getById(int id) async =>
+  SoilType getById(int id) =>
       soilTypes.where((element) => element.id == id).first;
 }

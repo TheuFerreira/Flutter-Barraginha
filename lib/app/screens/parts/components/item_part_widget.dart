@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/parts/controllers/item_part_controller.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
@@ -90,7 +88,9 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                               icon: const Icon(Icons.info),
                               iconSize: 24,
                               color: const Color(0xFF666666),
-                              onPressed: state != StateItem.none ? null : () => widget.onInfo!(_controller.info!),
+                              onPressed: state != StateItem.none
+                                  ? null
+                                  : () => widget.onInfo!(_controller.info!),
                             );
                           },
                         ),
@@ -109,7 +109,9 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                                 return;
                               }
 
-                              int barrageNumber = _controller.info!.barrageNumbersAdjusted.toInt();
+                              int barrageNumber = _controller
+                                  .info!.barrageNumbersAdjusted
+                                  .toInt();
                               widget.onCalculated!(barrageNumber);
                             },
                             child: const Text('Calcular'),

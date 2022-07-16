@@ -6,10 +6,11 @@ part of 'map_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$MapController on _MapControllerBase, Store {
-  final _$markersAtom = Atom(name: '_MapControllerBase.markers');
+  late final _$markersAtom =
+      Atom(name: '_MapControllerBase.markers', context: context);
 
   @override
   List<Marker> get markers {
@@ -24,8 +25,8 @@ mixin _$MapController on _MapControllerBase, Store {
     });
   }
 
-  final _$initialPositionAtom =
-      Atom(name: '_MapControllerBase.initialPosition');
+  late final _$initialPositionAtom =
+      Atom(name: '_MapControllerBase.initialPosition', context: context);
 
   @override
   CameraPosition? get initialPosition {
@@ -40,7 +41,8 @@ mixin _$MapController on _MapControllerBase, Store {
     });
   }
 
-  final _$statusAtom = Atom(name: '_MapControllerBase.status');
+  late final _$statusAtom =
+      Atom(name: '_MapControllerBase.status', context: context);
 
   @override
   PageStatus get status {
@@ -55,8 +57,8 @@ mixin _$MapController on _MapControllerBase, Store {
     });
   }
 
-  final _$_getCurrentLocationAsyncAction =
-      AsyncAction('_MapControllerBase._getCurrentLocation');
+  late final _$_getCurrentLocationAsyncAction =
+      AsyncAction('_MapControllerBase._getCurrentLocation', context: context);
 
   @override
   Future<dynamic> _getCurrentLocation() {
@@ -64,8 +66,8 @@ mixin _$MapController on _MapControllerBase, Store {
         .run(() => super._getCurrentLocation());
   }
 
-  final _$_MapControllerBaseActionController =
-      ActionController(name: '_MapControllerBase');
+  late final _$_MapControllerBaseActionController =
+      ActionController(name: '_MapControllerBase', context: context);
 
   @override
   void clickMap(BuildContext context, LatLng position) {

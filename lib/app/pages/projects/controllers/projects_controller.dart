@@ -174,7 +174,7 @@ abstract class _ProjectControllerBase with Store {
 
     projects = await _searchProjectsCase(search: value);
     for (DisplayProjectResponse project in projects) {
-      project.soilType = await _getSoilTypeByIdCase(project.idSoilType!);
+      project.soilType = _getSoilTypeByIdCase(project.idSoilType!);
     }
 
     message = '';

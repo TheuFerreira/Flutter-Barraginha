@@ -6,7 +6,7 @@ part of 'projects_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ProjectsController on _ProjectControllerBase, Store {
   Computed<bool>? _$isLoadingComputed;
@@ -17,7 +17,8 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
               name: '_ProjectControllerBase.isLoading'))
           .value;
 
-  final _$projectsAtom = Atom(name: '_ProjectControllerBase.projects');
+  late final _$projectsAtom =
+      Atom(name: '_ProjectControllerBase.projects', context: context);
 
   @override
   List<DisplayProjectResponse> get projects {
@@ -32,7 +33,8 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
     });
   }
 
-  final _$statusAtom = Atom(name: '_ProjectControllerBase.status');
+  late final _$statusAtom =
+      Atom(name: '_ProjectControllerBase.status', context: context);
 
   @override
   PageStatus get status {
@@ -47,7 +49,8 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
     });
   }
 
-  final _$messageAtom = Atom(name: '_ProjectControllerBase.message');
+  late final _$messageAtom =
+      Atom(name: '_ProjectControllerBase.message', context: context);
 
   @override
   String get message {
@@ -62,8 +65,8 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
     });
   }
 
-  final _$addNewProjectAsyncAction =
-      AsyncAction('_ProjectControllerBase.addNewProject');
+  late final _$addNewProjectAsyncAction =
+      AsyncAction('_ProjectControllerBase.addNewProject', context: context);
 
   @override
   Future<dynamic> addNewProject(
@@ -72,8 +75,8 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
         .run(() => super.addNewProject(context, searchController));
   }
 
-  final _$_editProjectAsyncAction =
-      AsyncAction('_ProjectControllerBase._editProject');
+  late final _$_editProjectAsyncAction =
+      AsyncAction('_ProjectControllerBase._editProject', context: context);
 
   @override
   Future<dynamic> _editProject(BuildContext context,
@@ -82,8 +85,8 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
         .run(() => super._editProject(context, project, searchController));
   }
 
-  final _$_deleteProjectAsyncAction =
-      AsyncAction('_ProjectControllerBase._deleteProject');
+  late final _$_deleteProjectAsyncAction =
+      AsyncAction('_ProjectControllerBase._deleteProject', context: context);
 
   @override
   Future<dynamic> _deleteProject(BuildContext context,
@@ -92,7 +95,8 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
         .run(() => super._deleteProject(context, project, searchController));
   }
 
-  final _$searchAsyncAction = AsyncAction('_ProjectControllerBase.search');
+  late final _$searchAsyncAction =
+      AsyncAction('_ProjectControllerBase.search', context: context);
 
   @override
   Future<dynamic> search({String value = ''}) {

@@ -20,7 +20,7 @@ abstract class _SaveProjectControllerBase with Store {
   SoilType? soilTypeSelected;
 
   @observable
-  List<SoilType> soilTypes = ObservableList<SoilType>();
+  ObservableList<SoilType> soilTypes = ObservableList<SoilType>.of([]);
 
   final DisplayProjectResponse _project;
   final _getAllSoilTypeCase = Modular.get<GetAllSoilTypeCase>();
@@ -33,15 +33,13 @@ abstract class _SaveProjectControllerBase with Store {
       volumeRainController.text = _project.rainVolume.toString();
     }
 
-    _getSoilTypeByIdCase(_project.idSoilType!).then((value) {
-      soilTypeSelected = value;
-      getAllSoilType();
-    });
+    getSoilType();
   }
 
   @action
-  void getAllSoilType() async {
-    soilTypes = await _getAllSoilTypeCase();
+  void getSoilType() {
+    soilTypeSelected = _getSoilTypeByIdCase(_project.idSoilType!);
+    soilTypes.addAll(_getAllSoilTypeCase());
   }
 
   @action
