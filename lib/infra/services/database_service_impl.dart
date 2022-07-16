@@ -1,8 +1,9 @@
-import 'dart:async';
+import 'package:flutter_barraginha/domain/services/database_service.dart';
 import 'package:flutter_barraginha/infra/utils/sql_v1.dart';
 import 'package:sqflite/sqflite.dart';
 
-abstract class Connection {
+class DatabaseServiceImpl implements DatabaseService {
+  @override
   Future<Database> getDatabase() async {
     String defaultPath = await getDatabasesPath();
     String dbPath = defaultPath + '/video_cut.db';

@@ -3,12 +3,14 @@ import 'package:flutter_barraginha/app/pages/projects/dialogs/context_dialog.dar
 import 'package:flutter_barraginha/app/pages/projects/dialogs/save_project_dialog.dart';
 import 'package:flutter_barraginha/app/pages/tutorial/tutorial_page.dart';
 import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
-import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
+import 'package:flutter_barraginha/domain/use_cases/add_new_project_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/get_show_tutorial_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/get_soil_type_by_id_case.dart';
+import 'package:flutter_barraginha/domain/use_cases/search_projects_case.dart';
+import 'package:flutter_barraginha/domain/use_cases/update_project_case.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -31,7 +33,9 @@ abstract class _ProjectControllerBase with Store {
   bool get isLoading => status == PageStatus.loading;
 
   final _getShowTutorialCase = Modular.get<GetShowTutorialCase>();
-  final IProjectRepository _projectRepository = ProjectRepository();
+  final _addNewProjectCase = Modular.get<AddNewProjectCase>();
+  final _updateProjectCase = Modular.get<UpdateProjectCase>();
+  final _searchProjectsCase = Modular.get<SearchProjectsCase>();
   final _getSoilTypeByIdCase = Modular.get<GetSoilTypeByIdCase>();
 
   _ProjectControllerBase(BuildContext context) {
@@ -70,11 +74,7 @@ abstract class _ProjectControllerBase with Store {
     message = 'Criando novo Projeto...';
     status = PageStatus.loading;
 
-    project.date = DateTime.now();
-    project.status = 1;
-
-    final newProject = await _projectRepository.save(project);
-    newProject.soilType = await _getSoilTypeByIdCase(newProject.idSoilType!);
+    final newProject = await _addNewProjectCase(project);
 
     message = '';
     status = PageStatus.normal;
@@ -128,7 +128,7 @@ abstract class _ProjectControllerBase with Store {
     message = 'Atualizando Projeto...';
     status = PageStatus.loading;
 
-    await _projectRepository.save(project);
+    await _updateProjectCase(project);
 
     message = '';
     status = PageStatus.normal;
@@ -155,7 +155,7 @@ abstract class _ProjectControllerBase with Store {
     message = 'Deletando Projeto...';
     status = PageStatus.loading;
 
-    await _projectRepository.save(project);
+    await _updateProjectCase(project);
 
     message = '';
     status = PageStatus.normal;
@@ -172,7 +172,7 @@ abstract class _ProjectControllerBase with Store {
     message = 'Pesquisando...';
     status = PageStatus.loading;
 
-    projects = await _projectRepository.search(search: value);
+    projects = await _searchProjectsCase(search: value);
     for (DisplayProjectResponse project in projects) {
       project.soilType = await _getSoilTypeByIdCase(project.idSoilType!);
     }
