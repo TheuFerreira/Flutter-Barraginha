@@ -2,7 +2,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class IPreferencesService {
   Future<bool> getShowTutorial();
-  void setShowTutorial(bool value);
 }
 
 class PreferencesService implements IPreferencesService {
@@ -14,11 +13,5 @@ class PreferencesService implements IPreferencesService {
     }
 
     return prefs.getBool("show_tutorial")!;
-  }
-
-  @override
-  void setShowTutorial(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setBool('show_tutorial', value);
   }
 }
