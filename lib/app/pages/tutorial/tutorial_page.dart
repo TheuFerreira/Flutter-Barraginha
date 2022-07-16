@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/tutorial/components/dot_widget.dart';
-import 'package:flutter_barraginha/app/screens/tutorial/controllers/tutorial_controller.dart';
+import 'package:flutter_barraginha/app/pages/tutorial/components/dot_widget.dart';
+import 'package:flutter_barraginha/app/pages/tutorial/controllers/tutorial_controller.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class TutorialPage extends StatefulWidget {
@@ -50,7 +50,8 @@ class _TutorialPageState extends State<TutorialPage> {
                         onPressed: Navigator.of(context).pop,
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(50, 35),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 8),
                         ),
                         child: const Text('Sair'),
                       ),
@@ -71,7 +72,8 @@ class _TutorialPageState extends State<TutorialPage> {
                         onPressed: () => _controller.continueToExit(context),
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(50, 35),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 8),
                         ),
                         child: const Text('Continuar'),
                       ),

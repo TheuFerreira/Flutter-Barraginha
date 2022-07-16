@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/pages/tutorial/tutorial_page.dart';
 import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
 import 'package:flutter_barraginha/app/screens/projects/dialogs/context_dialog.dart';
 import 'package:flutter_barraginha/app/screens/projects/dialogs/save_project_dialog.dart';
-import 'package:flutter_barraginha/app/screens/tutorial/tutorial_page.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/soil_type_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
@@ -17,7 +17,8 @@ class ProjectsController = _ProjectControllerBase with _$ProjectsController;
 
 abstract class _ProjectControllerBase with Store {
   @observable
-  List<DisplayProjectResponse> projects = ObservableList<DisplayProjectResponse>();
+  List<DisplayProjectResponse> projects =
+      ObservableList<DisplayProjectResponse>();
 
   @observable
   PageStatus status = PageStatus.normal;
@@ -44,7 +45,8 @@ abstract class _ProjectControllerBase with Store {
   }
 
   @action
-  Future addNewProject(BuildContext context, TextEditingController searchController) async {
+  Future addNewProject(
+      BuildContext context, TextEditingController searchController) async {
     final result = await showDialog<DisplayProjectResponse?>(
       context: context,
       builder: (ctx) => SaveProjectDialog(
@@ -62,7 +64,8 @@ abstract class _ProjectControllerBase with Store {
     toPartsPage(context, project, searchController);
   }
 
-  Future<DisplayProjectResponse> _insertProject(DisplayProjectResponse project) async {
+  Future<DisplayProjectResponse> _insertProject(
+      DisplayProjectResponse project) async {
     message = 'Criando novo Projeto...';
     status = PageStatus.loading;
 
@@ -93,7 +96,8 @@ abstract class _ProjectControllerBase with Store {
     await search(value: searchController.text);
   }
 
-  void showOptions(BuildContext context, DisplayProjectResponse project, TextEditingController searchController) {
+  void showOptions(BuildContext context, DisplayProjectResponse project,
+      TextEditingController searchController) {
     showDialog(
       context: context,
       builder: (BuildContext ctx) => ContextMenu(

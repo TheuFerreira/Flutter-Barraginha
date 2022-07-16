@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/tutorial/clippers/bottom_custom_clipper.dart';
+import 'package:flutter_barraginha/app/pages/tutorial/clippers/bottom_custom_clipper.dart';
 
 class BottomContainerWidget extends StatelessWidget {
   final Widget? child;

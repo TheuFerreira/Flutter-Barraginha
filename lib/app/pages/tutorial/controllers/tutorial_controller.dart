@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_barraginha/app/screens/tutorial/components/page_widget.dart';
-import 'package:flutter_barraginha/app/shared/services/preferences_service.dart';
+import 'package:flutter_barraginha/app/pages/tutorial/components/page_widget.dart';
+import 'package:flutter_barraginha/domain/use_cases/update_show_tutorial_case.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'tutorial_controller.g.dart';
@@ -37,7 +38,7 @@ abstract class _TutorialControllerBase with Store {
   @observable
   bool showContinue = false;
 
-  final _preferencesService = PreferencesService();
+  final _updateShowTutorialCase = Modular.get<UpdateShowTutorialCase>();
 
   @action
   void updatePage(int index) {
@@ -55,7 +56,7 @@ abstract class _TutorialControllerBase with Store {
   }
 
   void continueToExit(BuildContext context) {
-    _preferencesService.setShowTutorial(false);
+    _updateShowTutorialCase(false);
     Navigator.of(context).pop();
   }
 }

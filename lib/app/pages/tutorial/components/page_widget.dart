@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/tutorial/components/bottom_container_widget.dart';
-import 'package:flutter_barraginha/app/screens/tutorial/components/top_container_widget.dart';
+import 'package:flutter_barraginha/app/pages/tutorial/components/bottom_container_widget.dart';
+import 'package:flutter_barraginha/app/pages/tutorial/components/top_container_widget.dart';
 
 class PageWidget extends StatelessWidget {
   final String title;
@@ -54,7 +54,8 @@ class PageWidget extends StatelessWidget {
                         left: 0,
                         right: 0,
                         child: BottomContainerWidget(
-                          backgroundColor: Theme.of(context).colorScheme.primary,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           child: Padding(
                             padding: const EdgeInsets.only(right: 10, left: 10),
                             child: Text(
