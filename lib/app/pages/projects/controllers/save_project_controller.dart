@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/soil_type.dart';
-import 'package:flutter_barraginha/app/shared/database/repositories/soil_type_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
+import 'package:flutter_barraginha/domain/use_cases/get_all_soil_type_case.dart';
+import 'package:flutter_barraginha/domain/use_cases/get_soil_type_by_id_case.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'save_project_controller.g.dart';
 
-class SaveProjectController = _SaveProjectControllerBase with _$SaveProjectController;
+class SaveProjectController = _SaveProjectControllerBase
+    with _$SaveProjectController;
 
 abstract class _SaveProjectControllerBase with Store {
   final formController = GlobalKey<FormState>();
@@ -20,7 +23,8 @@ abstract class _SaveProjectControllerBase with Store {
   List<SoilType> soilTypes = ObservableList<SoilType>();
 
   final DisplayProjectResponse _project;
-  final ISoilTypeRepository _soilTypeRepository = SoilTypeRepository();
+  final _getAllSoilTypeCase = Modular.get<GetAllSoilTypeCase>();
+  final _getSoilTypeByIdCase = Modular.get<GetSoilTypeByIdCase>();
 
   _SaveProjectControllerBase(this._project) {
     nameController = TextEditingController(text: _project.title);
@@ -29,14 +33,15 @@ abstract class _SaveProjectControllerBase with Store {
       volumeRainController.text = _project.rainVolume.toString();
     }
 
-    soilTypeSelected = _soilTypeRepository.getById(_project.idSoilType!);
-
-    getAllSoilType();
+    _getSoilTypeByIdCase(_project.idSoilType!).then((value) {
+      soilTypeSelected = value;
+      getAllSoilType();
+    });
   }
 
   @action
-  void getAllSoilType() {
-    soilTypes = _soilTypeRepository.getAll();
+  void getAllSoilType() async {
+    soilTypes = await _getAllSoilTypeCase();
   }
 
   @action

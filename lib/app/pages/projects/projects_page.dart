@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/projects/controllers/projects_controller.dart';
+import 'package:flutter_barraginha/app/pages/projects/controllers/projects_controller.dart';
 import 'package:flutter_barraginha/app/shared/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/nothing_here_widget.dart';
@@ -39,7 +39,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
-            onPressed: () => controller.addNewProject(context, searchController),
+            onPressed: () =>
+                controller.addNewProject(context, searchController),
             color: Colors.white,
             iconSize: 32,
             icon: const Icon(Icons.add_circle),
@@ -50,7 +51,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
         children: [
           CustomBar(
             top: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 30),
+              padding: const EdgeInsets.only(
+                  left: 30, right: 30, top: 20, bottom: 30),
               child: SizedBox(
                 height: 40,
                 width: MediaQuery.of(context).size.width,
@@ -96,8 +98,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       return ItemProjectWidget(
                         projects[i],
                         key: UniqueKey(),
-                        onTap: (project) => controller.toPartsPage(builder, project, searchController),
-                        onLongPress: (project) => controller.showOptions(builder, project, searchController),
+                        onTap: (project) => controller.toPartsPage(
+                            builder, project, searchController),
+                        onLongPress: (project) => controller.showOptions(
+                            builder, project, searchController),
                       );
                     },
                   );

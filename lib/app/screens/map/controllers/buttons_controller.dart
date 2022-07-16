@@ -5,11 +5,12 @@ import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
-import 'package:flutter_barraginha/app/shared/database/repositories/soil_type_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
+import 'package:flutter_barraginha/domain/use_cases/get_soil_type_by_id_case.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
 
@@ -25,7 +26,7 @@ abstract class _ButtonsControllerBase with Store {
   final MapController _mapController;
   final IPartRepository _partRepository = PartRepository();
   final IProjectRepository _projectRepository = ProjectRepository();
-  final ISoilTypeRepository _soilTypeRepository = SoilTypeRepository();
+  final _getSoilTypeByIdCase = Modular.get<GetSoilTypeByIdCase>();
 
   _ButtonsControllerBase(this._part, this._mapController) {
     if (_part.id != null) {
@@ -61,7 +62,7 @@ abstract class _ButtonsControllerBase with Store {
     _generatePoints(markers);
 
     final project = await _projectRepository.getById(_part.idProject!);
-    project.soilType = _soilTypeRepository.getById(project.idSoilType!);
+    project.soilType = await _getSoilTypeByIdCase(project.idSoilType!);
 
     CalculatingDialog.show(context);
 
@@ -143,13 +144,15 @@ abstract class _ButtonsControllerBase with Store {
       _part.points.add(startPoint);
       _part.points.add(endPoint);
     } else {
-      if (_part.points[0].latitude != startPoint.latitude || _part.points[0].longitude != startPoint.longitude) {
+      if (_part.points[0].latitude != startPoint.latitude ||
+          _part.points[0].longitude != startPoint.longitude) {
         _part.points[0].altitude = null;
       }
       _part.points[0].latitude = startPoint.latitude;
       _part.points[0].longitude = startPoint.longitude;
 
-      if (_part.points[1].latitude != endPoint.latitude || _part.points[1].longitude != endPoint.longitude) {
+      if (_part.points[1].latitude != endPoint.latitude ||
+          _part.points[1].longitude != endPoint.longitude) {
         _part.points[1].altitude = null;
       }
       _part.points[1].latitude = endPoint.latitude;

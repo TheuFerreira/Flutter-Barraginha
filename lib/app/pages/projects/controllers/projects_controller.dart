@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/pages/projects/dialogs/context_dialog.dart';
+import 'package:flutter_barraginha/app/pages/projects/dialogs/save_project_dialog.dart';
 import 'package:flutter_barraginha/app/pages/tutorial/tutorial_page.dart';
 import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
-import 'package:flutter_barraginha/app/screens/projects/dialogs/context_dialog.dart';
-import 'package:flutter_barraginha/app/screens/projects/dialogs/save_project_dialog.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
-import 'package:flutter_barraginha/app/shared/database/repositories/soil_type_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
-import 'package:flutter_barraginha/app/shared/services/preferences_service.dart';
+import 'package:flutter_barraginha/domain/use_cases/get_show_tutorial_case.dart';
+import 'package:flutter_barraginha/domain/use_cases/get_soil_type_by_id_case.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'projects_controller.g.dart';
@@ -29,12 +30,12 @@ abstract class _ProjectControllerBase with Store {
   @computed
   bool get isLoading => status == PageStatus.loading;
 
-  final IPreferencesService _preferencesService = PreferencesService();
+  final _getShowTutorialCase = Modular.get<GetShowTutorialCase>();
   final IProjectRepository _projectRepository = ProjectRepository();
-  final ISoilTypeRepository _soilType = SoilTypeRepository();
+  final _getSoilTypeByIdCase = Modular.get<GetSoilTypeByIdCase>();
 
   _ProjectControllerBase(BuildContext context) {
-    _preferencesService.getShowTutorial().then((value) async {
+    _getShowTutorialCase().then((value) async {
       if (value) {
         await Navigator.of(context).push(
           MaterialPageRoute(builder: (ctx) => const TutorialPage()),
@@ -73,7 +74,7 @@ abstract class _ProjectControllerBase with Store {
     project.status = 1;
 
     final newProject = await _projectRepository.save(project);
-    newProject.soilType = SoilTypeRepository().getById(newProject.idSoilType!);
+    newProject.soilType = await _getSoilTypeByIdCase(newProject.idSoilType!);
 
     message = '';
     status = PageStatus.normal;
@@ -173,7 +174,7 @@ abstract class _ProjectControllerBase with Store {
 
     projects = await _projectRepository.search(search: value);
     for (DisplayProjectResponse project in projects) {
-      project.soilType = _soilType.getById(project.idSoilType!);
+      project.soilType = await _getSoilTypeByIdCase(project.idSoilType!);
     }
 
     message = '';

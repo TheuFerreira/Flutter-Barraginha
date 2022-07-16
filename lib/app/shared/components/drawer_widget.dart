@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/pages/projects/components/item_drawer_widget.dart';
+import 'package:flutter_barraginha/app/pages/projects/projects_page.dart';
 import 'package:flutter_barraginha/app/pages/tutorial/tutorial_page.dart';
 import 'package:flutter_barraginha/app/screens/about/about_page.dart';
 import 'package:flutter_barraginha/app/screens/licenses/licenses_page.dart';
 import 'package:flutter_barraginha/app/screens/partners/partners_page.dart';
-import 'package:flutter_barraginha/app/screens/projects/components/item_drawer_widget.dart';
-import 'package:flutter_barraginha/app/screens/projects/projects_page.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
