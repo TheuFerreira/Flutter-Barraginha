@@ -1,11 +1,7 @@
+import 'package:flutter_barraginha/domain/services/device_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-abstract class IInfoService {
-  Future<String> getName();
-  Future<String> getVersion();
-}
-
-class InfoService implements IInfoService {
+class DeviceServiceImpl implements DeviceService {
   @override
   Future<String> getName() async {
     final info = await PackageInfo.fromPlatform();

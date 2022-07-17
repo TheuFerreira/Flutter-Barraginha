@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/about/controllers/about_controller.dart';
+import 'package:flutter_barraginha/app/pages/about/controllers/about_controller.dart';
 import 'package:flutter_barraginha/app/shared/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/shared/components/large_app_bar_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -45,9 +45,13 @@ class AboutPage extends StatelessWidget {
       persistentFooterButtons: [
         Observer(
           builder: (context) {
-            String text = _controller.info;
+            final deviceInfo = _controller.deviceInfo;
+            if (deviceInfo == null) {
+              return Container();
+            }
+
             return Text(
-              text,
+              deviceInfo.toString(),
               style: const TextStyle(fontWeight: FontWeight.normal),
             );
           },
