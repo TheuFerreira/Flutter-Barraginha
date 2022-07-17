@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/pages/about/about_page.dart';
+import 'package:flutter_barraginha/app/pages/licenses/licenses_page.dart';
 import 'package:flutter_barraginha/app/pages/projects/components/item_drawer_widget.dart';
 import 'package:flutter_barraginha/app/pages/projects/projects_page.dart';
 import 'package:flutter_barraginha/app/pages/tutorial/tutorial_page.dart';
-import 'package:flutter_barraginha/app/screens/licenses/licenses_page.dart';
 import 'package:flutter_barraginha/app/screens/partners/partners_page.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -76,7 +76,7 @@ class DrawerWidget extends StatelessWidget {
                 ItemDrawerWidget(
                   title: 'Sobre',
                   icon: const Icon(Icons.info),
-                  onTap: () => Navigator.of(context).pushReplacement(
+                  onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(builder: (builder) => AboutPage()),
                   ),
                 ),
