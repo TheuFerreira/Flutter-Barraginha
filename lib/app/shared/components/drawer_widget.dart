@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/pages/about/about_page.dart';
 import 'package:flutter_barraginha/app/pages/licenses/licenses_page.dart';
+import 'package:flutter_barraginha/app/pages/partners/partners_page.dart';
 import 'package:flutter_barraginha/app/pages/projects/components/item_drawer_widget.dart';
 import 'package:flutter_barraginha/app/pages/projects/projects_page.dart';
 import 'package:flutter_barraginha/app/pages/tutorial/tutorial_page.dart';
-import 'package:flutter_barraginha/app/screens/partners/partners_page.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -68,7 +68,7 @@ class DrawerWidget extends StatelessWidget {
                 ItemDrawerWidget(
                   title: 'Parceiros',
                   icon: const Icon(Icons.people),
-                  onTap: () => Navigator.pushReplacement(
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (ctx) => const PartnersPage()),
                   ),

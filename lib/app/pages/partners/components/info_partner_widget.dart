@@ -14,9 +14,12 @@ class InfoPartnerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double containerWidth = MediaQuery.of(context).size.width - 30;
+    double imageWidth = MediaQuery.of(context).size.width / 2.7;
+    double textWidth = MediaQuery.of(context).size.width - imageWidth - 40;
     return Container(
-      width: MediaQuery.of(context).size.width - 30,
-      height: MediaQuery.of(context).size.height / 4,
+      width: containerWidth,
+      padding: const EdgeInsets.symmetric(vertical: 28),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.only(
@@ -38,7 +41,7 @@ class InfoPartnerWidget extends StatelessWidget {
         children: [
           Image.asset(
             imagePath,
-            width: MediaQuery.of(context).size.width / 2.7,
+            width: imageWidth,
             height: MediaQuery.of(context).size.width / 2.7,
           ),
           Padding(
@@ -57,7 +60,7 @@ class InfoPartnerWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 SizedBox(
-                  width: 200,
+                  width: textWidth,
                   child: Text(
                     description,
                     style: const TextStyle(
@@ -70,7 +73,7 @@ class InfoPartnerWidget extends StatelessWidget {
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
     );
