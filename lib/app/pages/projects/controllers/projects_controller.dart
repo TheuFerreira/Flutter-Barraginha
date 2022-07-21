@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/pages/parts/parts_page.dart';
 import 'package:flutter_barraginha/app/pages/projects/dialogs/context_dialog.dart';
 import 'package:flutter_barraginha/app/pages/projects/dialogs/save_project_dialog.dart';
 import 'package:flutter_barraginha/app/pages/tutorial/tutorial_page.dart';
-import 'package:flutter_barraginha/app/screens/parts/parts_page.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';

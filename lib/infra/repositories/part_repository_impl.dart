@@ -1,17 +1,17 @@
-import 'package:flutter_barraginha/app/shared/database/connection.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_point.dart';
+import 'package:flutter_barraginha/domain/repositories/part_repository.dart';
+import 'package:flutter_barraginha/domain/services/database_service.dart';
 
-abstract class IPartRepository {
-  Future<List<DisplayPart>> getAll(int idProject);
-  Future save(DisplayPart part);
-}
+class PartRepositoryImpl implements PartRepository {
+  final DatabaseService _databaseService;
 
-class PartRepository extends Connection implements IPartRepository {
+  PartRepositoryImpl(this._databaseService);
+
   @override
   Future<List<DisplayPart>> getAll(int idProject) async {
-    final db = await getDatabase();
+    final db = await _databaseService.getDatabase();
     final result = await db.transaction<List<DisplayPart>>((txn) async {
       final result = await txn.rawQuery(
         'SELECT p.id, p.id_project, p.road_width, p.status '
@@ -56,7 +56,7 @@ class PartRepository extends Connection implements IPartRepository {
   }
 
   Future _insert(DisplayPart part) async {
-    final db = await getDatabase();
+    final db = await _databaseService.getDatabase();
 
     await db.transaction((txn) async {
       int idPart = await txn.insert(
@@ -80,7 +80,7 @@ class PartRepository extends Connection implements IPartRepository {
   }
 
   Future _update(DisplayPart part) async {
-    final db = await getDatabase();
+    final db = await _databaseService.getDatabase();
 
     await db.transaction((txn) async {
       await txn.update(

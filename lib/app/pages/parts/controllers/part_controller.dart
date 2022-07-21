@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barraginha/app/pages/parts/controllers/item_info_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/map_page.dart';
-import 'package:flutter_barraginha/app/screens/parts/controllers/item_info_controller.dart';
 import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
-import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
+import 'package:flutter_barraginha/domain/use_cases/delete_part_case.dart';
+import 'package:flutter_barraginha/domain/use_cases/get_all_parts_by_id_project_case.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'part_controller.g.dart';
@@ -23,7 +25,8 @@ abstract class _PartControllerBase with Store {
 
   final DisplayProjectResponse _project;
   final ItemInfoController _infoController;
-  final IPartRepository _partRepository = PartRepository();
+  final _deletePartCase = Modular.get<DeletePartCase>();
+  final _getAllPartsByIdProjectCase = Modular.get<GetAllPartsByIdProjectCase>();
 
   _PartControllerBase(this._project, this._infoController) {
     loadAll().then((value) {
@@ -62,9 +65,7 @@ abstract class _PartControllerBase with Store {
       return;
     }
 
-    part.status = 0;
-
-    await _partRepository.save(part);
+    await _deletePartCase(part);
     _infoController.resetCountBarrage();
     await loadAll();
 
@@ -91,7 +92,7 @@ abstract class _PartControllerBase with Store {
   Future loadAll() async {
     parts = [];
     countBarrage = 0;
-    parts = await _partRepository.getAll(_project.id!);
+    parts = await _getAllPartsByIdProjectCase(_project);
   }
 
   void showInfoPart(BuildContext context, InfoPart info) {

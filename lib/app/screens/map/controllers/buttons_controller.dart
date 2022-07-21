@@ -3,12 +3,14 @@ import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.da
 import 'package:flutter_barraginha/app/screens/map/dialogs/calculating_dialog.dart';
 import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
-import 'package:flutter_barraginha/app/shared/database/repositories/part_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
-import 'package:flutter_barraginha/app/shared/services/calculator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
+import 'package:flutter_barraginha/domain/repositories/part_repository.dart';
+import 'package:flutter_barraginha/domain/use_cases/calculate_case.dart';
+import 'package:flutter_barraginha/domain/use_cases/calculate_distance_between_coordinates_case.dart';
+import 'package:flutter_barraginha/domain/use_cases/get_altitude_by_coordinate_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/get_soil_type_by_id_case.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -24,9 +26,14 @@ abstract class _ButtonsControllerBase with Store {
 
   final DisplayPart _part;
   final MapController _mapController;
-  final IPartRepository _partRepository = PartRepository();
+  final _partRepository = Modular.get<PartRepository>();
   final IProjectRepository _projectRepository = ProjectRepository();
   final _getSoilTypeByIdCase = Modular.get<GetSoilTypeByIdCase>();
+  final _calculateCase = Modular.get<CalculateCase>();
+  final _getAltitudeByCoordinateCase =
+      Modular.get<GetAltitudeByCoordinateCase>();
+  final _calculateDistanceBetweenCoordinatesCase =
+      Modular.get<CalculateDistanceBetweenCoordinatesCase>();
 
   _ButtonsControllerBase(this._part, this._mapController) {
     if (_part.id != null) {
@@ -66,42 +73,71 @@ abstract class _ButtonsControllerBase with Store {
 
     CalculatingDialog.show(context);
 
-    final info = await CalculatorService.calculate(
-      start: Point.copy(_part.points[0]),
-      end: Point.copy(_part.points[1]),
-      soilType: project.soilType!,
-      roadWidth: _part.roadWidth!,
-      rainVolume: project.rainVolume!,
-    );
+    try {
+      final start = Point.copy(_part.points[0]);
+      final end = Point.copy(_part.points[1]);
 
-    if (info == null) {
+      start.altitude = await _getAltitudeByCoordinateCase(
+        start.altitude,
+        start.latitude!.toDouble(),
+        start.longitude!.toDouble(),
+      );
+      end.altitude = await _getAltitudeByCoordinateCase(
+        end.altitude,
+        end.latitude!.toDouble(),
+        end.longitude!.toDouble(),
+      );
+
+      final startLatLng = LatLng(
+        start.latitude!.toDouble(),
+        start.longitude!.toDouble(),
+      );
+
+      final endLatLng = LatLng(
+        end.latitude!.toDouble(),
+        end.longitude!.toDouble(),
+      );
+
+      final distance = _calculateDistanceBetweenCoordinatesCase(
+        startLatLng,
+        endLatLng,
+      );
+
+      final info = await _calculateCase(
+        start: start,
+        end: end,
+        soilType: project.soilType!,
+        roadWidth: _part.roadWidth!,
+        rainVolume: project.rainVolume!,
+        distance: distance,
+      );
+
+      CalculatingDialog.close(context);
+
+      _part.points[0].altitude = info.pointA.altitude;
+      _part.points[1].altitude = info.pointB.altitude;
+
+      await _partRepository.save(_part);
+
+      final resultDialog = await DialogService.showQuestionDialog(
+        context,
+        'Calculado com sucesso.',
+        'Deseja ver os resultados?',
+      );
+
+      if (resultDialog == true) {
+        await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => PartsInfoPage(info),
+          ),
+        );
+      }
+
+      Navigator.pop(context, true);
+    } catch (e) {
       ToastService.show("Houve um problema ao calcular");
       CalculatingDialog.close(context);
-      return;
     }
-
-    CalculatingDialog.close(context);
-
-    _part.points[0].altitude = info.pointA.altitude;
-    _part.points[1].altitude = info.pointB.altitude;
-
-    await _partRepository.save(_part);
-
-    final resultDialog = await DialogService.showQuestionDialog(
-      context,
-      'Calculado com sucesso.',
-      'Deseja ver os resultados?',
-    );
-
-    if (resultDialog == true) {
-      await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (ctx) => PartsInfoPage(info),
-        ),
-      );
-    }
-
-    Navigator.pop(context, true);
   }
 
   Future save(BuildContext context) async {

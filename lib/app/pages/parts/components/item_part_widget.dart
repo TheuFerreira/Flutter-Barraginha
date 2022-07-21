@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/parts/controllers/item_part_controller.dart';
+import 'package:flutter_barraginha/app/pages/parts/controllers/item_part_controller.dart';
 import 'package:flutter_barraginha/app/shared/components/loading_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';

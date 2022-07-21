@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 abstract class IGeolocationService {
   Future<bool> isLocationEnabled();
@@ -26,7 +25,8 @@ class GeolocatorService implements IGeolocationService {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission != LocationPermission.denied || permission == LocationPermission.whileInUse) {
+      if (permission != LocationPermission.denied ||
+          permission == LocationPermission.whileInUse) {
         log('Location permissions are denied.');
         return null;
       }
@@ -38,15 +38,5 @@ class GeolocatorService implements IGeolocationService {
     }
 
     return await Geolocator.getCurrentPosition();
-  }
-
-  static double getDistanceBetweenTwoPoints(LatLng start, LatLng end) {
-    double value = Geolocator.distanceBetween(
-      start.latitude,
-      start.longitude,
-      end.latitude,
-      end.longitude,
-    );
-    return value;
   }
 }

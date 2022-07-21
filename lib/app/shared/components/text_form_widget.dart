@@ -59,6 +59,8 @@ class TextFormWidget extends StatelessWidget {
         if (validator != null) {
           return validator!(value);
         }
+
+        return null;
       },
     );
   }

@@ -10,13 +10,12 @@ abstract class _ItemInfoControllerBase with Store {
   String countParts = "0";
 
   @observable
-  String countBarrage = "0";
+  int countBarrage = 0;
 
   @observable
   String rainVolume = '';
 
   final DisplayProjectResponse _project;
-  late int _countParts = 0;
 
   _ItemInfoControllerBase(this._project) {
     rainVolume = _project.rainVolume.toString().replaceAll('.', ',');
@@ -27,13 +26,11 @@ abstract class _ItemInfoControllerBase with Store {
 
   @action
   void resetCountBarrage() {
-    _countParts = 0;
-    countBarrage = _countParts.toString();
+    countBarrage = 0;
   }
 
   @action
   void addCountBarrage(int value) {
-    _countParts += value;
-    countBarrage = _countParts.toString();
+    countBarrage += value;
   }
 }

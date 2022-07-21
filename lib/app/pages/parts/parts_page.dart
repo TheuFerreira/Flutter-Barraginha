@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/parts/controllers/item_info_controller.dart';
-import 'package:flutter_barraginha/app/screens/parts/controllers/part_controller.dart';
+import 'package:flutter_barraginha/app/pages/parts/controllers/item_info_controller.dart';
+import 'package:flutter_barraginha/app/pages/parts/controllers/part_controller.dart';
 import 'package:flutter_barraginha/app/shared/components/nothing_here_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -98,7 +98,7 @@ class _PartsPageState extends State<PartsPage> {
                           Expanded(
                             child: ItemInfoWidget(
                               title: 'Bolsões',
-                              value: _infoController.countBarrage,
+                              value: _infoController.countBarrage.toString(),
                             ),
                           ),
                           Expanded(
@@ -155,9 +155,12 @@ class _PartsPageState extends State<PartsPage> {
                               widget.project,
                               part,
                               title: 'Trecho ${i + 1}',
-                              onInfo: (info) => _controller.showInfoPart(context, info),
-                              onEdit: (part) => _controller.showEditPart(context, part),
-                              onLongPress: (part) => _controller.deletePart(builder, part, i),
+                              onInfo: (info) =>
+                                  _controller.showInfoPart(context, info),
+                              onEdit: (part) =>
+                                  _controller.showEditPart(context, part),
+                              onLongPress: (part) =>
+                                  _controller.deletePart(builder, part, i),
                               onCalculated: _infoController.addCountBarrage,
                             );
                           },

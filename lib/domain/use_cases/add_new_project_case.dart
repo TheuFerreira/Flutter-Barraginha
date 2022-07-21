@@ -18,7 +18,7 @@ class AddNewProjectCaseImpl implements AddNewProjectCase {
     project.status = 1;
 
     final newProject = await _projectRepository.save(project);
-    newProject.soilType = await _getSoilTypeByIdCase(newProject.idSoilType!);
+    newProject.soilType = _getSoilTypeByIdCase(newProject.idSoilType!);
 
     return newProject;
   }

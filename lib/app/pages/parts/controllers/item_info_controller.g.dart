@@ -29,13 +29,13 @@ mixin _$ItemInfoController on _ItemInfoControllerBase, Store {
       Atom(name: '_ItemInfoControllerBase.countBarrage', context: context);
 
   @override
-  String get countBarrage {
+  int get countBarrage {
     _$countBarrageAtom.reportRead();
     return super.countBarrage;
   }
 
   @override
-  set countBarrage(String value) {
+  set countBarrage(int value) {
     _$countBarrageAtom.reportWrite(value, super.countBarrage, () {
       super.countBarrage = value;
     });

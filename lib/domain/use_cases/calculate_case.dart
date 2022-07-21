@@ -3,57 +3,28 @@ import 'dart:math' as mt;
 import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/soil_type.dart';
-import 'package:flutter_barraginha/app/shared/exceptions/web_exception.dart';
-import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
-import 'package:flutter_barraginha/app/shared/services/google_earth_service.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class CalculatorService {
-  static Future<InfoPart?> calculate({
+abstract class CalculateCase {
+  Future<InfoPart> call({
     required Point start,
     required Point end,
     required SoilType soilType,
     required num roadWidth,
     required num rainVolume,
+    required double distance,
+  });
+}
+
+class CalculateCaseImpl implements CalculateCase {
+  @override
+  Future<InfoPart> call({
+    required Point start,
+    required Point end,
+    required SoilType soilType,
+    required num roadWidth,
+    required num rainVolume,
+    required double distance,
   }) async {
-    final startLatitude = start.latitude!.toDouble();
-    final startLongitude = start.longitude!.toDouble();
-    final startLatLng = LatLng(startLatitude, startLongitude);
-
-    final endLatitude = end.latitude!.toDouble();
-    final endLongitude = end.longitude!.toDouble();
-    final endLatLng = LatLng(endLatitude, endLongitude);
-
-    if (start.altitude == null) {
-      try {
-        final value =
-            await GoogleEarthService.getAltitude(startLatitude, startLongitude);
-        start.altitude = value;
-      } on WebException {
-        return null;
-      }
-    } else {
-      start.altitude = start.altitude!.toDouble();
-    }
-
-    if (end.altitude == null) {
-      try {
-        final value =
-            await GoogleEarthService.getAltitude(endLatitude, endLongitude);
-
-        end.altitude = value;
-      } on WebException {
-        return null;
-      }
-    } else {
-      end.altitude = end.altitude!.toDouble();
-    }
-
-    final distance = GeolocatorService.getDistanceBetweenTwoPoints(
-      startLatLng,
-      endLatLng,
-    );
-
     final levelDifference = (start.altitude! - end.altitude!).abs();
     final horizontalDifference =
         mt.sqrt(mt.pow(distance, 2) - mt.pow(levelDifference, 2));
@@ -101,7 +72,6 @@ class CalculatorService {
     return info;
   }
 
-  static num convert(num value, {int decimal = 1}) {
-    return num.parse(value.toStringAsFixed(decimal));
-  }
+  num convert(num value, {int decimal = 1}) =>
+      num.parse(value.toStringAsFixed(decimal));
 }
