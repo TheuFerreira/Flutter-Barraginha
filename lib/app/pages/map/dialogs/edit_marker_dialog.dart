@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/components/text_field_widget.dart';
 import 'package:flutter_barraginha/app/dialogs/base_dialog.dart';
-import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
+import 'package:flutter_barraginha/infra/services/toast_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class EditMarkerDialog extends StatelessWidget {
