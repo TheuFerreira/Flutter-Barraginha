@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/map/controllers/buttons_controller.dart';
-import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
-import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
+import 'package:flutter_barraginha/app/pages/map/buttons_controller.dart';
+import 'package:flutter_barraginha/app/pages/map/map_controller.dart';
+import 'package:flutter_barraginha/app/pages/map/options_controller.dart';
 import 'package:flutter_barraginha/app/components/loader.dart';
 import 'package:flutter_barraginha/app/components/text_form_widget.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
+import 'package:flutter_barraginha/domain/entities/display_part.dart';
 import 'package:flutter_barraginha/app/utils/page_status.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

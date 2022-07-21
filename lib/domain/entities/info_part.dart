@@ -1,5 +1,5 @@
-import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
-import 'package:flutter_barraginha/app/shared/database/entities/soil_type.dart';
+import 'package:flutter_barraginha/domain/entities/point.dart';
+import 'package:flutter_barraginha/domain/entities/soil_type.dart';
 
 class InfoPart {
   Point pointA;

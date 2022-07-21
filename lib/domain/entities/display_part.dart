@@ -1,4 +1,4 @@
-import 'package:flutter_barraginha/app/shared/database/entities/part.dart';
+import 'package:flutter_barraginha/domain/entities/part.dart';
 
 class DisplayPart extends Part {
   DisplayPart({int idProject = -1}) : super(idProject: idProject) {

@@ -4,7 +4,7 @@ import 'package:flutter_barraginha/app/components/drawer_widget.dart';
 import 'package:flutter_barraginha/app/components/loading_widget.dart';
 import 'package:flutter_barraginha/app/components/nothing_here_widget.dart';
 import 'package:flutter_barraginha/app/components/text_field_widget.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
+import 'package:flutter_barraginha/domain/entities/display_project_response.dart';
 import 'package:flutter_barraginha/app/utils/page_status.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 

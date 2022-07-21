@@ -1,7 +1,7 @@
-import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
-import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
+import 'package:flutter_barraginha/domain/entities/info_part.dart';
+import 'package:flutter_barraginha/domain/entities/point.dart';
+import 'package:flutter_barraginha/domain/entities/display_part.dart';
+import 'package:flutter_barraginha/domain/entities/display_project_response.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:flutter_barraginha/domain/use_cases/calculate_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/calculate_distance_between_coordinates_case.dart';

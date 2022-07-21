@@ -1,5 +1,5 @@
-import 'package:flutter_barraginha/app/shared/database/entities/project.dart';
-import 'package:flutter_barraginha/app/shared/database/entities/soil_type.dart';
+import 'package:flutter_barraginha/domain/entities/project.dart';
+import 'package:flutter_barraginha/domain/entities/soil_type.dart';
 import 'package:intl/intl.dart';
 
 class DisplayProjectResponse extends Project {

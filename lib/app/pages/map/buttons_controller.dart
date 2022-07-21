@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
-import 'package:flutter_barraginha/app/screens/map/dialogs/calculating_dialog.dart';
+import 'package:flutter_barraginha/app/pages/map/map_controller.dart';
+import 'package:flutter_barraginha/app/pages/map/dialogs/calculating_dialog.dart';
 import 'package:flutter_barraginha/app/pages/parts_info/parts_info_page.dart';
-import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
-import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
-import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
+import 'package:flutter_barraginha/domain/entities/point.dart';
+import 'package:flutter_barraginha/domain/entities/display_part.dart';
+import 'package:flutter_barraginha/infra/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
-import 'package:flutter_barraginha/domain/repositories/part_repository.dart';
 import 'package:flutter_barraginha/domain/use_cases/calculate_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/calculate_distance_between_coordinates_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/get_altitude_by_coordinate_case.dart';
+import 'package:flutter_barraginha/domain/use_cases/get_project_by_id_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/get_soil_type_by_id_case.dart';
+import 'package:flutter_barraginha/domain/use_cases/save_part_project_case.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
@@ -26,14 +26,14 @@ abstract class _ButtonsControllerBase with Store {
 
   final DisplayPart _part;
   final MapController _mapController;
-  final _partRepository = Modular.get<PartRepository>();
-  final IProjectRepository _projectRepository = ProjectRepository();
   final _getSoilTypeByIdCase = Modular.get<GetSoilTypeByIdCase>();
   final _calculateCase = Modular.get<CalculateCase>();
   final _getAltitudeByCoordinateCase =
       Modular.get<GetAltitudeByCoordinateCase>();
   final _calculateDistanceBetweenCoordinatesCase =
       Modular.get<CalculateDistanceBetweenCoordinatesCase>();
+  final _getProjectByIdCase = Modular.get<GetProjectByIdCase>();
+  final _savePartProjectCase = Modular.get<SavePartProjectCase>();
 
   _ButtonsControllerBase(this._part, this._mapController) {
     if (_part.id != null) {
@@ -68,7 +68,7 @@ abstract class _ButtonsControllerBase with Store {
     _updateRoadWidth();
     _generatePoints(markers);
 
-    final project = await _projectRepository.getById(_part.idProject!);
+    final project = await _getProjectByIdCase(_part.idProject!);
     project.soilType = _getSoilTypeByIdCase(project.idSoilType!);
 
     CalculatingDialog.show(context);
@@ -117,7 +117,7 @@ abstract class _ButtonsControllerBase with Store {
       _part.points[0].altitude = info.pointA.altitude;
       _part.points[1].altitude = info.pointB.altitude;
 
-      await _partRepository.save(_part);
+      await _savePartProjectCase(_part);
 
       final resultDialog = await DialogService.showQuestionDialog(
         context,
@@ -154,7 +154,7 @@ abstract class _ButtonsControllerBase with Store {
     _updateRoadWidth();
     _generatePoints(markers);
 
-    await _partRepository.save(_part);
+    await _savePartProjectCase(_part);
 
     ToastService.show('Trecho salvo com sucesso.');
     Navigator.pop(context, true);

@@ -1,5 +1,5 @@
-import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
+import 'package:flutter_barraginha/domain/entities/display_part.dart';
+import 'package:flutter_barraginha/domain/entities/display_project_response.dart';
 import 'package:flutter_barraginha/domain/repositories/part_repository.dart';
 
 abstract class GetAllPartsByIdProjectCase {

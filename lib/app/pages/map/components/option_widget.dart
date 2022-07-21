@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
+import 'package:flutter_barraginha/app/utils/options_type.dart';
 
 class OptionWidget extends StatelessWidget {
   final IconData? icon;

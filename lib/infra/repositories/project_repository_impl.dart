@@ -1,4 +1,4 @@
-import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
+import 'package:flutter_barraginha/domain/entities/display_project_response.dart';
 import 'package:flutter_barraginha/domain/repositories/project_repository.dart';
 import 'package:flutter_barraginha/domain/services/database_service.dart';
 
@@ -63,6 +63,23 @@ class ProjectRepositoryImpl implements ProjectRepository {
       projects.add(project);
     }
 
+    return projects;
+  }
+
+  @override
+  Future<DisplayProjectResponse> getById(int id) async {
+    final db = await _databaseService.getDatabase();
+    final result = await db.rawQuery(
+      'SELECT p.id, p.id_soil_type, p.title, p.date, p.rain_volume, p.status, COUNT(pt.id) AS parts '
+      'FROM project AS p '
+      'LEFT JOIN (SELECT id, id_project FROM part WHERE status = 1) AS pt ON pt.id_project = p.id '
+      'WHERE p.status = 1 AND p.id = ? '
+      'GROUP BY p.id'
+      ';',
+      [id],
+    );
+
+    DisplayProjectResponse projects = DisplayProjectResponse.fromMap(result[0]);
     return projects;
   }
 }

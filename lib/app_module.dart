@@ -14,8 +14,10 @@ import 'package:flutter_barraginha/domain/use_cases/get_all_parts_by_id_project_
 import 'package:flutter_barraginha/domain/use_cases/get_all_soil_type_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/get_altitude_by_coordinate_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/get_info_device_case.dart';
+import 'package:flutter_barraginha/domain/use_cases/get_project_by_id_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/get_show_tutorial_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/get_soil_type_by_id_case.dart';
+import 'package:flutter_barraginha/domain/use_cases/save_part_project_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/search_projects_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/update_project_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/update_show_tutorial_case.dart';
@@ -60,5 +62,7 @@ class AppModule extends Module {
         Bind.factory<GetAllPartsByIdProjectCase>(
             (i) => GetAllPartsByIdProjectCaseImpl(i())),
         Bind.factory<CalculateCase>((i) => CalculateCaseImpl()),
+        Bind.factory<GetProjectByIdCase>((i) => GetProjectByIdCaseImpl(i())),
+        Bind.factory<SavePartProjectCase>((i) => SavePartProjectCaseImpl(i())),
       ];
 }

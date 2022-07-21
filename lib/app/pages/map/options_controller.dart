@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/map/components/option_widget.dart';
-import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
+import 'package:flutter_barraginha/app/pages/map/components/option_widget.dart';
+import 'package:flutter_barraginha/app/utils/options_type.dart';
 import 'package:mobx/mobx.dart';
 
 part 'options_controller.g.dart';

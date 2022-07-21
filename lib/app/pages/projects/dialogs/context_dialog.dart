@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
+import 'package:flutter_barraginha/domain/entities/display_project_response.dart';
 
 class ContextMenu extends StatelessWidget {
   final DisplayProjectResponse project;

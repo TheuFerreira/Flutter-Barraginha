@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/shared/database/entities/soil_type.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
+import 'package:flutter_barraginha/domain/entities/soil_type.dart';
+import 'package:flutter_barraginha/domain/entities/display_project_response.dart';
 import 'package:flutter_barraginha/domain/use_cases/get_all_soil_type_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/get_soil_type_by_id_case.dart';
 import 'package:flutter_modular/flutter_modular.dart';

@@ -1,6 +1,6 @@
-import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
-import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
-import 'package:flutter_barraginha/app/shared/database/entities/soil_type.dart';
+import 'package:flutter_barraginha/domain/entities/info_part.dart';
+import 'package:flutter_barraginha/domain/entities/point.dart';
+import 'package:flutter_barraginha/domain/entities/soil_type.dart';
 import 'package:flutter_barraginha/domain/use_cases/calculate_case.dart';
 import 'package:flutter_barraginha/infra/utils/soil_types.dart';
 import 'package:flutter_test/flutter_test.dart';

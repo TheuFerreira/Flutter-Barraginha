@@ -1,4 +1,4 @@
-import 'package:flutter_barraginha/app/shared/database/entities/soil_type.dart';
+import 'package:flutter_barraginha/domain/entities/soil_type.dart';
 
 List<SoilType> soilTypes = [
   SoilType(id: 1, text: "Latossolo", value: 1.25),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/pages/parts/item_info_controller.dart';
-import 'package:flutter_barraginha/app/screens/map/map_page.dart';
+import 'package:flutter_barraginha/app/pages/map/map_page.dart';
 import 'package:flutter_barraginha/app/pages/parts_info/parts_info_page.dart';
-import 'package:flutter_barraginha/app/shared/database/entities/info_part.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
-import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
+import 'package:flutter_barraginha/domain/entities/info_part.dart';
+import 'package:flutter_barraginha/domain/entities/display_part.dart';
+import 'package:flutter_barraginha/domain/entities/display_project_response.dart';
+import 'package:flutter_barraginha/infra/services/dialog_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:flutter_barraginha/domain/use_cases/delete_part_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/get_all_parts_by_id_project_case.dart';

@@ -1,6 +1,6 @@
-import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_point.dart';
+import 'package:flutter_barraginha/domain/entities/point.dart';
+import 'package:flutter_barraginha/domain/entities/display_part.dart';
+import 'package:flutter_barraginha/domain/entities/display_point.dart';
 import 'package:flutter_barraginha/domain/repositories/part_repository.dart';
 import 'package:flutter_barraginha/domain/services/database_service.dart';
 

@@ -1,4 +1,4 @@
-import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
+import 'package:flutter_barraginha/domain/entities/display_project_response.dart';
 import 'package:flutter_barraginha/domain/repositories/project_repository.dart';
 
 abstract class UpdateProjectCase {

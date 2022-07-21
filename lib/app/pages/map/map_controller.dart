@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
-import 'package:flutter_barraginha/app/screens/map/dialogs/edit_marker_dialog.dart';
-import 'package:flutter_barraginha/app/screens/map/enums/options_type.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
+import 'package:flutter_barraginha/app/pages/map/dialogs/edit_marker_dialog.dart';
+import 'package:flutter_barraginha/app/pages/map/options_controller.dart';
+import 'package:flutter_barraginha/app/utils/options_type.dart';
+import 'package:flutter_barraginha/domain/entities/display_part.dart';
 import 'package:flutter_barraginha/app/utils/page_status.dart';
-import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
-import 'package:flutter_barraginha/app/shared/services/geolocator_service.dart';
+import 'package:flutter_barraginha/infra/services/dialog_service.dart';
+import 'package:flutter_barraginha/infra/services/geolocator_service.dart';
 import 'package:flutter_barraginha/app/shared/services/toast_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';

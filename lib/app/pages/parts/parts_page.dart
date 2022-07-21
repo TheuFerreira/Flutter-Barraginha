@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/pages/parts/item_info_controller.dart';
 import 'package:flutter_barraginha/app/pages/parts/part_controller.dart';
 import 'package:flutter_barraginha/app/components/nothing_here_widget.dart';
-import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
+import 'package:flutter_barraginha/domain/entities/display_project_response.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'components/item_info_widget.dart';
