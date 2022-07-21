@@ -34,7 +34,7 @@ class CalculateCaseImpl implements CalculateCase {
     final verticalSpacing = 0.4518 * soilType.value! * mt.pow(declivity, 0.58);
     final barrageNumbers = horizontalDifference / horizontalSpacing;
     final barrageNumbersAdjusted = barrageNumbers.round();
-    final spacing = distance / barrageNumbersAdjusted;
+    final spacing = distance / barrageNumbers;
     final runoffVolume = spacing * roadWidth * rainVolume;
     final depth = mt.pow((runoffVolume / 6.52), 1 / 3).toDouble();
     final radius = 2.41 * depth;
@@ -49,11 +49,13 @@ class CalculateCaseImpl implements CalculateCase {
     start.longitude = convert(start.longitude!, decimal: 2);
     end.longitude = convert(end.longitude!, decimal: 2);
 
+    num distanceFormatted = convert(distance, decimal: 2);
+
     InfoPart info = InfoPart(
       pointA: start,
       pointB: end,
       soilType: soilType,
-      distance: distance.round(),
+      distance: distanceFormatted,
       levelDifference: levelDifference.round(),
       horizontalDifference: convert(horizontalDifference, decimal: 1),
       declivity: convert(declivity, decimal: 1),

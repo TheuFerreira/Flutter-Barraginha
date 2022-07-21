@@ -17,4 +17,19 @@ class Point {
     longitude = point.longitude;
     altitude = point.altitude;
   }
+
+  @override
+  bool operator ==(other) =>
+      (other is Point) &&
+      other.id == id &&
+      other.latitude == latitude &&
+      other.longitude == longitude &&
+      other.altitude == altitude;
+
+  @override
+  int get hashCode => id.hashCode;
+
+  @override
+  String toString() =>
+      "{Id: $id | Latitude: $latitude | Longitude: $longitude | Altitude: $altitude}";
 }

@@ -39,4 +39,28 @@ class InfoPart {
     required this.radius,
     required this.barrageVolume,
   });
+
+  @override
+  bool operator ==(other) =>
+      (other is InfoPart) &&
+      other.pointA == pointA &&
+      other.pointB == pointB &&
+      other.distance == distance &&
+      other.levelDifference == levelDifference &&
+      other.horizontalDifference == horizontalDifference &&
+      other.declivity == declivity &&
+      other.horizontalSpacing == horizontalSpacing &&
+      other.verticalSpacing == verticalSpacing &&
+      other.barrageNumbers == barrageNumbers &&
+      other.barrageNumbersAdjusted == barrageNumbersAdjusted &&
+      other.spacing == spacing &&
+      other.roadWidth == roadWidth &&
+      other.runoffVolume == runoffVolume;
+
+  @override
+  int get hashCode => barrageVolume.hashCode;
+
+  @override
+  String toString() =>
+      "{Point A: $pointA | Point B: $pointB | Soil Type: $soilType | Distance: $distance | Level Difference: $levelDifference | Horizontal Difference: $horizontalDifference | Declivity: $declivity | Horizontal Spacing: $horizontalSpacing | Vertical Spacing: $verticalSpacing | Barrage Numbers: $barrageNumbers | Barrage Numbers Adjusted: $barrageNumbersAdjusted | Spacing: $spacing | Road Width: $roadWidth | Runoff Volume: $runoffVolume | Depth: $depth | Radius: $radius | Barrage Volume: $barrageVolume}";
 }
