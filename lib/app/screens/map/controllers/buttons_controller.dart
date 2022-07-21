@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/dialogs/calculating_dialog.dart';
-import 'package:flutter_barraginha/app/screens/parts_info/parts_info_page.dart';
+import 'package:flutter_barraginha/app/pages/parts_info/parts_info_page.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/point.dart';
 import 'package:flutter_barraginha/app/shared/database/repositories/project_repository.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
