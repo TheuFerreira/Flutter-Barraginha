@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/shared/dialogs/base_dialog.dart';
+import 'package:flutter_barraginha/app/dialogs/base_dialog.dart';
 
 class DialogService {
   static Future<bool> showQuestionDialog(

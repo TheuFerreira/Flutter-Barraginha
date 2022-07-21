@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/buttons_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/map_controller.dart';
 import 'package:flutter_barraginha/app/screens/map/controllers/options_controller.dart';
-import 'package:flutter_barraginha/app/shared/components/loader.dart';
-import 'package:flutter_barraginha/app/shared/components/text_form_widget.dart';
+import 'package:flutter_barraginha/app/components/loader.dart';
+import 'package:flutter_barraginha/app/components/text_form_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_part.dart';
-import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
+import 'package:flutter_barraginha/app/utils/page_status.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -80,7 +80,8 @@ class _MapPageState extends State<MapPage> {
                             child: Observer(
                               builder: (context) {
                                 final markers = _mapController.markers;
-                                final initialPosition = _mapController.initialPosition;
+                                final initialPosition =
+                                    _mapController.initialPosition;
 
                                 if (initialPosition == null) {
                                   // TODO: Error loading Google Maps
@@ -91,8 +92,10 @@ class _MapPageState extends State<MapPage> {
                                   initialCameraPosition: initialPosition,
                                   mapType: MapType.terrain,
                                   markers: Set.from(markers),
-                                  onMapCreated: (map) => _mapController.googleMapController = map,
-                                  onTap: (position) => _mapController.clickMap(context, position),
+                                  onMapCreated: (map) =>
+                                      _mapController.googleMapController = map,
+                                  onTap: (position) => _mapController.clickMap(
+                                      context, position),
                                 );
                               },
                             ),
@@ -130,7 +133,8 @@ class _MapPageState extends State<MapPage> {
                                     hoverColor: Colors.transparent,
                                     splashColor: Colors.transparent,
                                     color: Colors.white,
-                                    selectedColor: Theme.of(context).colorScheme.primary,
+                                    selectedColor:
+                                        Theme.of(context).colorScheme.primary,
                                     renderBorder: false,
                                     onPressed: _optionsController.onSelect,
                                     children: options,
@@ -182,7 +186,8 @@ class _MapPageState extends State<MapPage> {
                         SizedBox(
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: () => _buttonsController.calculate(context),
+                            onPressed: () =>
+                                _buttonsController.calculate(context),
                             child: const Text(
                               'Calcular',
                               style: TextStyle(

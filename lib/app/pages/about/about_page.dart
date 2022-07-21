@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/pages/about/controllers/about_controller.dart';
-import 'package:flutter_barraginha/app/shared/components/drawer_widget.dart';
-import 'package:flutter_barraginha/app/shared/components/large_app_bar_widget.dart';
+import 'package:flutter_barraginha/app/pages/about/about_controller.dart';
+import 'package:flutter_barraginha/app/components/drawer_widget.dart';
+import 'package:flutter_barraginha/app/components/large_app_bar_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AboutPage extends StatelessWidget {

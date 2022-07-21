@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/pages/projects/controllers/save_project_controller.dart';
-import 'package:flutter_barraginha/app/shared/components/dropdown_button_form_widget.dart';
-import 'package:flutter_barraginha/app/shared/components/text_form_widget.dart';
+import 'package:flutter_barraginha/app/pages/projects/save_project_controller.dart';
+import 'package:flutter_barraginha/app/components/dropdown_button_form_widget.dart';
+import 'package:flutter_barraginha/app/components/text_form_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/entities/soil_type.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
-import 'package:flutter_barraginha/app/shared/dialogs/base_dialog.dart';
+import 'package:flutter_barraginha/app/dialogs/base_dialog.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class SaveProjectDialog extends StatefulWidget {

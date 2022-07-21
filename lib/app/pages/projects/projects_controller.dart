@@ -4,7 +4,7 @@ import 'package:flutter_barraginha/app/pages/projects/dialogs/context_dialog.dar
 import 'package:flutter_barraginha/app/pages/projects/dialogs/save_project_dialog.dart';
 import 'package:flutter_barraginha/app/pages/tutorial/tutorial_page.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
-import 'package:flutter_barraginha/app/shared/enums/page_status.dart';
+import 'package:flutter_barraginha/app/utils/page_status.dart';
 import 'package:flutter_barraginha/app/shared/services/dialog_service.dart';
 import 'package:flutter_barraginha/domain/use_cases/add_new_project_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/get_show_tutorial_case.dart';

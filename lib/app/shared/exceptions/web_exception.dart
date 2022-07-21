@@ -1,1 +1,0 @@
-class WebException implements Exception {}

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/pages/parts/controllers/item_info_controller.dart';
-import 'package:flutter_barraginha/app/pages/parts/controllers/part_controller.dart';
-import 'package:flutter_barraginha/app/shared/components/nothing_here_widget.dart';
+import 'package:flutter_barraginha/app/pages/parts/item_info_controller.dart';
+import 'package:flutter_barraginha/app/pages/parts/part_controller.dart';
+import 'package:flutter_barraginha/app/components/nothing_here_widget.dart';
 import 'package:flutter_barraginha/app/shared/database/responses/display_project_response.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
