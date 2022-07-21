@@ -103,4 +103,52 @@ void main() {
 
     expect(expected, infoPart);
   });
+
+  test('Calculate Third Values', () async {
+    Point start = Point(
+      latitude: 0,
+      longitude: 0,
+      altitude: 976,
+    );
+    Point end = Point(
+      latitude: 0,
+      longitude: 0,
+      altitude: 972,
+    );
+    SoilType soilType = soilTypes[0];
+    num roadWidth = 4;
+    num rainVolume = 0.194;
+    double distance = 158;
+
+    final expected = InfoPart(
+      pointA: start,
+      pointB: end,
+      soilType: soilType,
+      distance: distance,
+      levelDifference: 4,
+      horizontalDifference: 157.9,
+      declivity: 2.5,
+      horizontalSpacing: 38.2,
+      verticalSpacing: 1,
+      barrageNumbers: 4.1,
+      barrageNumbersAdjusted: 4,
+      spacing: 38.2,
+      roadWidth: roadWidth,
+      runoffVolume: 29.7,
+      depth: 1.52,
+      radius: 3.66,
+      barrageVolume: 22.8,
+    );
+
+    final infoPart = await _calculateCase(
+      start: start,
+      end: end,
+      soilType: soilType,
+      roadWidth: roadWidth,
+      rainVolume: rainVolume,
+      distance: distance,
+    );
+
+    expect(expected, infoPart);
+  });
 }
