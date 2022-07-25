@@ -9,6 +9,14 @@ part of 'item_info_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ItemInfoController on _ItemInfoControllerBase, Store {
+  Computed<num>? _$rainVolumeComputed;
+
+  @override
+  num get rainVolume =>
+      (_$rainVolumeComputed ??= Computed<num>(() => super.rainVolume,
+              name: '_ItemInfoControllerBase.rainVolume'))
+          .value;
+
   late final _$countPartsAtom =
       Atom(name: '_ItemInfoControllerBase.countParts', context: context);
 
@@ -38,22 +46,6 @@ mixin _$ItemInfoController on _ItemInfoControllerBase, Store {
   set countBarrage(int value) {
     _$countBarrageAtom.reportWrite(value, super.countBarrage, () {
       super.countBarrage = value;
-    });
-  }
-
-  late final _$rainVolumeAtom =
-      Atom(name: '_ItemInfoControllerBase.rainVolume', context: context);
-
-  @override
-  String get rainVolume {
-    _$rainVolumeAtom.reportRead();
-    return super.rainVolume;
-  }
-
-  @override
-  set rainVolume(String value) {
-    _$rainVolumeAtom.reportWrite(value, super.rainVolume, () {
-      super.rainVolume = value;
     });
   }
 

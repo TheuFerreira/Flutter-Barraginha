@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/domain/entities/info_part.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class PartsInfoPage extends StatelessWidget {
   final InfoPart info;
@@ -72,19 +73,19 @@ class PartsInfoPage extends StatelessWidget {
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                'Raio: ${info.radius}m',
+                                'Raio: ${_formatNumberToBr(info.radius)}m',
                                 style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.left,
                               ),
                               const SizedBox(height: 3),
                               Text(
-                                'Profundidade: ${info.depth}m',
+                                'Profundidade: ${_formatNumberToBr(info.depth)}m',
                                 style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.left,
                               ),
                               const SizedBox(height: 3),
                               Text(
-                                'Volume: ${info.barrageVolume}L',
+                                'Volume: ${_formatNumberToBr(info.barrageVolume)}L',
                                 style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.left,
                               ),
@@ -119,7 +120,7 @@ class PartsInfoPage extends StatelessWidget {
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                '${info.distance}m',
+                                '${_formatNumberToBr(info.distance)}m',
                                 style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.end,
                               ),
@@ -170,7 +171,7 @@ class PartsInfoPage extends StatelessWidget {
                               ),
                               const SizedBox(height: 3),
                               Text(
-                                '${info.declivity}m',
+                                '${_formatNumberToBr(info.declivity)}m',
                                 style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.left,
                               )
@@ -187,11 +188,11 @@ class PartsInfoPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 5),
                             Text(
-                              'Ponto 1: ${info.pointA.altitude}m',
+                              'Ponto 1: ${_formatNumberToBr(info.pointA.altitude!)}m',
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                             Text(
-                              'Ponto 2: ${info.pointB.altitude}m',
+                              'Ponto 2: ${_formatNumberToBr(info.pointB.altitude!)}m',
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                           ],
@@ -214,12 +215,12 @@ class PartsInfoPage extends StatelessWidget {
                                 textAlign: TextAlign.end,
                               ),
                               Text(
-                                'Lat: ${info.pointA.latitude}',
+                                'Lat: ${_formatNumberToBr(info.pointA.latitude!)}',
                                 style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.end,
                               ),
                               Text(
-                                'Long: ${info.pointA.longitude}',
+                                'Long: ${_formatNumberToBr(info.pointA.longitude!)}',
                                 style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.end,
                               ),
@@ -232,12 +233,12 @@ class PartsInfoPage extends StatelessWidget {
                                 textAlign: TextAlign.end,
                               ),
                               Text(
-                                'Lat: ${info.pointB.latitude}',
+                                'Lat: ${_formatNumberToBr(info.pointB.latitude!)}',
                                 style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.end,
                               ),
                               Text(
-                                'Long: ${info.pointB.longitude}',
+                                'Long: ${_formatNumberToBr(info.pointB.longitude!)}',
                                 style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.end,
                               ),
@@ -255,4 +256,7 @@ class PartsInfoPage extends StatelessWidget {
       ),
     );
   }
+
+  String _formatNumberToBr(num n) =>
+      NumberFormat.decimalPattern('pt-BR').format(n);
 }

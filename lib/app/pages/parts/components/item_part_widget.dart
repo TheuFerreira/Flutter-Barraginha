@@ -5,6 +5,7 @@ import 'package:flutter_barraginha/domain/entities/info_part.dart';
 import 'package:flutter_barraginha/domain/entities/display_part.dart';
 import 'package:flutter_barraginha/domain/entities/display_project_response.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:intl/intl.dart';
 
 class ItemPartWidget extends StatefulWidget {
   final DisplayProjectResponse project;
@@ -131,15 +132,15 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                                   style: Theme.of(context).textTheme.headline5,
                                 ),
                                 Text(
-                                  'Raio: ${info.radius}m',
+                                  'Raio: ${_formatNumberToBr(info.radius)}m',
                                   style: Theme.of(context).textTheme.subtitle1,
                                 ),
                                 Text(
-                                  'Profundidade: ${info.depth}m',
+                                  'Profundidade: ${_formatNumberToBr(info.depth)}m',
                                   style: Theme.of(context).textTheme.subtitle1,
                                 ),
                                 Text(
-                                  'Volume: ${info.barrageVolume}m³',
+                                  'Volume: ${_formatNumberToBr(info.barrageVolume)}L',
                                   style: Theme.of(context).textTheme.subtitle1,
                                 ),
                               ],
@@ -165,7 +166,7 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                                   style: Theme.of(context).textTheme.headline5,
                                 ),
                                 Text(
-                                  '${info.spacing}m',
+                                  '${_formatNumberToBr(info.spacing)}m',
                                   style: Theme.of(context).textTheme.subtitle1,
                                 ),
                               ],
@@ -193,4 +194,7 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
       ),
     );
   }
+
+  String _formatNumberToBr(num n) =>
+      NumberFormat.decimalPattern('pt-BR').format(n);
 }

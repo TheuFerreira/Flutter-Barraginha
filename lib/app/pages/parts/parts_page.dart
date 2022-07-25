@@ -4,6 +4,7 @@ import 'package:flutter_barraginha/app/pages/parts/part_controller.dart';
 import 'package:flutter_barraginha/app/components/nothing_here_widget.dart';
 import 'package:flutter_barraginha/domain/entities/display_project_response.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:intl/intl.dart';
 
 import 'components/item_info_widget.dart';
 import 'components/item_part_widget.dart';
@@ -104,7 +105,8 @@ class _PartsPageState extends State<PartsPage> {
                           Expanded(
                             child: ItemInfoWidget(
                               title: 'Volume de chuva',
-                              value: _infoController.rainVolume,
+                              value:
+                                  _formatNumberToBr(_infoController.rainVolume),
                             ),
                           ),
                         ],
@@ -176,4 +178,7 @@ class _PartsPageState extends State<PartsPage> {
       ),
     );
   }
+
+  String _formatNumberToBr(num n) =>
+      NumberFormat.decimalPattern('pt-BR').format(n);
 }

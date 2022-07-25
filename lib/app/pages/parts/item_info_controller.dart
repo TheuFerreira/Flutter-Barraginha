@@ -12,14 +12,12 @@ abstract class _ItemInfoControllerBase with Store {
   @observable
   int countBarrage = 0;
 
-  @observable
-  String rainVolume = '';
+  @computed
+  num get rainVolume => _project.rainVolume!;
 
   final DisplayProjectResponse _project;
 
-  _ItemInfoControllerBase(this._project) {
-    rainVolume = _project.rainVolume.toString().replaceAll('.', ',');
-  }
+  _ItemInfoControllerBase(this._project);
 
   @action
   void setCountParts(int value) => countParts = value.toString();
