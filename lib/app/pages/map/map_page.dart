@@ -166,7 +166,7 @@ class _MapPageState extends State<MapPage> {
                         key: _buttonsController.form,
                         child: TextFormWidget(
                           controller: _buttonsController.roadWithController,
-                          hintText: 'Largura da Estrada',
+                          labelText: 'Largura da Estrada em m',
                           errorText: 'Insira um valor',
                           fillColor: const Color.fromARGB(255, 255, 255, 255),
                           textColor: const Color(0xff666666),
