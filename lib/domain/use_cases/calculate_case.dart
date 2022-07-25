@@ -40,15 +40,6 @@ class CalculateCaseImpl implements CalculateCase {
     final radius = 2.41 * depth;
     final barrageVolume = 3.14 * mt.pow(depth, 2) * (radius - (depth / 3));
 
-    start.altitude = convert(start.altitude!, decimal: 2);
-    end.altitude = convert(end.altitude!, decimal: 2);
-
-    start.latitude = convert(start.latitude!, decimal: 2);
-    end.latitude = convert(end.latitude!, decimal: 2);
-
-    start.longitude = convert(start.longitude!, decimal: 2);
-    end.longitude = convert(end.longitude!, decimal: 2);
-
     num distanceFormatted = convert(distance, decimal: 2);
 
     InfoPart info = InfoPart(

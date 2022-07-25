@@ -257,6 +257,8 @@ class PartsInfoPage extends StatelessWidget {
     );
   }
 
-  String _formatNumberToBr(num n) =>
-      NumberFormat.decimalPattern('pt-BR').format(n);
+  String _formatNumberToBr(num n) {
+    final numberFormat = NumberFormat.decimalPattern('pt-BR');
+    return numberFormat.format(n);
+  }
 }
