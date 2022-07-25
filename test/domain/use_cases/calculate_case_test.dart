@@ -21,7 +21,7 @@ void main() {
     );
     SoilType soilType = soilTypes[0];
     num roadWidth = 13;
-    num rainVolume = 0.7;
+    num rainVolume = 70;
     double distance = 2448.0;
 
     final expected = InfoPart(
@@ -69,7 +69,7 @@ void main() {
     );
     SoilType soilType = soilTypes[0];
     num roadWidth = 13;
-    num rainVolume = 0.7;
+    num rainVolume = 70;
     double distance = 715.13;
 
     final expected = InfoPart(
@@ -117,7 +117,7 @@ void main() {
     );
     SoilType soilType = soilTypes[0];
     num roadWidth = 4;
-    num rainVolume = 0.194;
+    num rainVolume = 19.4;
     double distance = 158;
 
     final expected = InfoPart(

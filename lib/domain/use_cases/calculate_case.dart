@@ -35,7 +35,7 @@ class CalculateCaseImpl implements CalculateCase {
     final barrageNumbers = horizontalDifference / horizontalSpacing;
     final barrageNumbersAdjusted = barrageNumbers.round();
     final spacing = distance / barrageNumbers;
-    final runoffVolume = spacing * roadWidth * rainVolume;
+    final runoffVolume = spacing * roadWidth * (rainVolume / 100);
     final depth = mt.pow((runoffVolume / 6.52), 1 / 3).toDouble();
     final radius = 2.41 * depth;
     final barrageVolume = 3.14 * mt.pow(depth, 2) * (radius - (depth / 3));
