@@ -60,10 +60,10 @@ class _SaveProjectDialogState extends State<SaveProjectDialog> {
                 ),
                 child: TextFormWidget(
                   controller: _controller.volumeRainController,
-                  labelText: 'Volume de Chuva',
+                  labelText: 'Volume de Chuva em mm',
                   hintText: 'Ex: 22',
                   keyboardType: TextInputType.number,
-                  errorText: 'Informe o volume de chuva',
+                  errorText: 'Informe o volume de chuva em mm',
                   validator: _controller.validateVolumeRain,
                 ),
               ),

@@ -104,7 +104,7 @@ class _PartsPageState extends State<PartsPage> {
                           ),
                           Expanded(
                             child: ItemInfoWidget(
-                              title: 'Volume de chuva',
+                              title: 'Volume de chuva em mm',
                               value:
                                   _formatNumberToBr(_infoController.rainVolume),
                             ),
