@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/pages/parts/item_part_controller.dart';
 import 'package:flutter_barraginha/app/components/loading_widget.dart';
-import 'package:flutter_barraginha/app/pages/parts_info/components/text_component.dart';
+import 'package:flutter_barraginha/app/components/text_component.dart';
 import 'package:flutter_barraginha/domain/entities/info_part.dart';
 import 'package:flutter_barraginha/domain/entities/display_part.dart';
 import 'package:flutter_barraginha/domain/entities/display_project_response.dart';

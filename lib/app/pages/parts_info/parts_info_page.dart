@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/pages/parts_info/components/card_border_component.dart';
 import 'package:flutter_barraginha/app/pages/parts_info/components/card_dimension_component.dart';
-import 'package:flutter_barraginha/app/pages/parts_info/components/text_component.dart';
+import 'package:flutter_barraginha/app/components/text_component.dart';
 import 'package:flutter_barraginha/domain/entities/info_part.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';

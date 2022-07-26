@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barraginha/app/pages/parts_info/components/text_component.dart';
+import 'package:flutter_barraginha/app/components/text_component.dart';
 
 class CardDimensionComponent extends StatelessWidget {
   final String barrageNumber;
