@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/pages/parts/item_part_controller.dart';
 import 'package:flutter_barraginha/app/components/loading_widget.dart';
+import 'package:flutter_barraginha/app/pages/parts_info/components/text_component.dart';
 import 'package:flutter_barraginha/domain/entities/info_part.dart';
 import 'package:flutter_barraginha/domain/entities/display_part.dart';
 import 'package:flutter_barraginha/domain/entities/display_project_response.dart';
@@ -120,56 +121,51 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                         }
 
                         final info = _controller.info!;
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        return Column(
                           children: [
-                            Column(
+                            const SizedBox(height: 16),
+                            Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Tamanho',
-                                  style: Theme.of(context).textTheme.headline5,
+                                Expanded(
+                                  child: TextComponent(
+                                    title: 'Nº de Bolsões',
+                                    description:
+                                        '${info.barrageNumbersAdjusted}',
+                                  ),
                                 ),
-                                Text(
-                                  'Raio: ${_formatNumberToBr(info.radius)}m',
-                                  style: Theme.of(context).textTheme.subtitle1,
-                                ),
-                                Text(
-                                  'Profundidade: ${_formatNumberToBr(info.depth)}m',
-                                  style: Theme.of(context).textTheme.subtitle1,
-                                ),
-                                Text(
-                                  'Volume: ${_formatNumberToBr(info.barrageVolume)}L',
-                                  style: Theme.of(context).textTheme.subtitle1,
+                                Expanded(
+                                  child: TextComponent(
+                                    title: 'Distância entre Bolsões',
+                                    description:
+                                        '${_formatNumberToBr(info.spacing)}m',
+                                  ),
                                 ),
                               ],
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Bolsões',
-                                  style: Theme.of(context).textTheme.headline5,
-                                ),
-                                Text(
-                                  '${info.barrageNumbersAdjusted}',
-                                  style: Theme.of(context).textTheme.subtitle1,
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'Distância',
-                                  style: Theme.of(context).textTheme.headline5,
-                                ),
-                                Text(
-                                  '${_formatNumberToBr(info.spacing)}m',
-                                  style: Theme.of(context).textTheme.subtitle1,
-                                ),
-                              ],
+                            const SizedBox(height: 16),
+                            TextComponent(
+                              title: 'Tamanho dos Bolsões',
+                              titleStyle: Theme.of(context).textTheme.headline5,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Raio: ${_formatNumberToBr(info.radius)}m',
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1,
+                                  ),
+                                  Text(
+                                    'Profundidade: ${_formatNumberToBr(info.depth)}m',
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1,
+                                  ),
+                                  Text(
+                                    'Volume: ${_formatNumberToBr(info.barrageVolume)}m³',
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1,
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         );
