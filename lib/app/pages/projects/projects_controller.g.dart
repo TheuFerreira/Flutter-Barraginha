@@ -65,16 +65,6 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
     });
   }
 
-  late final _$addNewProjectAsyncAction =
-      AsyncAction('_ProjectControllerBase.addNewProject', context: context);
-
-  @override
-  Future<dynamic> addNewProject(
-      BuildContext context, TextEditingController searchController) {
-    return _$addNewProjectAsyncAction
-        .run(() => super.addNewProject(context, searchController));
-  }
-
   late final _$_editProjectAsyncAction =
       AsyncAction('_ProjectControllerBase._editProject', context: context);
 
@@ -95,12 +85,30 @@ mixin _$ProjectsController on _ProjectControllerBase, Store {
         .run(() => super._deleteProject(context, project, searchController));
   }
 
-  late final _$searchAsyncAction =
-      AsyncAction('_ProjectControllerBase.search', context: context);
+  late final _$_ProjectControllerBaseActionController =
+      ActionController(name: '_ProjectControllerBase', context: context);
 
   @override
-  Future<dynamic> search({String value = ''}) {
-    return _$searchAsyncAction.run(() => super.search(value: value));
+  void addNewProject(
+      BuildContext context, TextEditingController searchController) {
+    final _$actionInfo = _$_ProjectControllerBaseActionController.startAction(
+        name: '_ProjectControllerBase.addNewProject');
+    try {
+      return super.addNewProject(context, searchController);
+    } finally {
+      _$_ProjectControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void search({String value = ''}) {
+    final _$actionInfo = _$_ProjectControllerBaseActionController.startAction(
+        name: '_ProjectControllerBase.search');
+    try {
+      return super.search(value: value);
+    } finally {
+      _$_ProjectControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

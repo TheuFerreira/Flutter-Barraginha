@@ -41,22 +41,29 @@ mixin _$PartController on _PartControllerBase, Store {
     });
   }
 
-  late final _$deletePartAsyncAction =
-      AsyncAction('_PartControllerBase.deletePart', context: context);
+  late final _$_PartControllerBaseActionController =
+      ActionController(name: '_PartControllerBase', context: context);
 
   @override
-  Future<dynamic> deletePart(
-      BuildContext context, DisplayPart part, int index) {
-    return _$deletePartAsyncAction
-        .run(() => super.deletePart(context, part, index));
+  void deletePart(BuildContext context, DisplayPart part, int index) {
+    final _$actionInfo = _$_PartControllerBaseActionController.startAction(
+        name: '_PartControllerBase.deletePart');
+    try {
+      return super.deletePart(context, part, index);
+    } finally {
+      _$_PartControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
-  late final _$loadAllAsyncAction =
-      AsyncAction('_PartControllerBase.loadAll', context: context);
-
   @override
-  Future<dynamic> loadAll() {
-    return _$loadAllAsyncAction.run(() => super.loadAll());
+  void loadAll() {
+    final _$actionInfo = _$_PartControllerBaseActionController.startAction(
+        name: '_PartControllerBase.loadAll');
+    try {
+      return super.loadAll();
+    } finally {
+      _$_PartControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

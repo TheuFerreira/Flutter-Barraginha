@@ -29,7 +29,7 @@ abstract class _PartControllerBase with Store {
   final _getAllPartsByIdProjectCase = Modular.get<GetAllPartsByIdProjectCase>();
 
   _PartControllerBase(this._project, this._infoController) {
-    loadAll().then((value) {
+    _loadAll().then((value) {
       _infoController.setCountParts(parts.length);
     });
   }
@@ -49,12 +49,13 @@ abstract class _PartControllerBase with Store {
     }
 
     _infoController.resetCountBarrage();
-    await loadAll();
+    await _loadAll();
     _infoController.setCountParts(parts.length);
   }
 
   @action
-  Future deletePart(BuildContext context, DisplayPart part, int index) async {
+  void deletePart(BuildContext context, DisplayPart part, int index) => _deletePart(context, part, index);
+  Future _deletePart(BuildContext context, DisplayPart part, int index) async {
     final result = await DialogService.showQuestionDialog(
       context,
       "Excluir",
@@ -67,7 +68,7 @@ abstract class _PartControllerBase with Store {
 
     await _deletePartCase(part);
     _infoController.resetCountBarrage();
-    await loadAll();
+    await _loadAll();
 
     _infoController.setCountParts(parts.length);
     ToastService.show('Trecho ${index + 1}, excluído.');
@@ -85,11 +86,12 @@ abstract class _PartControllerBase with Store {
     }
 
     _infoController.resetCountBarrage();
-    await loadAll();
+    await _loadAll();
   }
 
   @action
-  Future loadAll() async {
+  void loadAll() => _loadAll();
+  Future _loadAll() async {
     parts = [];
     countBarrage = 0;
     parts = await _getAllPartsByIdProjectCase(_project);

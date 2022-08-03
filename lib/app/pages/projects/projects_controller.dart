@@ -11,6 +11,7 @@ import 'package:flutter_barraginha/domain/use_cases/get_show_tutorial_case.dart'
 import 'package:flutter_barraginha/domain/use_cases/get_soil_type_by_id_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/search_projects_case.dart';
 import 'package:flutter_barraginha/domain/use_cases/update_project_case.dart';
+import 'package:flutter_barraginha/infra/services/geolocator_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -20,8 +21,7 @@ class ProjectsController = _ProjectControllerBase with _$ProjectsController;
 
 abstract class _ProjectControllerBase with Store {
   @observable
-  List<DisplayProjectResponse> projects =
-      ObservableList<DisplayProjectResponse>();
+  List<DisplayProjectResponse> projects = ObservableList<DisplayProjectResponse>();
 
   @observable
   PageStatus status = PageStatus.normal;
@@ -37,6 +37,7 @@ abstract class _ProjectControllerBase with Store {
   final _updateProjectCase = Modular.get<UpdateProjectCase>();
   final _searchProjectsCase = Modular.get<SearchProjectsCase>();
   final _getSoilTypeByIdCase = Modular.get<GetSoilTypeByIdCase>();
+  final IGeolocationService _geolocationService = GeolocatorService();
 
   _ProjectControllerBase(BuildContext context) {
     _getShowTutorialCase().then((value) async {
@@ -45,13 +46,19 @@ abstract class _ProjectControllerBase with Store {
           MaterialPageRoute(builder: (ctx) => const TutorialPage()),
         );
       }
-      search();
+      await _search();
     });
   }
 
   @action
-  Future addNewProject(
-      BuildContext context, TextEditingController searchController) async {
+  void addNewProject(BuildContext context, TextEditingController searchController) =>
+      _addNewProject(context, searchController);
+  Future _addNewProject(BuildContext context, TextEditingController searchController) async {
+    final locationIsEnabled = await _enableLocation(context);
+    if (!locationIsEnabled) {
+      return;
+    }
+
     final result = await showDialog<DisplayProjectResponse?>(
       context: context,
       builder: (ctx) => SaveProjectDialog(
@@ -69,8 +76,7 @@ abstract class _ProjectControllerBase with Store {
     toPartsPage(context, project, searchController);
   }
 
-  Future<DisplayProjectResponse> _insertProject(
-      DisplayProjectResponse project) async {
+  Future<DisplayProjectResponse> _insertProject(DisplayProjectResponse project) async {
     message = 'Criando novo Projeto...';
     status = PageStatus.loading;
 
@@ -94,11 +100,14 @@ abstract class _ProjectControllerBase with Store {
       ),
     );
 
-    await search(value: searchController.text);
+    await _search(value: searchController.text);
   }
 
-  void showOptions(BuildContext context, DisplayProjectResponse project,
-      TextEditingController searchController) {
+  void showOptions(
+    BuildContext context,
+    DisplayProjectResponse project,
+    TextEditingController searchController,
+  ) {
     showDialog(
       context: context,
       builder: (BuildContext ctx) => ContextMenu(
@@ -115,6 +124,11 @@ abstract class _ProjectControllerBase with Store {
     DisplayProjectResponse project,
     TextEditingController searchController,
   ) async {
+    final locationIsEnabled = await _enableLocation(context);
+    if (!locationIsEnabled) {
+      return;
+    }
+
     final result = await showDialog<DisplayProjectResponse?>(
       context: context,
       builder: (BuildContext ctx) => SaveProjectDialog(
@@ -133,7 +147,7 @@ abstract class _ProjectControllerBase with Store {
     message = '';
     status = PageStatus.normal;
 
-    await search(value: searchController.text);
+    await _search(value: searchController.text);
   }
 
   @action
@@ -160,11 +174,12 @@ abstract class _ProjectControllerBase with Store {
     message = '';
     status = PageStatus.normal;
 
-    await search(value: searchController.text);
+    await _search(value: searchController.text);
   }
 
   @action
-  Future search({String value = ''}) async {
+  void search({String value = ''}) => _search(value: value);
+  Future _search({String value = ''}) async {
     if (isLoading) {
       return;
     }
@@ -179,5 +194,25 @@ abstract class _ProjectControllerBase with Store {
 
     message = '';
     status = PageStatus.normal;
+  }
+
+  Future<bool> _enableLocation(BuildContext context) async {
+    final isLocationEnabled = await _geolocationService.isLocationEnabled();
+    if (isLocationEnabled) {
+      return true;
+    }
+
+    final result = await DialogService.showQuestionDialog(
+      context,
+      'GPS/Localização',
+      'Para continuar, precisamos que você habilite o GPS/Localização do seu telefone!',
+    );
+
+    if (result != true) {
+      return false;
+    }
+
+    _geolocationService.enableLocation();
+    return true;
   }
 }
