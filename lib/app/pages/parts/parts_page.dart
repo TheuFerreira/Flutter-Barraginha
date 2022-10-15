@@ -104,9 +104,8 @@ class _PartsPageState extends State<PartsPage> {
                           ),
                           Expanded(
                             child: ItemInfoWidget(
-                              title: 'Chuva em mm',
-                              value:
-                                  _formatNumberToBr(_infoController.rainVolume),
+                              title: 'Chuva',
+                              value: _formatNumberToBr(_infoController.rainVolume),
                             ),
                           ),
                         ],
@@ -117,10 +116,6 @@ class _PartsPageState extends State<PartsPage> {
                 const SizedBox(height: 2.0),
               ],
             ),
-          ),
-          const Divider(
-            color: Color(0xFFC0C0C0),
-            thickness: 1.5,
           ),
           Expanded(
             child: SingleChildScrollView(
@@ -157,12 +152,9 @@ class _PartsPageState extends State<PartsPage> {
                               widget.project,
                               part,
                               title: 'Trecho ${i + 1}',
-                              onInfo: (info) =>
-                                  _controller.showInfoPart(context, info),
-                              onEdit: (part) =>
-                                  _controller.showEditPart(context, part),
-                              onLongPress: (part) =>
-                                  _controller.deletePart(builder, part, i),
+                              onInfo: (info) => _controller.showInfoPart(context, info),
+                              onEdit: (part) => _controller.showEditPart(context, part),
+                              onLongPress: (part) => _controller.deletePart(builder, part, i),
                               onCalculated: _infoController.addCountBarrage,
                             );
                           },
@@ -179,6 +171,5 @@ class _PartsPageState extends State<PartsPage> {
     );
   }
 
-  String _formatNumberToBr(num n) =>
-      NumberFormat.decimalPattern('pt-BR').format(n);
+  String _formatNumberToBr(num n) => NumberFormat.decimalPattern('pt-BR').format(n);
 }

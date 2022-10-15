@@ -84,8 +84,7 @@ class DrawerWidget extends StatelessWidget {
                   title: 'Licenças',
                   icon: const Icon(Icons.android),
                   onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (builder) => const LicensesPage()),
+                    MaterialPageRoute(builder: (builder) => const LicensesPage()),
                   ),
                 ),
               ],

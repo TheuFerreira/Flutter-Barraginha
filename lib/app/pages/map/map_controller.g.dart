@@ -61,9 +61,9 @@ mixin _$MapController on _MapControllerBase, Store {
       AsyncAction('_MapControllerBase._getCurrentLocation', context: context);
 
   @override
-  Future<dynamic> _getCurrentLocation() {
+  Future<dynamic> _getCurrentLocation(BuildContext context) {
     return _$_getCurrentLocationAsyncAction
-        .run(() => super._getCurrentLocation());
+        .run(() => super._getCurrentLocation(context));
   }
 
   late final _$_MapControllerBaseActionController =

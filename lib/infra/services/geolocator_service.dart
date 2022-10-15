@@ -25,8 +25,7 @@ class GeolocatorService implements IGeolocationService {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission != LocationPermission.denied ||
-          permission == LocationPermission.whileInUse) {
+      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
         log('Location permissions are denied.');
         return null;
       }

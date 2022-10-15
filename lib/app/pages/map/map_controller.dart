@@ -33,18 +33,19 @@ abstract class _MapControllerBase with Store {
 
   _MapControllerBase(BuildContext context, this._part, this._options) {
     if (_part.id == null) {
-      _getCurrentLocation();
+      _getCurrentLocation(context);
     } else {
       _loadPositions(context);
     }
   }
 
   @action
-  Future _getCurrentLocation() async {
+  Future _getCurrentLocation(BuildContext context) async {
     final position = await _geolocationService.getCurrentLocation();
     if (position == null) {
       status = PageStatus.normal;
       ToastService.show('Um problema aconteceu');
+      Navigator.of(context).pop();
       return;
     }
 

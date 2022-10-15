@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:marquee/marquee.dart';
 
 class ItemInfoWidget extends StatelessWidget {
   final String title;
@@ -41,9 +40,9 @@ class ItemInfoWidget extends StatelessWidget {
             children: [
               SizedBox(
                 height: 20,
-                child: Marquee(
-                  text: title,
-                  blankSpace: 100,
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16.0,
