@@ -49,7 +49,7 @@ class PartsInfoPage extends StatelessWidget {
             children: [
               CardDimensionComponent(
                 barrageNumber: '${info.barrageNumbersAdjusted}',
-                distance: '${_formatNumberToBr(info.distance)}m',
+                distance: '${_formatNumberToBr(info.spacing)}m',
                 radius: 'Raio: ${_formatNumberToBr(info.radius)}m',
                 depth: 'Profundidade: ${_formatNumberToBr(info.depth)}m',
                 barrageVolume:
