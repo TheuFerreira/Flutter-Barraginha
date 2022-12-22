@@ -84,8 +84,9 @@ class _MapPageState extends State<MapPage> {
                                     _mapController.initialPosition;
 
                                 if (initialPosition == null) {
-                                  // TODO: Error loading Google Maps
-                                  return Container();
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
                                 }
 
                                 return GoogleMap(
