@@ -21,7 +21,8 @@ class ProjectsController = _ProjectControllerBase with _$ProjectsController;
 
 abstract class _ProjectControllerBase with Store {
   @observable
-  List<DisplayProjectResponse> projects = ObservableList<DisplayProjectResponse>();
+  List<DisplayProjectResponse> projects =
+      ObservableList<DisplayProjectResponse>();
 
   @observable
   PageStatus status = PageStatus.normal;
@@ -51,9 +52,11 @@ abstract class _ProjectControllerBase with Store {
   }
 
   @action
-  void addNewProject(BuildContext context, TextEditingController searchController) =>
+  void addNewProject(
+          BuildContext context, TextEditingController searchController) =>
       _addNewProject(context, searchController);
-  Future _addNewProject(BuildContext context, TextEditingController searchController) async {
+  Future _addNewProject(
+      BuildContext context, TextEditingController searchController) async {
     final locationIsEnabled = await _enableLocation(context);
     if (!locationIsEnabled) {
       return;
@@ -76,7 +79,8 @@ abstract class _ProjectControllerBase with Store {
     toPartsPage(context, project, searchController);
   }
 
-  Future<DisplayProjectResponse> _insertProject(DisplayProjectResponse project) async {
+  Future<DisplayProjectResponse> _insertProject(
+      DisplayProjectResponse project) async {
     message = 'Criando novo Projeto...';
     status = PageStatus.loading;
 

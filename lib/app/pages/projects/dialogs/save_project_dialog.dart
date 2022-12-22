@@ -58,13 +58,27 @@ class _SaveProjectDialogState extends State<SaveProjectDialog> {
                 constraints: const BoxConstraints(
                   minHeight: 42,
                 ),
-                child: TextFormWidget(
-                  controller: _controller.volumeRainController,
-                  labelText: 'Volume de Chuva em mm',
-                  hintText: 'Ex: 22',
-                  keyboardType: TextInputType.number,
-                  errorText: 'Informe o volume de chuva em mm',
-                  validator: _controller.validateVolumeRain,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextFormWidget(
+                        controller: _controller.volumeRainController,
+                        labelText: 'Volume de Chuva em mm',
+                        hintText: 'Ex: 22',
+                        keyboardType: TextInputType.number,
+                        errorText: 'Informe o volume de chuva em mm',
+                        validator: _controller.validateVolumeRain,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: _controller.infoAboutRainVolume,
+                      icon: const Icon(
+                        Icons.info_sharp,
+                        size: 28,
+                        color: Colors.green,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 16.0),
