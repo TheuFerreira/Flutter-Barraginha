@@ -1,16 +1,23 @@
-# flutter_barraginha
+# Flutter Barraginha
 
-A App Barraginha project.
+Um aplicativo para se calcular Barrainhas no Android.
 
-## Getting Started
+## Chave do Google Maps
 
-This project is a starting point for a Flutter application.
+Quando for necessário adicionar ou trocar a chave do google maps, basta acessar o arquivo **AndroidManifest.xml** dentro da pasta **<raiz_do_projeto>/android/app/src/main** e dentro do arquivo identificar as seguintes linhas:
 
-A few resources to get you started if this is your first Flutter project:
+```xml
+<meta-data 
+    android:name="com.google.android.geo.API_KEY"
+    android:value="API_KEY"/>
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+E no campo API_KEY, adicionar a chave do google maps.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Compilar o Projeto
+
+Para compilar o projeto, é necessário que o flutter esteja configurado na máquina (para saber mais, acesse [Flutter Install](https://docs.flutter.dev/get-started/install)) após instalado com exito, basta executar o comando abaixo e o APK será gerado;
+
+```powershell
+flutter build apk --release
+```
