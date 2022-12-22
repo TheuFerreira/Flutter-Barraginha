@@ -47,6 +47,29 @@ class PartsInfoPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.info, color: Colors.grey[500]),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Text(
+                        'O cálculo da declividade do terreno é feito levando em consideração a declividade uniforme',
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          color: Colors.grey[500],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
               CardDimensionComponent(
                 barrageNumber: '${info.barrageNumbersAdjusted}',
                 distance: '${_formatNumberToBr(info.spacing)}m',
