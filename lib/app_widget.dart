@@ -16,7 +16,7 @@ class AppWidget extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            primary: const Color(0xFF00695C),
+            backgroundColor: const Color(0xFF00695C),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12.0),
             minimumSize: const Size(200, 20),
             shape: RoundedRectangleBorder(
