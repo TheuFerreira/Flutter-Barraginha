@@ -21,7 +21,7 @@ class TextIconWidget extends StatelessWidget {
         const SizedBox(width: 8.0),
         Text(
           data,
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ],
     );

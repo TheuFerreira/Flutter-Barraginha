@@ -32,10 +32,10 @@ class PageWidget extends StatelessWidget {
         Expanded(
           flex: 3,
           child: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
             child: Image.asset(
               image,
             ),
-            borderRadius: BorderRadius.circular(30),
           ),
         ),
         Expanded(

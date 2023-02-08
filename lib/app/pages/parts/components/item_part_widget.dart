@@ -80,7 +80,7 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                       children: [
                         Text(
                           widget.title,
-                          style: Theme.of(context).textTheme.headline3,
+                          style: Theme.of(context).textTheme.displaySmall,
                         ),
                         Observer(
                           builder: (_) {
@@ -146,23 +146,24 @@ class _ItemPartWidgetState extends State<ItemPartWidget> {
                             const SizedBox(height: 16),
                             TextComponent(
                               title: 'Tamanho dos Bolsões',
-                              titleStyle: Theme.of(context).textTheme.headline5,
+                              titleStyle:
+                                  Theme.of(context).textTheme.headlineSmall,
                               child: Column(
                                 children: [
                                   Text(
                                     'Raio: ${_formatNumberToBr(info.radius)}m',
                                     style:
-                                        Theme.of(context).textTheme.subtitle1,
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                   Text(
                                     'Profundidade: ${_formatNumberToBr(info.depth)}m',
                                     style:
-                                        Theme.of(context).textTheme.subtitle1,
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                   Text(
                                     'Volume: ${_formatNumberToBr(info.barrageVolume)}m³',
                                     style:
-                                        Theme.of(context).textTheme.subtitle1,
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                 ],
                               ),

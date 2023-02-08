@@ -9,6 +9,7 @@ import 'package:mobx/mobx.dart';
 
 part 'save_project_controller.g.dart';
 
+// ignore: library_private_types_in_public_api
 class SaveProjectController = _SaveProjectControllerBase
     with _$SaveProjectController;
 

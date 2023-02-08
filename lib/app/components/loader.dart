@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class Loader extends StatefulWidget {
@@ -65,7 +67,10 @@ class _Loader extends State<Loader> with SingleTickerProviderStateMixin {
         Transform.translate(
           offset: Offset(
             0.0,
-            -30 * (animation_1.value <= 0.50 ? animation_1.value : 1.0 - animation_1.value),
+            -30 *
+                (animation_1.value <= 0.50
+                    ? animation_1.value
+                    : 1.0 - animation_1.value),
           ),
           child: Dot(
             radius: widget.dotSize,
@@ -76,7 +81,10 @@ class _Loader extends State<Loader> with SingleTickerProviderStateMixin {
         Transform.translate(
           offset: Offset(
             0.0,
-            -30 * (animation_2.value <= 0.50 ? animation_2.value : 1.0 - animation_2.value),
+            -30 *
+                (animation_2.value <= 0.50
+                    ? animation_2.value
+                    : 1.0 - animation_2.value),
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: widget.dotPadding),
@@ -90,7 +98,10 @@ class _Loader extends State<Loader> with SingleTickerProviderStateMixin {
         Transform.translate(
           offset: Offset(
             0.0,
-            -30 * (animation_3.value <= 0.50 ? animation_3.value : 1.0 - animation_3.value),
+            -30 *
+                (animation_3.value <= 0.50
+                    ? animation_3.value
+                    : 1.0 - animation_3.value),
           ),
           child: Dot(
             radius: widget.dotSize,

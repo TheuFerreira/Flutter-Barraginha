@@ -19,13 +19,13 @@ class CardDimensionComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final headline5 = textTheme.headline5!.copyWith(
+    final headline5 = textTheme.headlineSmall!.copyWith(
       color: Colors.white,
     );
-    final headline3 = textTheme.headline3!.copyWith(
+    final headline3 = textTheme.displaySmall!.copyWith(
       color: Colors.white,
     );
-    final subtitle1 = textTheme.subtitle1!.copyWith(
+    final subtitle1 = textTheme.titleMedium!.copyWith(
       color: const Color.fromARGB(255, 224, 224, 224),
     );
     return Row(

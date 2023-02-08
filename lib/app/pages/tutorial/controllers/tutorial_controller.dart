@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_barraginha/app/pages/tutorial/components/page_widget.dart';
 import 'package:flutter_barraginha/domain/use_cases/update_show_tutorial_case.dart';

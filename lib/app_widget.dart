@@ -30,36 +30,36 @@ class AppWidget extends StatelessWidget {
           style: ListTileStyle.drawer,
         ),
         textTheme: const TextTheme(
-          headline1: TextStyle(
+          displayLarge: TextStyle(
             fontWeight: FontWeight.normal,
             fontSize: 24,
             color: Colors.white,
           ),
-          headline2: TextStyle(
+          displayMedium: TextStyle(
             fontWeight: FontWeight.normal,
             fontSize: 24.0,
             color: Color(0xFF666666),
           ),
-          headline3: TextStyle(
+          displaySmall: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 24.0,
             color: Color(0xFF666666),
           ),
-          headline4: TextStyle(
+          headlineMedium: TextStyle(
             fontSize: 18.0,
             color: Color(0xFF666666),
           ),
-          headline5: TextStyle(
+          headlineSmall: TextStyle(
             color: Color(0xff666666),
             fontWeight: FontWeight.normal,
             fontSize: 17,
           ),
-          headline6: TextStyle(
+          titleLarge: TextStyle(
             color: Color(0xff666666),
             fontSize: 20,
             fontWeight: FontWeight.w400,
           ),
-          subtitle1: TextStyle(
+          titleMedium: TextStyle(
             color: Color(0xffA8A8A8),
             fontWeight: FontWeight.normal,
             fontSize: 15,

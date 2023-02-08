@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/pages/parts/item_info_controller.dart';
 import 'package:flutter_barraginha/app/pages/map/map_page.dart';
@@ -54,7 +56,8 @@ abstract class _PartControllerBase with Store {
   }
 
   @action
-  void deletePart(BuildContext context, DisplayPart part, int index) => _deletePart(context, part, index);
+  void deletePart(BuildContext context, DisplayPart part, int index) =>
+      _deletePart(context, part, index);
   Future _deletePart(BuildContext context, DisplayPart part, int index) async {
     final result = await DialogService.showQuestionDialog(
       context,

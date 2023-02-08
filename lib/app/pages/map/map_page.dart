@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/pages/map/buttons_controller.dart';
 import 'package:flutter_barraginha/app/pages/map/map_controller.dart';
@@ -138,8 +140,8 @@ class _MapPageState extends State<MapPage> {
                                         Theme.of(context).colorScheme.primary,
                                     renderBorder: false,
                                     onPressed: _optionsController.onSelect,
-                                    children: options,
                                     isSelected: values.map((e) => e).toList(),
+                                    children: options,
                                   );
                                 },
                               ),

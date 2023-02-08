@@ -6,7 +6,7 @@ class DatabaseServiceImpl implements DatabaseService {
   @override
   Future<Database> getDatabase() async {
     String defaultPath = await getDatabasesPath();
-    String dbPath = defaultPath + '/video_cut.db';
+    String dbPath = '$defaultPath/video_cut.db';
 
     //await deleteDatabase(dbPath);
 

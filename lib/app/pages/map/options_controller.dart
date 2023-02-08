@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/pages/map/components/option_widget.dart';
 import 'package:flutter_barraginha/app/utils/options_type.dart';

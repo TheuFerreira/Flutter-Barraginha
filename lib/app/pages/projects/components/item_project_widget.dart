@@ -36,7 +36,7 @@ class ItemProjectWidget extends StatelessWidget {
             children: [
               Text(
                 project.title ?? '',
-                style: Theme.of(context).textTheme.headline2,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
               const SizedBox(height: 8.0),
               Row(

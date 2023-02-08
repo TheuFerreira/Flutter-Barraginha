@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:flutter_barraginha/app/pages/parts/item_info_controller.dart';
 import 'package:flutter_barraginha/app/pages/parts/part_controller.dart';
@@ -81,7 +83,7 @@ class _PartsPageState extends State<PartsPage> {
                   padding: const EdgeInsets.only(left: 12.0),
                   child: Text(
                     'Projeto',
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.displayMedium,
                   ),
                 ),
                 const SizedBox(height: 0.0),
@@ -105,7 +107,8 @@ class _PartsPageState extends State<PartsPage> {
                           Expanded(
                             child: ItemInfoWidget(
                               title: 'Chuva',
-                              value: _formatNumberToBr(_infoController.rainVolume),
+                              value:
+                                  _formatNumberToBr(_infoController.rainVolume),
                             ),
                           ),
                         ],
@@ -132,7 +135,7 @@ class _PartsPageState extends State<PartsPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
                         'Trechos',
-                        style: Theme.of(context).textTheme.headline2,
+                        style: Theme.of(context).textTheme.displayMedium,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -152,9 +155,12 @@ class _PartsPageState extends State<PartsPage> {
                               widget.project,
                               part,
                               title: 'Trecho ${i + 1}',
-                              onInfo: (info) => _controller.showInfoPart(context, info),
-                              onEdit: (part) => _controller.showEditPart(context, part),
-                              onLongPress: (part) => _controller.deletePart(builder, part, i),
+                              onInfo: (info) =>
+                                  _controller.showInfoPart(context, info),
+                              onEdit: (part) =>
+                                  _controller.showEditPart(context, part),
+                              onLongPress: (part) =>
+                                  _controller.deletePart(builder, part, i),
                               onCalculated: _infoController.addCountBarrage,
                             );
                           },
@@ -171,5 +177,6 @@ class _PartsPageState extends State<PartsPage> {
     );
   }
 
-  String _formatNumberToBr(num n) => NumberFormat.decimalPattern('pt-BR').format(n);
+  String _formatNumberToBr(num n) =>
+      NumberFormat.decimalPattern('pt-BR').format(n);
 }

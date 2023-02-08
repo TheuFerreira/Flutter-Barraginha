@@ -47,14 +47,7 @@ class ProjectRepositoryImpl implements ProjectRepository {
   Future<List<DisplayProjectResponse>> search({String search = ''}) async {
     final db = await _databaseService.getDatabase();
     final result = await db.rawQuery(
-      'SELECT p.id, p.id_soil_type, p.title, p.date, p.rain_volume, p.status, COUNT(pt.id) AS parts '
-              'FROM project AS p '
-              'LEFT JOIN (SELECT id, id_project FROM part WHERE status = 1) AS pt ON pt.id_project = p.id '
-              'WHERE p.status = 1 AND title LIKE \'%' +
-          search +
-          '%\' '
-              'GROUP BY p.id'
-              ';',
+      'SELECT p.id, p.id_soil_type, p.title, p.date, p.rain_volume, p.status, COUNT(pt.id) AS parts FROM project AS p LEFT JOIN (SELECT id, id_project FROM part WHERE status = 1) AS pt ON pt.id_project = p.id WHERE p.status = 1 AND title LIKE \'%$search%\' GROUP BY p.id;',
     );
 
     List<DisplayProjectResponse> projects = [];

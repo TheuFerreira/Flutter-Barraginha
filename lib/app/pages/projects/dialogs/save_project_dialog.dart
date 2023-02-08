@@ -101,8 +101,8 @@ class _SaveProjectDialogState extends State<SaveProjectDialog> {
                       value: soilTypeSelected,
                       items: soilTypes
                           .map((e) => DropdownMenuItem(
-                                child: Text(e.text ?? ''),
                                 value: e,
+                                child: Text(e.text ?? ''),
                               ))
                           .toList(),
                     );

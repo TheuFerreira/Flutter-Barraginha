@@ -18,7 +18,7 @@ class ItemDrawerWidget extends StatelessWidget {
       leading: icon,
       title: Text(
         title,
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context).textTheme.headlineSmall,
       ),
       onTap: onTap,
     );

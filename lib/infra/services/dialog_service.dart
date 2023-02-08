@@ -15,7 +15,7 @@ class DialogService {
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Text(
             description,
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
         ),
         onConfirm: () => Navigator.pop(context, true),

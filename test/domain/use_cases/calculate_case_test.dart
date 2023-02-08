@@ -6,7 +6,7 @@ import 'package:flutter_barraginha/infra/utils/soil_types.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final _calculateCase = CalculateCaseImpl();
+  final calculateCase = CalculateCaseImpl();
 
   test('Calculate First Values', () async {
     Point start = Point(
@@ -44,7 +44,7 @@ void main() {
       barrageVolume: 1471.70,
     );
 
-    final infoPart = await _calculateCase(
+    final infoPart = await calculateCase(
       start: start,
       end: end,
       soilType: soilType,
@@ -92,7 +92,7 @@ void main() {
       barrageVolume: 656,
     );
 
-    final infoPart = await _calculateCase(
+    final infoPart = await calculateCase(
       start: start,
       end: end,
       soilType: soilType,
@@ -140,7 +140,7 @@ void main() {
       barrageVolume: 22.8,
     );
 
-    final infoPart = await _calculateCase(
+    final infoPart = await calculateCase(
       start: start,
       end: end,
       soilType: soilType,

@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter_barraginha/domain/entities/display_project_response.dart';
 import 'package:mobx/mobx.dart';
 

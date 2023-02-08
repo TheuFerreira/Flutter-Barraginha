@@ -37,7 +37,7 @@ class ContextMenu extends StatelessWidget {
                   children: [
                     Text(
                       'Editar',
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
                 ),
@@ -53,7 +53,7 @@ class ContextMenu extends StatelessWidget {
                 },
                 child: Text(
                   'Excluir',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
             )

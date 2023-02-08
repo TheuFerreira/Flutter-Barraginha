@@ -29,7 +29,7 @@ class CardBorderComponent extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.headline3,
+                  style: Theme.of(context).textTheme.displaySmall,
                 ),
                 const SizedBox(height: 16),
                 Row(

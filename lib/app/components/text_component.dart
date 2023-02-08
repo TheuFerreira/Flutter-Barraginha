@@ -22,13 +22,13 @@ class TextComponent extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: titleStyle ?? Theme.of(context).textTheme.headline5,
+          style: titleStyle ?? Theme.of(context).textTheme.headlineSmall,
         ),
         const SizedBox(height: 6),
         if (description != null)
           Text(
             description!,
-            style: descriptionStyle ?? Theme.of(context).textTheme.subtitle1,
+            style: descriptionStyle ?? Theme.of(context).textTheme.titleMedium,
           ),
         if (child != null) child!
       ],
